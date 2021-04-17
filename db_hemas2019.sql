@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 17, 2021 at 07:53 PM
+-- Generation Time: Apr 18, 2021 at 04:00 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -99,7 +99,9 @@ INSERT INTO `tbl_ad_modes_details` (`admode_details_id`, `newsad_mode_id`, `adco
 (1, 1, 'CL001', '4cmx1cm', 1),
 (2, 2, 'CL002', '4cmx1cm', 1),
 (3, 2, 'CL003', '4cmx1cm', 1),
-(4, 2, 'CL003', '8cmx6cm', 1);
+(4, 2, 'CL003', '8cmx6cm', 1),
+(5, 5, 'CL001', 'Full page', 1),
+(6, 5, 'CL003', 'Full page', 1);
 
 -- --------------------------------------------------------
 
@@ -469,7 +471,8 @@ INSERT INTO `tbl_news_adcat_type` (`adcattype_id`, `newsac_id`, `adcattype_desc`
 ('ADCT0165', 'ACAT0003', 'House Property Services', 1),
 ('ADCT0166', 'ACAT0004', 'For Grooms', 1),
 ('ADCT0167', 'ACAT0004', 'For Brides', 1),
-('ADCT0168', 'ACAT0002', 'hhhhhhhhhhhhhhhhhhhhfffffffffffffffffff', 0);
+('ADCT0168', 'ACAT0002', 'hhhhhhhhhhhhhhhhhhhhfffffffffffffffffff', 0),
+('ADCT0169', 'ACAT0005', 'For publish financial statement', 1);
 
 -- --------------------------------------------------------
 
@@ -491,7 +494,8 @@ INSERT INTO `tbl_news_ad_category` (`newsac_id`, `newsac_category`, `newsac_stat
 ('ACAT0001', 'Automobile', 1),
 ('ACAT0002', 'Employment', 1),
 ('ACAT0003', 'Realestate', 1),
-('ACAT0004', 'Marriage Proposals', 1);
+('ACAT0004', 'Marriage Proposals', 1),
+('ACAT0005', 'Financial Statements', 1);
 
 -- --------------------------------------------------------
 
@@ -513,7 +517,8 @@ INSERT INTO `tbl_news_ad_mode` (`newsad_mode_id`, `newsad_mode`, `newsad_mode_st
 (1, 'Sketch  Advertisement', 1),
 (2, 'Box Advertisement ', 1),
 (3, 'Photo Classified', 1),
-(4, 'Marriage Proposal Advertisment', 1);
+(4, 'Marriage Proposal Advertisment', 1),
+(5, 'Full Page Advertisement', 1);
 
 -- --------------------------------------------------------
 
@@ -929,7 +934,7 @@ ALTER TABLE `tbl_ad_booking`
 -- AUTO_INCREMENT for table `tbl_ad_modes_details`
 --
 ALTER TABLE `tbl_ad_modes_details`
-  MODIFY `admode_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `admode_details_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_newspaper_booking`
@@ -941,7 +946,7 @@ ALTER TABLE `tbl_newspaper_booking`
 -- AUTO_INCREMENT for table `tbl_news_ad_mode`
 --
 ALTER TABLE `tbl_news_ad_mode`
-  MODIFY `newsad_mode_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `newsad_mode_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_pwd_reset`
@@ -969,8 +974,8 @@ ALTER TABLE `tbl_sample_data`
 -- Constraints for table `tbl_ad_modes_details`
 --
 ALTER TABLE `tbl_ad_modes_details`
-  ADD CONSTRAINT `tbl_ad_modes_details_ibfk_1` FOREIGN KEY (`newsad_mode_id`) REFERENCES `tbl_ad_modes_details` (`admode_details_id`),
-  ADD CONSTRAINT `tbl_ad_modes_details_ibfk_2` FOREIGN KEY (`adcolour_id`) REFERENCES `tbl_ad_colour` (`adcolour_id`);
+  ADD CONSTRAINT `tbl_ad_modes_details_ibfk_1` FOREIGN KEY (`newsad_mode_id`) REFERENCES `tbl_news_ad_mode` (`newsad_mode_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tbl_ad_modes_details_ibfk_2` FOREIGN KEY (`adcolour_id`) REFERENCES `tbl_ad_colour` (`adcolour_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tbl_batch`
