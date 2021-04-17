@@ -96,7 +96,7 @@ require("cmn_booking_navbar.php");
             <input type="file" class="form-control-file" name="imgad" id="imgad"  accept="image/*">
           </div>
             <div style="padding-left: 180px; padding-right: 20px">
-              <small id="passwordHelpBlock" class="form-text text-muted">*Only applicable for Photo classified advertisments
+              <small id="passwordHelpBlock" class="form-text text-muted">*Only applicable for Photo classified & Full Page advertisments
               </small>
             </div>
       </div>

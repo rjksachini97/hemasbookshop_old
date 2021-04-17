@@ -7,7 +7,7 @@ if(!isset($_SESSION["user"])){
   header("Location:lib/route.php");
 }
 ?>
-<!-- customer page -->
+
 <!-- Page Wrapper -->
 <div id="wrapper">
   <!-- Sidebar -->
