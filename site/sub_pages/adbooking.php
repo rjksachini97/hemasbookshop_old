@@ -15,13 +15,13 @@ require("cmn_booking_navbar.php");
           <h3 >Advertisment Booking</h3>
         </li>
       </ol>
-    <form id="BookingForm">
+    <form id="BookingForm" enctype="multipart/form-data">
 
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="txt_npname">Newspaper Name<b class="text-danger">*</b></label>
             <select class="form-control col-sm-8" name="txt_npname" id="txt_npname">
-              <option>-- Select Newspaper --</option>
+              <option value="">-- Select Newspaper --</option>
                                   <?php getNewspaperCategories(); ?>
             </select>
         </div>
@@ -34,21 +34,21 @@ require("cmn_booking_navbar.php");
         <div class="form-group col-md-6">
 					<label for="txt_npadmode">Modes of Advertisment<b class="text-danger">*</b></label>
 						<select class="form-control col-sm-8" name="txt_npadmode" id="txt_npadmode">
-          		<option>-- Select Ad Mode--</option>
+          		<option value="">-- Select Ad Mode--</option>
          				<?php getModesofAd(); ?>
          		</select>
       	</div>
         <div class="form-group col-md-6">
         <label for="txt_npadcolour">Colour<b class="text-danger">*</b></label>
           <select class="form-control col-sm-8" name="txt_npadcolour" id="txt_npadcolour">
-            <option>-- Select Colour --</option>
+            <option value="">-- Select Colour --</option>
               <?php getAdColour(); ?>
           </select>
       </div>
       <div class="form-group col-md-6">
         <label for="txt_npadsize">Size<b class="text-danger">*</b></label>
           <select class="form-control col-sm-8" name="txt_npadsize" id="txt_npadsize">
-            <option>-- Select Size --</option>
+            <option value="">-- Select Size --</option>
               <?php getAdSize(); ?>
           </select>
       </div>
@@ -58,14 +58,14 @@ require("cmn_booking_navbar.php");
       <div class="form-group col-md-6">
         <label for="txt_npadcat">Category of Advertisment<b class="text-danger">*</b></label>
           <select class="form-control col-sm-8" name="txt_npadcat" id="txt_npadcat">
-            <option>-- Select Ad Category--</option>
+            <option value="">-- Select Ad Category--</option>
               <?php getAdCategories(); ?>
           </select>
       </div>
       <div class="form-group col-md-6">
         <label for="txt_npadcatdes">Description of Ad Category<b class="text-danger">*</b></label>
           <select class="form-control col-sm-8" name="txt_npadcatdes" id="txt_npadcatdes">
-            <option>-- Select Ad Category Description--</option>
+            <option value="">-- Select Ad Category Description--</option>
               <?php getAdCatDescription(); ?>
           </select>
       </div>    
@@ -74,22 +74,22 @@ require("cmn_booking_navbar.php");
 
 
 
-    <div class="form-row">
+    <div class="form-row" id="txtaddress-group">
       <div class="form-group col-md-10">
         <label for="txtaddress">Description of Ad <b class="text-danger">*</b></label>
           <textarea type="text" class="form-control" name="txtaddress" id="txtaddress" placeholder="Type your Advertisment here"></textarea>
       </div>  
     </div>
 
-    <div class="form-row">
+    <div class="form-row" id="txt_wc-group">
       <div class="form-group col-md-6">
         <label for="txt_wc">Word Count<b class="text-danger">*</b></label>
-          <input type="text" class="form-control col-sm-8" id="txt_wc" name="txt_wc" value="">
+          <input type="text" class="form-control col-sm-8" id="txt_wc" name="txt_wc" value="" >
       </div>
     </div>
 
 
-    <div class="form-group row">
+    <div class="form-group row" id="imgad-group">
         <label for="imgad" class="col-sm-4 col-form-label">Upload Advertisment Image</label>
           <div class="col-sm-3">
             <input type="hidden" name="MAX_FILE_SIZE" value="10000000">
@@ -209,6 +209,11 @@ $("#btnBooking").click(function(){
     if(ad_mode == ""){
       swal("Required Field", "Please Select Advertisment Mode", "error");
       return;
+    }else if(ad_mode=="1" || ad_mode=="2" || ad_mode=="4"){
+      if(ad_description == ""){
+        swal("Required Field", "Please Enter Description of the Advertisment", "error");
+        return;
+      }
     }
 
     if(ad_colour == ""){
@@ -231,10 +236,7 @@ $("#btnBooking").click(function(){
       return;
     }
 
-    if(ad_description == ""){
-      swal("Required Field", "Please Enter Description of the Advertisment", "error");
-      return;
-    }
+    
 
     if(nic_img == ""){
       swal("Required Field", "Please Upload the Image of NIC", "error");
@@ -246,8 +248,9 @@ $("#btnBooking").click(function(){
       return;
     }
 
-    var fdata = $('form').serialize();
-    var url = "../lib/mod_ad_booking.php?type=addNewAdBooking";
+    // var fdata = $('#BookingForm').serialize();
+    var fdata =new FormData($('#BookingForm')[0]);
+    var url = "lib/mod_ad_booking.php?type=addNewAdBooking";
 
     swal({
         title:"Do you want to place this Booking ?",
@@ -256,34 +259,37 @@ $("#btnBooking").click(function(){
       }).then((printdone)=>{  //start from her today-------------------------------------------------------
           if(printdone){
           
-          $.ajax({
-      method:"POST",
-      url:url,
-      data:fdata,
-      dataType:"text",
-      success:function(result){
-        // alert(result);
-      res = result.split(",");
-      stat = res[0].trim();
-      if(stat[0]=="0"){
-        swal("Error",res[1],"error");
-      }
-      else if(stat[0]=="1"){
-        swal({
-          title:"Success",
-          text:res[1],
-          icon:"success",
-        }).then((willDelete)=>{
-        if(willDelete){
-            window.location.href="../index.php";
-          }
-        });                                            
-      }                                         
-    },
-    error:function(eobj,etxt,err){
-      console.log(etxt);
-    }
-  });
+            $.ajax({
+              method:"POST",
+              url:url,
+              data:fdata,
+              dataType:"text",
+              contentType:false,
+              cache:false,
+              processData:false,
+              success:function(result){
+              alert(result);
+              res = result.split(",");
+              stat = res[0].trim();
+                if(stat[0]=="0"){
+                  swal("Error",res[1],"error");
+                }
+                else if(stat[0]=="1"){
+                  swal({
+                    title:"Success",
+                    text:res[1],
+                    icon:"success",
+                  }).then((willDelete)=>{
+                    if(willDelete){
+                        window.location.href="../index.php";
+                      }
+                    });                                            
+                }                                         
+              },
+              error:function(eobj,etxt,err){
+                console.log(etxt);
+              }
+      });
       }
   });                                    
 <?php
@@ -297,7 +303,7 @@ $("#btnBooking").click(function(){
             if(bkingdone){
               window.location = "../index.php#why-us";
             }
-            });
+        });
   <?php
     }
   ?>
@@ -347,7 +353,8 @@ $("#imgupnic").change(function(){
         $("#imgupnic").val('');
         exit;
     }
-});           
+});   
+
 
 /*File type validation for BR upload*/
 $("#imgupbr").change(function(){
@@ -369,9 +376,73 @@ $("#imgupbr").change(function(){
 
 
 /*validation for word count*/   
-$("#txt_wc").change(function(){
-  $string =                                         ///complet6e this
-});    
+// $("#txt_wc").change(function(){
+//   $string =                                         ///complet6e this
+// });    
+
+
+
+/* -------------------------#############################################------------------------------------- */
+
+
+//calculate Total Price
+function calculate_total_price(){
+  $per_word = 25;
+  $colour = 25; // %
+  $vat = 15; // %
+  $full_page = 175000;
+  $box = 25000;
+  $full = 225000;
+
+  $word_count= $("#txt_wc").val();  //word count
+  $if_colour = $("#txt_npadcolour").val(); //colour type  CL003
+
+  $price = $per_word * $word_count;
+
+  if($if_colour=="CL003"){
+    $price = $price + (($price*$colour)/100);
+  }
+
+  $total_price = $price;
+  $total_price = $total_price +  (($total_price*$vat)/100);
+  $total_price = $total_price.toFixed(2);
+  $("#tot_price").val($total_price);
+}
+
+// When change mode of Advertissment change the css in description
+$("#txt_npadmode").change(function(){
+  $mode_id = $(this).val();
+  if(($mode_id=="1") || ($mode_id=="2") || ($mode_id=="4") ){
+    $("#txtaddress-group").removeClass("d-none");
+    $("#txt_wc-group").removeClass("d-none");
+    $("#imgad-group").addClass("d-none"); //photo upload hidden
+
+    $("#txtaddress").removeAttr("required"); //remove required attributes
+    $("#txt_wc").removeAttr("required"); //remove required attributes
+    $("#imgad").removeAttr("required"); //remove required attributes
+  }else{
+    $("#txtaddress-group").addClass("d-none");
+    $("#txt_wc-group").addClass("d-none");
+    $("#imgad-group").removeClass("d-none"); //photo upload
+
+    $("#txtaddress").removeAttr("required"); //remove required attributes
+    $("#txt_wc").removeAttr("required"); //remove required attributes
+    $("#imgad").removeAttr("required"); //remove required attributes
+  }
+  
+});
+
+// When click the the description button automatically get word count
+$("#txtaddress").keyup(function(){
+   var wordCount = $(this).val().split(/[\s\.\?]+/).length;
+   $("#txt_wc").val(wordCount);
+   calculate_total_price()
+});
+
+
+
+
+
 
 
 
