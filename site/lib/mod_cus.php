@@ -18,7 +18,7 @@ function addNewCus(){
 	$cus_mobile = $_POST["txtmob"];
 	$cus_email = $_POST["txtemail"];
 	$cus_nic = $_POST["txtnic"];
-	$cus_pass = $_POST["txtformpass"];
+	$cus_pass = md5($_POST["txtpass"]);
 
 	$dbobj = DB::connect();
 
