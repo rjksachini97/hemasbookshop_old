@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2021 at 04:00 AM
+-- Generation Time: Apr 18, 2021 at 06:31 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -116,7 +116,7 @@ CREATE TABLE `tbl_ad_order` (
   `adorder_date` date NOT NULL,
   `publish_date` date NOT NULL,
   `adorder_price` varchar(10) NOT NULL,
-  `adorder_status` varchar(10) NOT NULL
+  `adorder_status` tinyint(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -137,6 +137,18 @@ CREATE TABLE `tbl_batch` (
   `total_price` float(15,2) NOT NULL,
   `bat_status` tinyint(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_batch`
+--
+
+INSERT INTO `tbl_batch` (`bat_id`, `grn_id`, `newsp_id`, `bat_qty`, `bat_cprice`, `bat_sprice`, `bat_rem`, `bat_rdate`, `total_price`, `bat_status`) VALUES
+('BAT00001', 1, 'NEWP0001', 100, 70.00, 80.00, 50, '2019-01-04', 7000.00, 1),
+('BAT00002', 2, 'NEWP0002', 50, 70.00, 80.00, 45, '2019-01-04', 3500.00, 1),
+('BAT00003', 3, 'NEWP0003', 50, 50.00, 60.00, 40, '2019-01-11', 2500.00, 1),
+('BAT00004', 4, 'NEWP0001', 250, 70.00, 80.00, 75, '2019-01-11', 17500.00, 1),
+('BAT00005', 5, 'NEWP0013', 50, 30.00, 40.00, 20, '2019-01-13', 1500.00, 1),
+('BAT00006', 6, 'NEWP0018', 100, 20.00, 30.00, 50, '2019-01-13', 2000.00, 1);
 
 -- --------------------------------------------------------
 
@@ -225,7 +237,7 @@ INSERT INTO `tbl_employee` (`emp_id`, `emp_title`, `emp_name`, `emp_dob`, `emp_g
 ('EMP00004', 1, 'Niyomal Gunathilake', '1985-11-20', 1, '188,Makwatta Road,Gampaha', '0785209641', 'niyomal@gmail.com', '85103796551V', '2016-08-15', 1),
 ('EMP00005', 2, 'Nishanthi Munasinghe', '1980-11-18', 0, 'No32/1,Lumbini Road,Gampaha', '0775623894', 'nishanthi@gmail.com', '805541236V', '2018-06-04', 1),
 ('EMP00006', 1, 'Prasanna Disanayake', '1989-07-12', 1, 'No.75/4,Colomo Road,Gampaha', '0774521043', 'prasanna@gmail.com', '895644107V', '2018-03-05', 1),
-('EMP00007', 1, 'kumaj', '1999-02-03', 1, 'ffffffffffffffffff', '1234567898', 'kumaj@gmail.com', '991234567V', '2021-01-05', 0),
+('EMP00007', 1, 'kumaj', '1999-02-03', 1, 'No 45,Siyana Road,Gampaha', '1234567898', 'kumaj@gmail.com', '991234567V', '2021-01-05', 0),
 ('EMP00008', 2, 'Asitha Fernando', '1993-03-15', 1, 'No55,Wilabad Mawatha,Gampaha', '0778542136', 'asitha@gmail.com', '935411200V', '2019-06-03', 1);
 
 -- --------------------------------------------------------
@@ -243,6 +255,18 @@ CREATE TABLE `tbl_grn` (
   `grn_discount` float(15,2) NOT NULL,
   `grn_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_grn`
+--
+
+INSERT INTO `tbl_grn` (`grn_id`, `pub_id`, `grn_rdate`, `grn_total`, `total_qty`, `grn_discount`, `grn_status`) VALUES
+(1, 'PUBC0001', '2019-01-04', 7000.00, 100, 0.00, 1),
+(2, 'PUBC0002', '2019-01-04', 3500.00, 50, 0.00, 1),
+(3, 'PUBC0006', '2019-01-11', 2500.00, 50, 0.00, 1),
+(4, 'PUBC0001', '2019-01-11', 17500.00, 250, 0.00, 1),
+(5, 'PUBC0002', '2019-01-13', 1500.00, 50, 0.00, 1),
+(6, 'PUBC0001', '2019-01-13', 2000.00, 100, 0.00, 1);
 
 -- --------------------------------------------------------
 
@@ -271,7 +295,9 @@ CREATE TABLE `tbl_invoice` (
 INSERT INTO `tbl_invoice` (`inv_id`, `cus_id`, `inv_date`, `inv_qty`, `inv_discount`, `inv_total`, `inv_paid`, `pay_id`, `inv_user`, `inv_type`, `inv_status`) VALUES
 ('INV20200112_0001', 1, '2020-01-12', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2),
 ('INV20210412_0001', 1, '2021-04-12', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2),
-('INV20210412_0002', 1, '2021-04-12', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2);
+('INV20210412_0002', 1, '2021-04-12', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2),
+('INV20210413_0001', 1, '2021-04-13', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2),
+('INV20210413_0002', 3, '2021-04-13', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2);
 
 -- --------------------------------------------------------
 
@@ -298,26 +324,26 @@ CREATE TABLE `tbl_newspaper` (
 INSERT INTO `tbl_newspaper` (`newsp_id`, `pub_id`, `npcat_id`, `np_det_id`, `newsp_name`, `newsp_price`, `newsp_qty`, `newsp_rlevel`, `newsp_status`) VALUES
 ('NEWP0001', 'PUBC0001', 'NCAT0001', 1, 'Lanakadeepa', 80.00, 350, 50, 1),
 ('NEWP0002', 'PUBC0002', 'NCAT0001', 1, 'Silumina', 80.00, 200, 30, 1),
-('NEWP0003', '', 'NCAT0001', 1, 'Lakbima', 60.00, 100, 30, 1),
-('NEWP0004', '', 'NCAT0001', 1, 'Divaina', 100.00, 100, 20, 1),
+('NEWP0003', 'PUBC0006', 'NCAT0001', 1, 'Lakbima', 60.00, 100, 30, 1),
+('NEWP0004', 'PUBC0006', 'NCAT0001', 1, 'Divaina', 100.00, 100, 20, 1),
 ('NEWP0005', 'PUBC0002', 'NCAT0001', 2, 'Sunday Observer', 100.00, 350, 50, 1),
 ('NEWP0006', 'PUBC0001', 'NCAT0001', 2, 'Sunday Times', 60.00, 250, 20, 1),
 ('NEWP0007', 'PUBC0001', 'NCAT0002', 1, 'Daily Lankadeepa', 30.00, 300, 30, 1),
-('NEWP0008', 'PUBC0002', 'NCAT0002', 1, 'Dinamina', 30.00, 0, 0, 1),
-('NEWP0009', 'PUBC0002', 'NCAT0002', 2, 'Daily News', 50.00, 0, 0, 1),
-('NEWP0010', '', 'NCAT0002', 2, 'Daily Island', 30.00, 0, 0, 1),
-('NEWP0011', '', 'NCAT0002', 2, 'Daily Today', 30.00, 0, 0, 1),
-('NEWP0012', 'PUBC0001', 'NCAT0003', 1, 'Sirikatha', 40.00, 0, 0, 1),
-('NEWP0013', '', 'NCAT0003', 1, 'Tharuni', 40.00, 0, 0, 1),
-('NEWP0014', '', 'NCAT0003', 1, 'Diyaniya', 30.00, 0, 0, 1),
-('NEWP0015', '', 'NCAT0003', 1, 'Birinda', 40.00, 0, 0, 1),
-('NEWP0016', '', 'NCAT0003', 1, 'Nawaliya', 40.00, 0, 0, 1),
-('NEWP0017', '', 'NCAT0004', 1, 'Mihira', 30.00, 0, 0, 1),
-('NEWP0018', 'PUBC0001', 'NCAT0004', 1, 'Vijaya', 30.00, 0, 0, 1),
-('NEWP0019', '', 'NCAT0004', 1, 'Widusara', 30.00, 0, 0, 1),
-('NEWP0020', '', 'NCAT0004', 1, 'Sujaya', 50.00, 0, 0, 1),
-('NEWP0021', 'PUBC0003', 'NCAT0003', 1, 'Dharani', 25.00, 0, 0, 1),
-('NEWP0022', 'PUBC0003', 'NCAT0001', 2, 'Aruna', 62.00, 0, 0, 1);
+('NEWP0008', 'PUBC0002', 'NCAT0002', 1, 'Dinamina', 30.00, 150, 20, 1),
+('NEWP0009', 'PUBC0002', 'NCAT0002', 2, 'Daily News', 50.00, 50, 10, 1),
+('NEWP0010', 'PUBC0005', 'NCAT0002', 2, 'Daily Island', 30.00, 50, 10, 1),
+('NEWP0011', 'PUBC0004', 'NCAT0002', 2, 'Daily Today', 30.00, 75, 20, 1),
+('NEWP0012', 'PUBC0001', 'NCAT0003', 1, 'Sirikatha', 40.00, 100, 25, 1),
+('NEWP0013', 'PUBC0002', 'NCAT0003', 1, 'Tharuni', 40.00, 250, 50, 1),
+('NEWP0014', 'PUBC0005', 'NCAT0003', 1, 'Diyaniya', 30.00, 75, 10, 1),
+('NEWP0015', 'PUBC0001', 'NCAT0003', 1, 'Birinda', 40.00, 50, 10, 1),
+('NEWP0016', 'PUBC0006', 'NCAT0003', 1, 'Nawaliya', 40.00, 75, 20, 1),
+('NEWP0017', 'PUBC0002', 'NCAT0004', 1, 'Mihira', 30.00, 250, 40, 1),
+('NEWP0018', 'PUBC0001', 'NCAT0004', 1, 'Vijaya', 30.00, 250, 40, 1),
+('NEWP0019', 'PUBC0001', 'NCAT0004', 1, 'Widusara', 30.00, 100, 20, 1),
+('NEWP0020', 'PUBC0006', 'NCAT0004', 1, 'Sujaya', 50.00, 50, 10, 1),
+('NEWP0021', 'PUBC0003', 'NCAT0003', 1, 'Dharani', 25.00, 100, 25, 1),
+('NEWP0022', 'PUBC0003', 'NCAT0001', 2, 'Aruna', 62.00, 250, 75, 1);
 
 -- --------------------------------------------------------
 
@@ -429,10 +455,12 @@ CREATE TABLE `tbl_newspaper_order` (
   `order_id` char(6) NOT NULL,
   `cus_id` int(11) NOT NULL,
   `np_book_id` int(11) NOT NULL,
+  `newsp_id` char(8) NOT NULL,
+  `order_qty` int(11) NOT NULL,
   `order_date` date NOT NULL,
   `order_comp_date` date NOT NULL,
-  `order_price` varchar(10) NOT NULL,
-  `order_status` varchar(10) NOT NULL
+  `order_price` float(15,2) NOT NULL,
+  `order_status` tinyint(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -581,7 +609,8 @@ INSERT INTO `tbl_pub_company` (`pub_id`, `pub_name`, `pub_address`, `pub_mobile`
 ('PUBC0002', 'Lake House', 'No 35,\r\nD. R. Wijewardena Mawatha,\r\nColombo 10', '0112429429', 'lakehouse@gmail.com', 1),
 ('PUBC0003', 'Aruna Newspaper Publishes', '91 Wijerama Mawatha, Colombo 07', '0115 200 900', 'arunapublishes@gmail.com', 1),
 ('PUBC0004', 'Ceylon Today', '101 Rosmead Pl, Colombo 07', '0117 566 566', 'ceylontoday@gmail.com', 1),
-('PUBC0005', 'Lankadeepa Publications', 'Hunupitiya Cross Rd, Colombo 07', '0112448321', 'lankadeepa@gmail.com', 1);
+('PUBC0005', 'Lankadeepa Publications', 'Hunupitiya Cross Rd, Colombo 07', '0112448321', 'lankadeepa@gmail.com', 1),
+('PUBC0006', 'Upali Newspapers Limited.', 'Avissawella Rd, Homagama', '0112 855 137', 'upalinewspapers@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -640,7 +669,7 @@ INSERT INTO `tbl_reg_customer` (`cus_id`, `cus_name`, `cus_dob`, `cus_gender`, `
 (3, 'Rasindu Gunasena', '1992-05-31', 1, 'No 43/1,Bazar Road,Gampaha', '0712365203', 'rasindu@gmail.com', '923652104V', '25f9e794323b453885f5181f1b624d0b', 1),
 (4, 'Nikila Vibodha', '1991-04-02', 1, 'N306,Yakkala Road,Gampaha', '0785463120', 'nikila@gmail.com', '912044567V', '25f9e794323b453885f5181f1b624d0b', 1),
 (5, 'Pawara Matheesha', '1993-11-16', 1, 'No76/1,Kandy Road,Gampaha', '0701549986', 'pawara@gmail.com', '931200458V', '25f9e794323b453885f5181f1b624d0b', 1),
-(7, 'Amanthe Dissa', '1993-07-07', 0, 'No56,Imbulgoda Road,Gampaha', '0771234569', 'amanthe@gmail.com', '931254698V', '123456789', 0);
+(7, 'Amanthe Dissa', '1993-07-07', 0, 'No56,Imbulgoda Road,Gampaha', '0771234569', 'amanthe@gmail.com', '931254698V', '123456789', 1);
 
 -- --------------------------------------------------------
 
@@ -721,10 +750,10 @@ CREATE TABLE `tbl_users` (
 INSERT INTO `tbl_users` (`usr_name`, `usr_pass`, `usr_type`, `usr_status`, `pwd_reset`) VALUES
 ('admin', '202cb962ac59075b964b07152d234b70', 1, 1, 0),
 ('daanith@gmail.com', '1bbd7f50b7abf3c929eeb195f2a4a100', 2, 1, 1),
-('eshadi@gmail.com', 'ebb3568cc3257be7bc2ac835dc76b208', 1, 0, 1),
-('niyomal@gmail.com', 'd3835a509829130a0e70b4e85cde05d9', 2, 1, 1),
+('eshadi@gmail.com', 'ebb3568cc3257be7bc2ac835dc76b208', 3, 0, 1),
+('niyomal@gmail.com', 'd3835a509829130a0e70b4e85cde05d9', 3, 1, 1),
 ('prasanna@gmail.com', 'dd8f339035ad353e126a8db03727857a', 3, 1, 1),
-('sachi@gmail.com', '4fe693b846579f5afa0bb6aaf83f5eab', 1, 1, 1);
+('sachi@gmail.com', '4fe693b846579f5afa0bb6aaf83f5eab', 2, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -842,9 +871,7 @@ ALTER TABLE `tbl_newspaper_details`
 -- Indexes for table `tbl_newspaper_order`
 --
 ALTER TABLE `tbl_newspaper_order`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `cus_id` (`cus_id`),
-  ADD KEY `np_book_id` (`np_book_id`);
+  ADD PRIMARY KEY (`order_id`);
 
 --
 -- Indexes for table `tbl_news_adcat_type`
@@ -1011,13 +1038,6 @@ ALTER TABLE `tbl_newspaper_ad`
   ADD CONSTRAINT `tbl_newspaper_ad_ibfk_3` FOREIGN KEY (`newsp_id`) REFERENCES `tbl_newspaper` (`newsp_id`),
   ADD CONSTRAINT `tbl_newspaper_ad_ibfk_4` FOREIGN KEY (`newsad_mode_id`) REFERENCES `tbl_news_ad_mode` (`newsad_mode_id`),
   ADD CONSTRAINT `tbl_newspaper_ad_ibfk_5` FOREIGN KEY (`adcolour_id`) REFERENCES `tbl_ad_colour` (`adcolour_id`);
-
---
--- Constraints for table `tbl_newspaper_order`
---
-ALTER TABLE `tbl_newspaper_order`
-  ADD CONSTRAINT `tbl_newspaper_order_ibfk_1` FOREIGN KEY (`cus_id`) REFERENCES `tbl_reg_customer` (`cus_id`),
-  ADD CONSTRAINT `tbl_newspaper_order_ibfk_2` FOREIGN KEY (`np_book_id`) REFERENCES `tbl_newspaper_booking` (`np_book_id`);
 
 --
 -- Constraints for table `tbl_sample_data`
