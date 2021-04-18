@@ -109,7 +109,7 @@ require("cmn_booking_navbar.php");
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row" id="imgupbr-group">
         <label for="imgupbr" class="col-sm-4 col-form-label">Upload Image of Business Registartion Certificate<b style="color: red">*</b></label>
           <div class="col-sm-3">
             <input type="hidden" name="MAX_FILE_SIZE" value="10000000">
@@ -135,12 +135,13 @@ require("cmn_booking_navbar.php");
 </div>
 <!-- End Advertismen Details Section -->
 
-<script type="text/javascript">
+<script type="text/javascript"> 
     $(function(){
       $("#dtadpublish").datepicker({
         changeYear:true,
         changeMonth:true,
-        dateFormat:"yy-mm-dd", 
+        dateFormat:"yy-mm-dd",
+        //maxDate:"-6570" 
         minDate:"45",                                 
     });
 
@@ -386,7 +387,7 @@ $("#imgupbr").change(function(){
 
 
 //calculate Total Price
-function calculate_total_price(){
+function calculate_total_price(){ 
   $per_word = 25;
   $colour = 25; // %
   $vat = 15; // %
@@ -412,22 +413,29 @@ function calculate_total_price(){
 // When change mode of Advertissment change the css in description
 $("#txt_npadmode").change(function(){
   $mode_id = $(this).val();
-  if(($mode_id=="1") || ($mode_id=="2") || ($mode_id=="4") ){
+  if(($mode_id=="1") || ($mode_id=="2") || ($mode_id=="3") || ($mode_id=="4") ){
     $("#txtaddress-group").removeClass("d-none");
     $("#txt_wc-group").removeClass("d-none");
     $("#imgad-group").addClass("d-none"); //photo upload hidden
+    $("#imgupbr-group").addClass("d-none");//br upload hidden
+
+
 
     $("#txtaddress").removeAttr("required"); //remove required attributes
     $("#txt_wc").removeAttr("required"); //remove required attributes
     $("#imgad").removeAttr("required"); //remove required attributes
+    $("#imgupbr").removeAttr("required");//remove required attribute
+
   }else{
     $("#txtaddress-group").addClass("d-none");
     $("#txt_wc-group").addClass("d-none");
     $("#imgad-group").removeClass("d-none"); //photo upload
+    $("#imgupbr-group").removeClass("d-none");//br upload 
 
     $("#txtaddress").removeAttr("required"); //remove required attributes
     $("#txt_wc").removeAttr("required"); //remove required attributes
     $("#imgad").removeAttr("required"); //remove required attributes
+    $("#imgupbr").removeAttr("required");//remove required attribute
   }
   
 });
