@@ -2,19 +2,7 @@
 ?>
 
 <body> 
-  
-  <!-- ======= Top Bar ======= -->
-  <!-- <div id="topbar" class="d-none d-lg-flex align-items-end fixed-top topbar-transparent">
-    <div class="container d-flex justify-content-end">
-     <div class="social-links">
-        <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-        <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-        <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
-        <a href="#" class="instagram"><i class="fa fa-instagram"></i></a> 
-      </div> 
-    </div>
-  </div>-->
-
+ 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top header-transparent">
     <div class="container d-flex align-items-center">
@@ -28,13 +16,32 @@
           <li class="active"><a href="#intro">Home</a></li>
           <li><a href="#about">About Us</a></li>
           <li><a href="#services">Services</a></li>
-          <li class="drop-down"><a href="">Contact Us</a>
-            <ul>
-              <li><a href="#footer">Contact Details</a></li>
-              <li><a href="sub_pages/agencies.php">Newspaer Agencies</a></li>
-            </ul>
+          <li><a href="#footer">Contact Us</a>
+            
+             
           </li>
-          <li><a href="#why-us">Account</a></li>
+
+          <ul id="nav" class="nav nav-pills clearfix right" role="tablist">
+              <?php
+                if(!isset($_SESSION['session_cus'])){
+              ?>
+              <li class="dropdown"><a href="#why-us" data-toggle="dropdown">Account</a></li>
+              <?php
+                }else{
+              ?>
+
+              <li class="dropdown"><a href="#why-us" data-toggle="dropdown"><?php echo $_SESSION['session_cus']['cus_name']; ?></a>
+                  <ul id="products-menu" class="dropdown-menu clearfix" role="menu">
+                      <li><a href="cus_profile.php">Profile</a></li>
+                      <li><a href="lib/logout.php" id="logout_btn">Logout</a></li>
+                      
+                  </ul>
+              </li>
+
+              <?php
+                }
+              ?>
+            </ul>
           
         </ul>
       </nav><!-- .main-nav-->
@@ -47,6 +54,10 @@
       <div class="row justify-content-center align-self-center" >
         <div class="col-md-20 intro-img order-md-last order-first" data-aos="zoom-out" data-aos-delay="200">
           <img src="images/np4.jpg" alt="" class="img-fluid">
+      <!--     <div style="padding-left: 40px;">
+              <a href="#why-us" class="btn-get-started scrollto" >LOGIN</a>
+            </div>
+        -->
       </div>
     </div>
   </section>
@@ -64,7 +75,9 @@
     <!-- End Services Section -->
 
     <!-- ======= Why Us Section ======= -->
-    <?php require("login.php");
+    <?php 
+   if(!isset($_SESSION['session_cus'])){
+    require("login.php");}
     ?>
     <!-- End Why Us Section -->
 
