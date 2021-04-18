@@ -70,7 +70,7 @@ $(document).ready(function(){
 
    $.ajax({
     data:{year:year},
-    url:"lib/mod_reports.php?type=numberOrderByYear",
+    url:"lib/mod_reports.php?type=AdOrderByYear",
     type:"GET",
     success: function(data){
       chartData = data;
@@ -100,7 +100,7 @@ $(document).ready(function(){
  /* ------------------- Chart for income Annalyze ------------------*/
    $.ajax({
       data:{year:year},
-      url: "lib/mod_reports.php?type=OrderSummaryByYear",
+      url: "lib/mod_reports.php?type=AdOrderSummaryByYear",
       type: "GET",
       dataType:"json",
         success: function(data) {
@@ -125,13 +125,13 @@ $(document).ready(function(){
 
 
  
-  /*  $("#btn-export").click(function(){
-      var monthname = "<?php //echo $monthname ?>";
-      var year = "<?php //echo $year ?>";
+   $("#btn-export").click(function(){
+      var monthname = "<?php echo $monthname ?>";
+      var year = "<?php echo $year ?>";
     	
     	window.open('view/reports/npBookedSummaryByMonthReportPDF.php?monthname='+monthname+'&year='+year,'_blank');
 
-    });*/
+    });
 });
 </script>	
 

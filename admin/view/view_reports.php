@@ -1,4 +1,4 @@
-<!------Breadcrumbs----->
+<!------Breadcrumbs-----> 
 <ol class="breadcrumb">  
   <li class="breadcrumb-item">
     <a href="home.php">Dashboard</a>
@@ -96,7 +96,7 @@
  <div class="col-lg-6">
    <div class="card shadow mb-4">
     <div class="card-header py-3 card rep_button">
-        <a href="#" id="" class="card-link report_type" title="Recived Newspapers">
+        <a href="#" id="" class="card-link report_type" title="Online Sales">
           <h6 class="m-0 font-weight-bold text-success"><i class="fas fa-chart-line fa-2x"></i><span>Online Newspaper Sales Report</span>
           </h6>
         </a>
@@ -112,13 +112,13 @@
    <div class="col-lg-6">
    <div class="card shadow mb-4">
     <div class="card-header py-3 card rep_button">
-        <a href="#" id="" class="card-link report_type" title="Booked Newspapers">
-          <h6 class="m-0 font-weight-bold text-info"><i class="fas fa-chart-line fa-2x"></i><span>Newspaper Order Summary Report </span>
+        <a href="#" id="" class="card-link report_type" title="Offline Sales">
+          <h6 class="m-0 font-weight-bold text-danger"><i class="fas fa-chart-line fa-2x"></i><span>Offline Newspaper Sales Report </span>
           </h6>
         </a>
     </div>
     <div class="card-body">
-      This report will provide a summary of order newspapers
+      This report will provide a summary of offline newspaper sales
     </div>
   </div>
 </div>
@@ -126,44 +126,50 @@
  <div class="col-lg-6">
    <div class="card shadow mb-4">
     <div class="card-header py-3 card rep_button">
-        <a href="#" id="" class="card-link report_type" title="Recived Newspapers">
-          <h6 class="m-0 font-weight-bold text-success"><i class="fas fa-chart-line fa-2x"></i><span>Online Newspaper Sales Report</span>
+        <a href="#" id="" class="card-link report_type" title="Sales by Newspaper">
+          <h6 class="m-0 font-weight-bold text-primary"><i class="fas fa-chart-line fa-2x"></i><span>Sales by Newspaper Report</span>
           </h6>
         </a>
     </div>
     <div class="card-body">
-      This report will provide a summary of online newspaper sales
+      This report will provide a summary of newspaper sales
     </div>
   </div>
 </div> 
 </div>
 
+<h4>Advertisment</h4>
+<hr>
 
+<div class="row">
+   <div class="col-lg-6">
+   <div class="card shadow mb-4">
+    <div class="card-header py-3 card rep_button">
+        <a href="#" id="" class="card-link report_type" title="Booked Ad">
+          <h6 class="m-0 font-weight-bold text-info"><i class="fas fa-chart-line fa-2x"></i><span>Newspaper Advertisment Booked Summary Report </span>
+          </h6>
+        </a>
+    </div>
+    <div class="card-body">
+      This report will provide a summary of booked newspaper advertisments
+    </div>
+  </div>
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ <div class="col-lg-6">
+   <div class="card shadow mb-4">
+    <div class="card-header py-3 card rep_button">
+        <a href="#" id="" class="card-link report_type" title="Sales by Ad">
+          <h6 class="m-0 font-weight-bold text-success"><i class="fas fa-chart-line fa-2x"></i><span>Sales by Advertisment Report</span>
+          </h6>
+        </a>
+    </div>
+    <div class="card-body">
+      This report will provide a summary of completed newspaper advertisments
+    </div>
+  </div>
+</div> 
+</div>
 
 
 
@@ -386,13 +392,13 @@ $(document).ready(function () {
           $("#daily_section").removeClass('d-none'); // see daily section
           $("#type").addClass('d-none'); // hide payment type
         // purchase summery
-      }else if(title=="Sales by Product"){
+      }else if(title=="Sales by Newspaper"){
                 $("#month_section").addClass('d-none');    //hide month section             
                 $("#year_section").removeClass('d-none'); // see year section
                 $("#daily_section").removeClass('d-none'); // see daily section
                 $("#type").addClass('d-none'); // hide payment type
         // purchase summery
-            }else if(title=="Purchase Summery"){
+            }else if(title=="Sales by Ad"){
                 $("#month_section").addClass('d-none');
                 $("#year_section").addClass('d-none');                
                 $("#daily_section").removeClass('d-none');
@@ -446,12 +452,42 @@ $(document).ready(function () {
                     $("#rpanel").load("view/reports/npBookedSummaryByDate.php?sdate="+sdate+"&edate="+edate);
                   }, 250);
                     
-              }
+              }else if(title=="Online Sales"){
+                    //var income = $("#income").val();
+                  setTimeout(function(){ 
+                    $("#rpanel").load("view/reports/onlinesalesbydate.php?sdate="+sdate+"&edate="+edate+"&income="+income);
+                  }, 250);
+                    
+                }else if(title=="Offline Sales"){
+                    //var income = $("#income").val();
+                  setTimeout(function(){ 
+                    $("#rpanel").load("view/reports/offlinesalesbydate.php?sdate="+sdate+"&edate="+edate+"&income="+income);
+                  }, 250);
+                }else if(title=="Sales by Newspaper"){
+                    //var income = $("#income").val();
+                  setTimeout(function(){ 
+                    $("#rpanel").load("view/reports/npsalesbydate.php?sdate="+sdate+"&edate="+edate+"&income="+income);
+                  }, 250);
+                }else if(title=="Booked Ad"){
+                    //var income = $("#income").val();
+                  setTimeout(function(){ 
+                    $("#rpanel").load("view/reports/adbookedsummarybydate.php?sdate="+sdate+"&edate="+edate+"&income="+income);
+                  }, 250);
+                }else if(title=="Sales by Ad "){
+                    //var income = $("#income").val();
+                  setTimeout(function(){ 
+                    $("#rpanel").load("view/reports/adsalesbydate.php?sdate="+sdate+"&edate="+edate+"&income="+income);
+                  }, 250);
+                }
 
 
             }
 
-});
+}); 
+
+
+
+       
 
          /*----------------- Monthly Reports generation  -----------------------*/
 
@@ -467,29 +503,29 @@ $(document).ready(function () {
                   }, 250);
                     
                 }
-                /*else if(title=="Online Sales"){
+                else if(title=="Online Sales"){
                   setTimeout(function(){ 
-                    $("#rpanel").load("view/report/onlinesalesbymonth.php?month="+month+"&year="+year);
+                    $("#rpanel").load("view/reports/onlinesalesbymonth.php?month="+month+"&year="+year);
                   }, 250);
                     
                 }else if(title=="Offline Sales"){
                   setTimeout(function(){ 
-                    $("#rpanel").load("view/report/offlinesalesbymonth.php?month="+month+"&year="+year);
+                    $("#rpanel").load("view/reports/offlinesalesbymonth.php?month="+month+"&year="+year);
                   }, 250);
                     
-                }else if(title=="Purchase To Supplier"){
+                }else if(title=="Booked Ad"){
                     
                   setTimeout(function(){ 
-                    $("#rpanel").load("view/report/purchasetoSupplierbyMonth.php?month="+month+"&year="+year);
+                    $("#rpanel").load("view/reports/adBookedSummarybyMonth.php?month="+month+"&year="+year);
                   }, 250);  
                     
-                }*/
+                }
              
 
         });
 
 
-         /*----------------- MYearly Reports generation  -----------------------*/
+         /*----------------- Yearly Reports generation  -----------------------*/
          $("#btn_year_report").click(function(){
             var title = $("#report_ttitle").html();
             var year = $("#AnYear").val();
@@ -498,22 +534,35 @@ $(document).ready(function () {
                 if(title=="Booked Newspapers"){
                   setTimeout(function(){ 
                     $("#rpanel").load("view/reports/npBookedSummaryByYear.php?year="+year); 
-                  }, 250);
+                  }, 250); 
                     
                 }
-                /*else if(title=="Online Sales"){
+                else if(title=="Online Sales"){
                   setTimeout(function(){ 
-                    $("#rpanel").load("view/report/onlinesalesbyyear.php?year="+year); 
+                    $("#rpanel").load("view/reports/onlinesalesbyyear.php?year="+year); 
                   }, 250);
                     
                 }else if(title=="Offline Sales"){
                   setTimeout(function(){ 
-                    $("#rpanel").load("view/report/offlinesalesbyyear.php?year="+year); 
+                    $("#rpanel").load("view/reports/offlinesalesbyyear.php?year="+year); 
                   }, 250);
                     
-                }else if(title=="Sales by Product"){
+                }else if(title=="Sales by Newspaper"){
                   setTimeout(function(){ 
-                    $("#rpanel").load("view/report/salesproductbyyear.php?year="+year); 
+                    $("#rpanel").load("view/reports/npsalesbyyear.php?year="+year); 
+                  }, 250);
+                    
+                }else if(title=="Booked Ad"){
+                    
+                  setTimeout(function(){ 
+                    $("#rpanel").load("view/reports/adBookedSummarybyYear.php?month="+month+"&year="+year);
+                  }, 250);  
+                    
+                }
+
+              /*  else if(title=="Sales by Ad"){
+                  setTimeout(function(){ 
+                    $("#rpanel").load("view/reports/adsalesbyyear.php?year="+year); 
                   }, 250);
                     
                 }*/
@@ -524,7 +573,7 @@ $(document).ready(function () {
 
 
 
-  })
+  });
 
 
  </script>

@@ -122,7 +122,7 @@ function incomeInventory($sdate,$edate){
 
 }
 
-/*---------------------------------Expenses Reports-----------------------------------------*/
+/*---------------------------------np booked Reports-----------------------------------------*/
 function numberOrderByYear(){
 
     $year = $_GET['year'];
@@ -146,6 +146,49 @@ function numberOrderByYear(){
     $dbobj->close();
 
 }
+
+
+function OrderSummaryByYear(){
+
+    $year = $_GET['year'];
+
+    $dbobj =DB::connect();
+    $sql ="SELECT MONTHNAME(inv_date), sum(inv_total), sum(inv_paid) FROM tbl_invoice WHERE YEAR(inv_date) = '$year' AND inv_status != '0' GROUP BY MONTH(inv_date)" ;
+    $result = $dbobj->query($sql);
+
+    $dataArray = array(
+        "chart" => array(
+            "theme" => "fusion",
+            "caption" => "Total Revenue",
+            "exportEnabled" => "1",
+            "subCaption" => $year,
+        )
+    );
+
+    $categoryArray = array();
+    $dataserios1 = array();
+    $dataserios2 = array(); 
+
+    while($row= $result->fetch_assoc()){
+        array_push($categoryArray,array("label"=> $row['MONTHNAME(inv_date)']));
+
+        array_push($dataserios1,array("value"=> $row['sum(inv_total)']));
+        array_push($dataserios2,array("value"=> $row['sum(inv_paid)']));
+
+    }
+    $dataArray["categories"] = array(array("category"=>$categoryArray));
+
+    $dataArray["dataset"] = array(array("seriesName"=>'invoice Total',"data"=>$dataserios1),array("seriesName"=>'invoice Paid',"data"=>$dataserios2));
+     echo json_encode($dataArray);
+
+    //header('Content-type: application/json');
+   
+    $dbobj->close();
+
+}
+
+
+
 
 /*function npOrderByDay(){
 
@@ -172,6 +215,243 @@ function numberOrderByYear(){
 }
 */
 
+/*---------------------------------Sales Reports-----------------------------------------*/
+function numberonlinesalesbyyear(){
+
+    $year = $_GET['year'];
+    
+    $dbobj =DB::connect();
+    $sql ="SELECT MONTHNAME(inv_date), count(inv_id) FROM tbl_invoice WHERE YEAR(inv_date) = '$year' AND inv_status != '0' AND inv_type='online' GROUP BY MONTH(inv_date)" ;
+    $result = $dbobj->query($sql);
+    $data_point =array();
+    while($row= $result->fetch_assoc()){
+        $point = array();
+        $point['label'] = $row['MONTHNAME(inv_date)'];
+        $point['value'] = $row['count(inv_id)'];
+
+
+        array_push($data_point,$point);
+    }
+    header('Content-type: application/json');
+    echo json_encode($data_point);
+    $dbobj->close();
+
+}
+
+/*---------------------------------SalesReports-----------------------------------------*/
+
+function orderonlinebyyear(){
+
+    $year = $_GET['year'];
+
+    $dbobj =DB::connect();
+    $sql ="SELECT MONTHNAME(inv_date), sum(inv_total), sum(inv_paid) FROM tbl_invoice WHERE YEAR(inv_date) = '$year' AND inv_status != '0' AND inv_type='online' GROUP BY MONTH(inv_date)" ;
+    $result = $dbobj->query($sql);
+
+    $dataArray = array(
+        "chart" => array(
+            "theme" => "fusion",
+            "caption" => "Total Revenue",
+            "exportEnabled" => "1",
+            "subCaption" => $year,
+        )
+    );
+
+    $categoryArray = array();
+    $dataserios1 = array();
+    $dataserios2 = array(); 
+
+    while($row= $result->fetch_assoc()){
+        array_push($categoryArray,array("label"=> $row['MONTHNAME(inv_date)']));
+
+        array_push($dataserios1,array("value"=> $row['sum(inv_total)']));
+        array_push($dataserios2,array("value"=> $row['sum(inv_paid)']));
+
+    }
+    $dataArray["categories"] = array(array("category"=>$categoryArray));
+
+    $dataArray["dataset"] = array(array("seriesName"=>'invoice Total',"data"=>$dataserios1),array("seriesName"=>'invoice Paid',"data"=>$dataserios2));
+     echo json_encode($dataArray);
+
+    //header('Content-type: application/json');
+   
+    $dbobj->close();
+
+}
+
+/*---------------------------------Sales Reports-----------------------------------------*/
+function numberofflinesalesbyyear(){
+
+    $year = $_GET['year'];
+    
+    $dbobj =DB::connect();
+    $sql ="SELECT MONTHNAME(inv_date), count(inv_id) FROM tbl_invoice WHERE YEAR(inv_date) = '$year' AND inv_status != '0' AND inv_type='offline' GROUP BY MONTH(inv_date)" ;
+    $result = $dbobj->query($sql);
+    $data_point =array();
+    while($row= $result->fetch_assoc()){
+        $point = array();
+        $point['label'] = $row['MONTHNAME(inv_date)'];
+        $point['value'] = $row['count(inv_id)'];
+
+
+        array_push($data_point,$point);
+    }
+    header('Content-type: application/json');
+    echo json_encode($data_point);
+    $dbobj->close();
+
+}
+
+/*---------------------------------SalesReports-----------------------------------------*/
+
+function orderofflinebyyear(){
+
+    $year = $_GET['year'];
+
+    $dbobj =DB::connect();
+    $sql ="SELECT MONTHNAME(inv_date), sum(inv_total), sum(inv_paid) FROM tbl_invoice WHERE YEAR(inv_date) = '$year' AND inv_status != '0' AND inv_type='offline' GROUP BY MONTH(inv_date)" ;
+    $result = $dbobj->query($sql);
+
+    $dataArray = array(
+        "chart" => array(
+            "theme" => "fusion",
+            "caption" => "Total Revenue",
+            "exportEnabled" => "1",
+            "subCaption" => $year,
+        )
+    );
+
+    $categoryArray = array();
+    $dataserios1 = array();
+    $dataserios2 = array(); 
+
+    while($row= $result->fetch_assoc()){
+        array_push($categoryArray,array("label"=> $row['MONTHNAME(inv_date)']));
+
+        array_push($dataserios1,array("value"=> $row['sum(inv_total)']));
+        array_push($dataserios2,array("value"=> $row['sum(inv_paid)']));
+
+    }
+    $dataArray["categories"] = array(array("category"=>$categoryArray));
+
+    $dataArray["dataset"] = array(array("seriesName"=>'invoice Total',"data"=>$dataserios1),array("seriesName"=>'invoice Paid',"data"=>$dataserios2));
+     echo json_encode($dataArray);
+
+    //header('Content-type: application/json');
+   
+    $dbobj->close();
+
+}
+
+/*---------------------------------np Sales-----------------------------------------*/
+/*
+function newspapersalesbyyear(){
+
+    $year = $_GET['year'];   
+
+    $dbobj =DB::connect();
+    $sql ="SELECT prod_modal, MONTHNAME(inv_date), sum(invp.prod_qty) FROM tbl_invoice inv JOIN tbl_inv_prod invp ON inv.inv_id = invp.inv_id JOIN tbl_products pro ON pro.prod_id = invp.prod_id WHERE YEAR(inv_date) = '$year'  GROUP BY MONTH(inv_date)" ;
+    $result = $dbobj->query($sql);
+
+    $dataArray = array(
+        "chart" => array(
+            "theme" => "fusion",
+            "caption" => "Total Revenue",
+            "exportEnabled" => "1",
+            "subCaption" => $year,
+        )
+    );
+
+    $categoryArray = array();
+    $dataserios1 = array();
+    $seriasname = array(); 
+
+    while($row= $result->fetch_assoc()){
+        array_push($seriasname,array($row['prod_modal']));
+        array_push($categoryArray,array("label"=> $row['MONTHNAME(inv_date)']));
+
+        array_push($dataserios1,array("value"=> $row['sum(invp.prod_qty)']));
+        
+        
+
+    }
+    $dataArray["categories"] = array(array("category"=>$categoryArray));
+
+    $dataArray["dataset"] = array(array("seriesName"=>$seriasname,"data"=>$dataserios1));
+     echo json_encode($dataArray);
+
+    //header('Content-type: application/json');
+   
+    $dbobj->close();
+
+}
+
+*/
+
+/*--------------------------------Ad bookedReports-----------------------------------------*/
+function AdOrderByYear(){
+
+    $year = $_GET['year'];
+ 
+
+    $dbobj=DB::connect();
+    $sql ="SELECT MONTHNAME(publish_date), count(adorder_id) FROM tbl_ad_order WHERE YEAR(publish_date) ='$year' AND adorder_status !=0 GROUP BY MONTH(publish_date)" ;
+    $result = $dbobj->query($sql);
+    $data_point =array();
+    while($row= $result->fetch_assoc()){
+        $point = array();
+        $point['label'] = $row['MONTHNAME(publish_date)'];
+        $point['value'] = $row['count(adorder_id)'];
+
+
+        array_push($data_point,$point);
+    }
+    header('Content-type: application/json');
+    echo json_encode($data_point);
+    $dbobj->close();
+
+}
+
+function AdOrderSummaryByYear(){
+
+    $year = $_GET['year'];
+
+    $dbobj =DB::connect();
+    $sql ="SELECT MONTHNAME(publish_date), sum(adorder_price) FROM tbl_ad_order WHERE YEAR(publish_date) = '$year' AND adorder_status !='0' GROUP BY MONTH(publish_date)" ;
+    $result = $dbobj->query($sql);
+
+    $dataArray = array(
+        "chart" => array(
+            "theme" => "fusion",
+            "caption" => "Total Revenue",
+            "exportEnabled" => "1",
+            "subCaption" => $year,
+        )
+    );
+
+    $categoryArray = array();
+    $dataserios1 = array();
+    //$dataserios2 = array(); 
+
+    while($row= $result->fetch_assoc()){
+        array_push($categoryArray,array("label"=> $row['MONTHNAME(publish_date)']));
+
+        array_push($dataserios1,array("value"=> $row['sum(adorder_price)']));
+        //array_push($dataserios2,array("value"=> $row['sum(inv_paid)']));
+
+    }
+    $dataArray["categories"] = array(array("category"=>$categoryArray));
+
+    $dataArray["dataset"] = array(array("seriesName"=>'Advertisment Total',"data"=>$dataserios1)
+        //,array("seriesName"=>'invoice Paid',"data"=>$dataserios2)
+    );
+     echo json_encode($dataArray);
+
+    //header('Content-type: application/json');
+   
+    $dbobj->close();
+
+}
 
 
 

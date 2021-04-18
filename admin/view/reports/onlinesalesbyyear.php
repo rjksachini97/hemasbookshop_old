@@ -8,7 +8,6 @@
 
     $year = $_GET['year'];
    } 
-   
 
 ?>
 
@@ -17,7 +16,7 @@
   <li class="breadcrumb-item">
     <a href="home.php">Dashboard</a>
   </li>
-  <li class="breadcrumb-item" ><a href="#" class="text-dark" onclick="funViewRep()" >Report Management</a></li><li class="breadcrumb-item active">Order Report</li>
+  <li class="breadcrumb-item" ><a href="#" class="text-dark" onclick="funViewRep()" >Report Management</a></li><li class="breadcrumb-item active">Sales Report</li>
 </ol>
 
 <div class="d-flex justify-content-between">
@@ -28,7 +27,7 @@
 
 
 <div class="card mt-3" >
-	<h4 class="text-center h4 font-weight-bold text-primary">Newspaper Order Summary Report By Year </h4>
+	<h4 class="text-center h4 font-weight-bold text-primary">Online Sales Report By Year </h4>
 	<p class="text-center h5  text-dark"><?php echo $year;  ?> </p>
 
   <div class="d-flex justify-content-between">
@@ -64,16 +63,16 @@
 </div>
 
 <script>
-$(document).ready(function(){
+$(document).ready(function(){ 
   var year = $("#syear").val();
   /* ------------------- Chart for Order Annalyze ------------------*/
 
-   $.ajax({
-    data:{year:year},
-    url:"lib/mod_reports.php?type=numberOrderByYear",
-    type:"GET",
-    success: function(data){
-      chartData = data;
+    $.ajax({
+      data:{year:year},
+      url: "lib/mod_reports.php?type=numberonlinesalesbyyear",
+      type: "GET",
+        success: function(data) {
+          chartData = data;
             var chartProperties = {
             "theme": "fusion",
             "caption": "No of Orders",
@@ -94,18 +93,19 @@ $(document).ready(function(){
               }
             });
                 apiChart.render();
-    }
-   });
+        }
+    });
 
- /* ------------------- Chart for income Annalyze ------------------*/
-   $.ajax({
+       /* ------------------- Chart for income Annalyze ------------------*/
+    $.ajax({
       data:{year:year},
-      url: "lib/mod_reports.php?type=OrderSummaryByYear",
+      url: "lib/mod_reports.php?type=orderonlinebyyear",
       type: "GET",
       dataType:"json",
         success: function(data) {
           
-    apiChart = new FusionCharts({
+
+            apiChart = new FusionCharts({
               type: "mscolumn2d",
               width : "500",
               height : "400",
@@ -116,22 +116,11 @@ $(document).ready(function(){
                 apiChart.render();
         }
     });
-  
 
-
-
-
-
-
-
- 
-  /*  $("#btn-export").click(function(){
-      var monthname = "<?php //echo $monthname ?>";
-      var year = "<?php //echo $year ?>";
-    	
-    	window.open('view/reports/npBookedSummaryByMonthReportPDF.php?monthname='+monthname+'&year='+year,'_blank');
-
-    });*/
+    
+        
+        
+        
 });
-</script>	
+</script> 
 
