@@ -1,4 +1,4 @@
-<header id="header">
+<header id="header"> 
 
     <div class="container">
 
@@ -14,14 +14,14 @@
           <li><a href="adbooking.php">Advertisment booking</a></li>
           <li><a href="newspaperbooking.php">Newspaper Booking</a></li> 
 
-              <?php
+              <?php 
                 if(isset($_SESSION['session_cus'])){
               ?>
               
 
-              <li class="dropdown"><a href="#why-us" data-toggle="dropdown"><?php echo "Hi!, " . $_SESSION['session_cus']['cus_name']; ?></a></li>
+              <li class="dropdown"><a href="#services" data-toggle="dropdown"><?php echo "Hi!, " . $_SESSION['session_cus']['cus_name']; ?></a></li>
                   
-                      <li><a href="">Profile</a></li>
+                      <li><a href="../cus_profile.php">Profile</a></li>
                       <li><a href="../lib/logout.php" id="logout_btn">Logout</a></li>                       
               <?php
                 }
