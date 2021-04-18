@@ -105,20 +105,20 @@ $(function(){
     $(function(){
     $("#loginform").submit(function(e){
       e.preventDefault();
-      var url = "lib/mod_log.php?ischecklogin";
+      var url = "lib/mod_log.php";
       var fdata = $('#loginform').serialize();
       $.ajax({
         method:"POST",
         url:url,
         data:fdata,
         dataType:"text",
-         success: function(result) {
-                   if(result == 0){
-                    swal("Error", "Incorrect Username or Password!", "error");
-                   }else{
-                    $("#loginform").unbind('submit').submit();
-                   }
-                },
+        success: function(result) {
+          if(result==1){
+            location.href="lib/route.php";
+          }else{
+            swal("Error", "Incorrect Username or Password!", "error");
+          }
+        },
         error:function(eobj,etxt,err){
           console.log(etxt);
         }
