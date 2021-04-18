@@ -1,15 +1,21 @@
 <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
-      <div class="container">
+      <div class="container" style="padding-top: 250px;">
 
         <header class="section-header">
+           <span class="login100-form-title p-b-33">
+           <?php if (isset($_SESSION['session_cus'])) {
+             echo "Hi!, " . $_SESSION['session_cus']['cus_name'];
+             echo "<h5>This is what we offer..</h5>";
+            }?>
+            
+          </span>
           <h3>Services</h3>
-          <p>Laudem latine persequeris id sed, ex fabulas delectus quo. No vel partiendo abhorreant vituperatoribus.</p>
         </header>
 
         <div class="row">
 
-          <div class="col-md-6 col-lg-6 wow bounceInUp" data-aos="zoom-in">
+          <div class="col-md-10 col-lg-6 wow bounceInUp" data-aos="zoom-in"  >
             <div class="box">
               <div class="icon" style="background: #fff0da;"><i class="ion-ios-bookmarks-outline" style="color: #e98e06;"></i></div>
               <h4 class="title"><a href="">ADVERTISING</a></h4>
@@ -21,7 +27,7 @@
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-6 wow bounceInUp" data-aos="zoom-in">
+          <div class="col-md-10 col-lg-6 wow bounceInUp" data-aos="zoom-in">
             <div class="box">
               <div class="icon" style="background: #fceef3;"><i class="ion-ios-analytics-outline" style="color: #ff689b;"></i></div>
               <h4 class="title"><a href="">NEWSPAPERS</a></h4>
