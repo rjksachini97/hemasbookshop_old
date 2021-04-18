@@ -103,18 +103,8 @@ $(function(){
     });
           //login function
     $(function(){
-    $("#btnlogin").click(function(){
-      var username = $("#txtuname").val();
-      var password = $("#txtpass").val();
-      if(username==""){
-        swal("Login Error","Fill both Username and Password to log in","error");
-      }
-      else if(password==""){
-        swal("Login Error","Fill both Username and Password to log in","error");
-      }
-
-      //validate with DB
-
+    $("#loginform").submit(function(e){
+      e.preventDefault();
       var url = "lib/mod_log.php?ischecklogin";
       var fdata = $('#loginform').serialize();
       $.ajax({
@@ -122,21 +112,20 @@ $(function(){
         url:url,
         data:fdata,
         dataType:"text",
-          success: function(result) {
-                  //result
-                    if (result == "0"){
-                      swal("Login Error", "Incorrect Username or Password!", "error");
-                    }else{
-                      //location.href="user/home.php";
-                      $("#loginform").unbind('submit').submit();
-                    }
-                  },
-          error:function(eobj,etxt,err){
-            console.log(etxt);
-          }
-
+         success: function(result) {
+                   if(result == 0){
+                    swal("Error", "Incorrect Username or Password!", "error");
+                   }else{
+                    $("#loginform").unbind('submit').submit();
+                   }
+                },
+        error:function(eobj,etxt,err){
+          console.log(etxt);
+        }
       });
-    });
+
+  });
+
    
     });
      
@@ -173,7 +162,7 @@ $(function(){
               <div align="center"><img src="images/1.png" style="width: 100px"></div>
             </div>
                   
-            <form class="loginform validate-form" id="loginform" method="post" action="lib/mod_log.php" >
+            <form class="login100-form validate-form" id="loginform" method="post" action="lib/mod_log.php" >
               <div class="form-group validate-input" data-validate="Valid email is required: abc@sd.xyz">
                 <label class="text-gray-900" for="txtuname">Email</label>
                 <input type="txtuname" class="form-control" id="txtuname" name="txtuname" " placeholder="Enter Email Address..." size="40">
@@ -183,7 +172,7 @@ $(function(){
                 <input type="password" class="form-control" id="txtpass" name="txtpass" placeholder="Password">
               </div>
               <div class="form-group">
-                <button type="button" class="btn btn-primary btn-block" id="btnlogin">Login </button>
+                <button class="btn btn-primary btn-block" id="btnlogin" type="submit" value="submit" >Login </button>
                 <span style="display: none;" id="loading"><img width="30%" src="images/spinner.gif" /></span>
               </div>     
             </form>
