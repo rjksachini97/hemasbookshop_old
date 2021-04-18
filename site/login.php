@@ -1,6 +1,6 @@
 <?php 
   require("lib/mod_cus.php");
-   ?>
+   ?> 
 
 <script>
 
@@ -173,7 +173,7 @@ $(function(){
               <div align="center"><img src="images/1.png" style="width: 100px"></div>
             </div>
                   
-            <form class="loginform validate-form" id="loginform" method="post" action="#" >
+            <form class="loginform validate-form" id="loginform" method="post" action="lib/mod_log.php" >
               <div class="form-group validate-input" data-validate="Valid email is required: abc@sd.xyz">
                 <label class="text-gray-900" for="txtuname">Email</label>
                 <input type="txtuname" class="form-control" id="txtuname" name="txtuname" " placeholder="Enter Email Address..." size="40">
@@ -205,33 +205,6 @@ $(function(){
 
 
 <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////-->
-      <div class="container">
-        <div class="row counters" data-aos="fade-up" data-aos-delay="100">
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">274</span>
-            <p>Clients</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">421</span>
-            <p>Projects</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">1,364</span>
-            <p>Hours Of Support</p>
-          </div>
-
-          <div class="col-lg-3 col-6 text-center">
-            <span data-toggle="counter-up">18</span>
-            <p>Hard Workers</p>
-          </div>
-
-        </div>
-
-      </div>
-    </section><!-- End Why Us Section -->
 
 
 <!--Login form -->
