@@ -1,4 +1,4 @@
- <?php
+ <?php 
 require("../lib/mod_ad_booking.php");
 
 ?>
@@ -28,17 +28,14 @@ require("../lib/mod_ad_booking.php");
               return (data=="1")?"Approved":"Approval Pending";
             },
             "targets": 6
-          }, 
-
-          {
-            "data":"6",
-            "render":function(data,type,row){
-              return (data=="1")?"":"<a href='#' title='Half_payment'><i class='far fa-calendar-check'></i></a>";
-            },
+          },
+          /* {
+            "data":null,
+            "defaultContent": "<a href='#' title='Open_Slip' data-toggle='modal' data-target='#viewSlip'><i class='fas fa-money-check-alt'></i></a>",
             "targets": 7
           },
           {
-            "data":"7",
+            "data":"6",
             "render":function(data,type,row){
               return (data=="1")?"Yes":"No";
             },
@@ -49,27 +46,27 @@ require("../lib/mod_ad_booking.php");
             "data":null,
             "defaultContent": "<a href='#' title='Full_payment'><i class='fas fa-calendar-check'></i></a>",
             "targets": 9
-          },
+          },*/
     
           {
             "data":null,
             "defaultContent": "<a href='#' title='View_details' data-toggle='modal' data-target='#viewdetails'><i class='fas fa-list-alt'></i></a>",
-            "targets": 10
+            "targets": 7
           },
           {
             "data":null,
             "defaultContent": "<a href='#' title='Cancel_Booking'><i style='color:red' class='fas fa-window-close'></i></a>",
-            "targets": 11
+            "targets": 8
           }
         ]
     });
 
-    $("#tblviewadbkings tbody").on('click','a',function(){
+   $("#tblviewadbkings tbody").on('click','a',function(){
       var type = $(this).attr('title');
       var data = dataTable.row($(this).parents('tr')).data();
       var eid = data[0];
 
-      if(type=="Cancel_Booking"){
+    if(type=="Cancel_Booking"){
         swal({
             title:"Do you want to Cancel this Booking?",
             text:"You are trying to Cancel this Booking :"+eid,
@@ -98,7 +95,8 @@ require("../lib/mod_ad_booking.php");
               });
             }
           });
-      }else if(type=="View_details"){
+      }
+        else if(type=="View_details"){
         var url = "lib/mod_ad_booking.php?type=viewadBookingDetails";
          $.ajax({
             method:"POST",
@@ -113,70 +111,32 @@ require("../lib/mod_ad_booking.php");
             }
           });
 
-   }else if(type=="Half_payment"){
-        swal({
-            title:"Do you want to Approve this Booking?",
-            text:"You are trying to Approve this Booking :"+eid,
-            icon:"warning",
-            buttons:true,
-            dangerMode:true
-          }).then((willDelete)=>{
-            if(willDelete){
-              var url = "lib/mod_ad_booking.php?type=confirmBooking";
-             $.ajax({
-                method:"POST",
-                url:url,
-                data:{booking_id:eid},
-                dataType:"text",
-                success:function(result){
+   }
 
-                  if(result == 1){
-                    swal("Approved", "Booking has been approved", "success")
-                    dataTable.row($(this).parents('tr')).draw();
-                  }else{
-                    swal("Error!", "Some problem occured in the system", "error")
-                  }
-                },
-                error:function(eobj,etxt,err){
-                  console.log(etxt);
-                }
-              });
+ /*  else if(type=="Open_Slip"){
+        var url = "lib/mod_ad_booking.php?type=AdviewSlip";
+         $.ajax({
+            method:"POST",
+            url:url,
+            data:{event_id:eid},
+            dataType:"text",
+            success:function(result){
+              $("#view-slip").html(result);
+            },
+            error:function(eobj,etxt,err){
+              console.log(etxt);
             }
           });
-        
-      }else if(type=="Full_payment"){
-        swal({
-            title:"Fully paid?",
-            text:"You are trying to Approve for Full payment :"+eid,
-            icon:"warning",
-            buttons:true,
-            dangerMode:true
-          }).then((willDelete)=>{
-            if(willDelete){
-              var url = "lib/mod_ad_booking.php?type=confirmfullpayment";
-             $.ajax({
-                method:"POST",
-                url:url,
-                data:{booking_id:eid},
-                dataType:"text",
-                success:function(result){
-                  if(result == 1){
-                    swal("Full paid", "Full payment has been approved", "success")
-                    dataTable.row($(this).parents('tr')).draw();
-                  }else{
-                    swal("Error!", "Some problem occured in the system", "error")
-                  }
-                },
-                error:function(eobj,etxt,err){
-                  console.log(etxt);
-                }
-              });
-            }
-          });
-        
-      }
-    });
+      }*/
+
+
+      
+  }); 
+
+    
 });
+
+
 
 
 </script>
@@ -199,13 +159,13 @@ require("../lib/mod_ad_booking.php");
       <th>ID</th>
       <th>Cus ID</th>
       <th>Ad Mode</th>
-      <th>News Paper</th>
+      <th>NewsPaper</th>
       <th>Publish Date</th>
       <th>Total Price</th>
       <th>Status</th>
-      <th>Half payment</th>
+   <!--   <th>Uploaded Slip</th>
       <th>Fully paid</th>
-      <th>Full payment</th>
+      <th>Full payment</th> -->
       <th>View Details</th>
       <th>Cancel Booking</th>
     </tr>
@@ -215,13 +175,13 @@ require("../lib/mod_ad_booking.php");
       <th>ID</th>
       <th>Cus ID</th>
       <th>Ad Mode</th>
-      <th>News Paper</th>
+      <th>NewsPaper</th>
       <th>Publish Date</th>
       <th>Total Price</th>
       <th>Status</th>
-      <th>Half payment</th>
+ <!--     <th>Uploaded Slip</th>
       <th>Fully paid</th>
-      <th>Full payment</th>
+      <th>Full payment</th>  -->
       <th>View Details</th>
       <th>Cancel Booking</th>
     </tr>
@@ -258,3 +218,4 @@ require("../lib/mod_ad_booking.php");
                 </div>
               </div>
             </div>
+
