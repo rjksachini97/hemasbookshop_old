@@ -14,9 +14,15 @@ require("../lib/mod_booking_pay.php");
           {"data":"0"},
           {"data":"1"},
           {"data":"2"},
-          {"data":"3"},
           ],
         "columnDefs":[
+         {
+            "data":"3",
+            "render":function(data,type,row){
+              return (data=="1")?"Approved":"Approval Pending";
+            },
+            "targets": 3
+          },
 
            {
             "data":null,
@@ -37,12 +43,111 @@ require("../lib/mod_booking_pay.php");
             "targets": 6
           },
     
-        
+         {
+            "data":null,
+            "defaultContent": "<a href='#' title='View_details' data-toggle='modal' data-target='#viewdetails'><i class='fas fa-list-alt'></i></a>",
+            "targets": 7
+          },
          
         ]
     });
 
+  $("#tblviewadpay tbody").on('click','a',function(){
+      var type = $(this).attr('title');
+      var data = dataTable.row($(this).parents('tr')).data();
+      var eid = data[0];
+      
+      if(type=="View_details"){
+        var url = "lib/mod_booking_pay.php?type=viewadBookingPayDetails";
+         $.ajax({
+            method:"POST",
+            url:url,
+            data:{booking_id:eid},
+            dataType:"text",
+            success:function(result){
+              $("#view-booking-details").html(result);
+            },
+            error:function(eobj,etxt,err){
+              console.log(etxt);
+            }
+          });
+      }else if(type=="Open_Slip"){
+        var url = "lib/mod_booking_pay.php?type=AdviewSlip";
+         $.ajax({
+            method:"POST",
+            url:url,
+            data:{event_id:eid},
+            dataType:"text",
+            success:function(result){
+              $("#view-slip").html(result);
+            },
+            error:function(eobj,etxt,err){
+              console.log(etxt);
+            }
+          });
+      }else if(type=="Full_payment"){
+        swal({
+            title:"Do you want to Approve this Booking?",
+            text:"You are trying to Approve this Booking :"+eid,
+            icon:"warning",
+            buttons:true,
+            dangerMode:true
+          }).then((willDelete)=>{
+            if(willDelete){
+              var url = "lib/mod_booking_pay.php?type=confirmBooking";
+             $.ajax({
+                method:"POST",
+                url:url,
+                data:{booking_id:eid},
+                dataType:"text",
+                success:function(result){
 
+                  if(result == 1){
+                    swal("Approved", "Booking has been approved", "success")
+                    dataTable.row($(this).parents('tr')).draw();
+                  }else{
+                    swal("Error!", "Some problem occured in the system", "error")
+                  }
+                },
+                error:function(eobj,etxt,err){
+                  console.log(etxt);
+                }
+              });
+            }
+          });
+        
+      }else if(type=="Full_payment"){
+        swal({
+            title:"Fully paid?",
+            text:"You are trying to Approve for Full payment :"+eid,
+            icon:"warning",
+            buttons:true,
+            dangerMode:true
+          }).then((willDelete)=>{
+            if(willDelete){
+              var url = "lib/mod_booking_pay.php?type=confirmfullpayment";
+             $.ajax({
+                method:"POST",
+                url:url,
+                data:{booking_id:eid},
+                dataType:"text",
+                success:function(result){
+                  if(result == 1){
+                    swal("Full paid", "Full payment has been approved", "success")
+                    dataTable.row($(this).parents('tr')).draw();
+                  }else{
+                    swal("Error!", "Some problem occured in the system", "error")
+                  }
+                },
+                error:function(eobj,etxt,err){
+                  console.log(etxt);
+                }
+              });
+            }
+          });
+        
+      }
+    });
 });
 
 
@@ -69,6 +174,7 @@ require("../lib/mod_booking_pay.php");
       <th>Uploaded Slip</th>
       <th>Fully paid</th>
       <th>Full payment</th>
+      <th>View Details</th>
     </tr>
   </thead>
   <tfoot>
@@ -80,6 +186,7 @@ require("../lib/mod_booking_pay.php");
       <th>Uploaded Slip</th>
       <th>Fully paid</th>
       <th>Full payment</th>
+      <th>View Details</th>
     </tr>
   </tfoot>
 </table>

@@ -200,10 +200,11 @@ if(!isset($_SESSION["user"])){
       </a>  
       <div id="collapsePB" class="collapse" aria-labelledby="headingNews" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item menu" href="#" title="" id="lnkviewadbookpay">Ad Booking Payments</a>
+              <a class="collapse-item menu" href="#" title="" id="lnkviewnpbookpay">NP Booking Payments</a>
               <a class="collapse-item menu" href="#" title="" id="lnknewinvoice">New Invoice</a>
               <a class="collapse-item menu" href="#" title="" id="lnkviewinvoice">View Invoice</a>
-              <a class="collapse-item menu" href="#" title="" id="lnkviewbookpay">Booking Payments</a>
-              <a class="collapse-item menu" href="#" title="" id="lnkvieworderpay">Order Payments</a>
+              
           </div>
         </div>
     </li>
@@ -591,17 +592,18 @@ require("footer.php")
           case "lnkviewinvoice":
           $("#rpanel").load("view/view_invoice.php");
           break;
-          case "lnkviewbookpay":
-          $("#rpanel").load("view/booking_pay.php");
+          case "lnkviewadbookpay":
+          $("#rpanel").load("view/ad_booking_pay.php");
           break;
-          case "lnkvieworderpay":
-          $("#rpanel").load("view/order_pay.php");
+          case "lnkviewnpbookpay":
+          $("#rpanel").load("view/np_booking_pay.php");
           break;
 
          /* case "lnkviewreports":
           $("#rpanel").load("view/view_reports.php");
           break;
 */
+
 
 
 
