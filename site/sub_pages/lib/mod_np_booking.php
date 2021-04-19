@@ -70,7 +70,23 @@ function getNewspaperCategories(){
   $dbobj->close(); 
 }
 
-
+function getprice(){
+  $price = $_POST['price'];
+  $dbobj = DB::connect();
+  $sql = "SELECT newsp_id,newsp_price FROM tbl_newspaper WHERE newsp_price='$price';";
+  $result =  $dbobj->query($sql);
+  if($dbobj->errno){
+    echo("SQL Error : ".$dbobj->error);
+    exit;
+  }
+  $row = $result->fetch_assoc();
+  if($row==""){
+        echo ("1");
+  }else{
+    echo (json_encode($row));
+  }
+  $dbobj->close();
+}
 
 function getNPSave(){
   //$id = $_GET[""];
