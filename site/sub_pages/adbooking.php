@@ -444,6 +444,12 @@ $("#txt_npadmode").change(function(){
 $("#txtaddress").keyup(function(){
    var wordCount = $(this).val().split(/[\s\.\?]+/).length;
    $("#txt_wc").val(wordCount);
+
+   if(wordCount <= "15"){
+      swal("Required Field", "Minimum Words should be 15 in the Addvertisment!", "error");
+      return;
+    }
+
    calculate_total_price()
 });
 
