@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2021 at 06:31 PM
+-- Generation Time: Apr 19, 2021 at 06:09 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -45,16 +45,10 @@ CREATE TABLE `tbl_ad_booking` (
   `ad_img` varchar(200) NOT NULL,
   `ad_img_nic` varchar(500) NOT NULL,
   `ad_img_br` varchar(100) NOT NULL,
+  `ad_img_slip` varchar(250) NOT NULL,
   `ad_pay_status` int(11) NOT NULL,
   `ad_book_status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tbl_ad_booking`
---
-
-INSERT INTO `tbl_ad_booking` (`ad_book_id`, `cus_id`, `newsad_mode`, `adcolour_name`, `newsp_name`, `newsac_category`, `adcattype_desc`, `admode_details_size`, `crnt_date`, `adpub_date`, `ad_description`, `ad_wc`, `ad_tot_price`, `ad_img`, `ad_img_nic`, `ad_img_br`, `ad_pay_status`, `ad_book_status`) VALUES
-(1, 3, ' Box Advertisement', 'Colour', 'Sunday Times', 'Automobile', 'For Sale', '8cmx6cm', '2019-01-07', '2019-01-20', 'A car for sale', 4, 4500.00, '', '', '', 0, 1);
 
 -- --------------------------------------------------------
 
@@ -112,6 +106,7 @@ INSERT INTO `tbl_ad_modes_details` (`admode_details_id`, `newsad_mode_id`, `adco
 CREATE TABLE `tbl_ad_order` (
   `adorder_id` int(11) NOT NULL,
   `cus_id` int(11) NOT NULL,
+  `ad_book_id` int(11) NOT NULL,
   `newsad_mode` varchar(30) NOT NULL,
   `adorder_date` date NOT NULL,
   `publish_date` date NOT NULL,
@@ -143,12 +138,12 @@ CREATE TABLE `tbl_batch` (
 --
 
 INSERT INTO `tbl_batch` (`bat_id`, `grn_id`, `newsp_id`, `bat_qty`, `bat_cprice`, `bat_sprice`, `bat_rem`, `bat_rdate`, `total_price`, `bat_status`) VALUES
-('BAT00001', 1, 'NEWP0001', 100, 70.00, 80.00, 50, '2019-01-04', 7000.00, 1),
-('BAT00002', 2, 'NEWP0002', 50, 70.00, 80.00, 45, '2019-01-04', 3500.00, 1),
-('BAT00003', 3, 'NEWP0003', 50, 50.00, 60.00, 40, '2019-01-11', 2500.00, 1),
-('BAT00004', 4, 'NEWP0001', 250, 70.00, 80.00, 75, '2019-01-11', 17500.00, 1),
-('BAT00005', 5, 'NEWP0013', 50, 30.00, 40.00, 20, '2019-01-13', 1500.00, 1),
-('BAT00006', 6, 'NEWP0018', 100, 20.00, 30.00, 50, '2019-01-13', 2000.00, 1);
+('BAT00001', 1, 'NEWP0001', 100, 70.00, 80.00, 0, '2019-01-04', 7000.00, 1),
+('BAT00002', 2, 'NEWP0002', 50, 70.00, 80.00, 0, '2019-01-04', 3500.00, 1),
+('BAT00003', 3, 'NEWP0003', 50, 50.00, 60.00, 0, '2019-01-11', 2500.00, 1),
+('BAT00004', 4, 'NEWP0001', 250, 70.00, 80.00, 0, '2019-01-11', 17500.00, 1),
+('BAT00005', 5, 'NEWP0013', 50, 30.00, 40.00, 0, '2019-01-13', 1500.00, 1),
+('BAT00006', 6, 'NEWP0018', 100, 20.00, 30.00, 0, '2019-01-13', 2000.00, 1);
 
 -- --------------------------------------------------------
 
@@ -399,7 +394,7 @@ CREATE TABLE `tbl_newspaper_booking` (
 
 INSERT INTO `tbl_newspaper_booking` (`np_book_id`, `cus_id`, `newsp_name`, `np_book_qty`, `np_order_time`, `crnt_date`, `order_date`, `np_tot_price`, `np_slip_img`, `np_pay_status`, `np_book_status`) VALUES
 (1, 1, 'NEWP0001', 1, '09:00:00', '2019-01-03', '2019-01-05', 80.00, '', 1, 1),
-(2, 1, 'NEWP0002', 1, '09:02:00', '2019-01-03', '2019-01-05', 80.00, '', 0, 1),
+(2, 1, 'NEWP0002', 1, '09:02:00', '2019-01-03', '2019-01-05', 80.00, '', 1, 1),
 (3, 1, 'NEWP0005', 1, '09:05:00', '2019-01-03', '2019-01-05', 100.00, '', 0, 1);
 
 -- --------------------------------------------------------
@@ -463,6 +458,13 @@ CREATE TABLE `tbl_newspaper_order` (
   `order_status` tinyint(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tbl_newspaper_order`
+--
+
+INSERT INTO `tbl_newspaper_order` (`order_id`, `cus_id`, `np_book_id`, `newsp_id`, `order_qty`, `order_date`, `order_comp_date`, `order_price`, `order_status`) VALUES
+('1', 1, 1, 'NEWP0001', 1, '2019-01-05', '2019-01-06', 420.00, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -499,7 +501,6 @@ INSERT INTO `tbl_news_adcat_type` (`adcattype_id`, `newsac_id`, `adcattype_desc`
 ('ADCT0165', 'ACAT0003', 'House Property Services', 1),
 ('ADCT0166', 'ACAT0004', 'For Grooms', 1),
 ('ADCT0167', 'ACAT0004', 'For Brides', 1),
-('ADCT0168', 'ACAT0002', 'hhhhhhhhhhhhhhhhhhhhfffffffffffffffffff', 0),
 ('ADCT0169', 'ACAT0005', 'For publish financial statement', 1);
 
 -- --------------------------------------------------------
@@ -748,11 +749,11 @@ CREATE TABLE `tbl_users` (
 --
 
 INSERT INTO `tbl_users` (`usr_name`, `usr_pass`, `usr_type`, `usr_status`, `pwd_reset`) VALUES
-('admin', '202cb962ac59075b964b07152d234b70', 1, 1, 0),
-('daanith@gmail.com', '1bbd7f50b7abf3c929eeb195f2a4a100', 2, 1, 1),
+('daanith@gmail.com', '1bbd7f50b7abf3c929eeb195f2a4a100', 2, 0, 1),
 ('eshadi@gmail.com', 'ebb3568cc3257be7bc2ac835dc76b208', 3, 0, 1),
 ('niyomal@gmail.com', 'd3835a509829130a0e70b4e85cde05d9', 3, 1, 1),
 ('prasanna@gmail.com', 'dd8f339035ad353e126a8db03727857a', 3, 1, 1),
+('rjk@gmail.com', '202cb962ac59075b964b07152d234b70', 1, 1, 0),
 ('sachi@gmail.com', '4fe693b846579f5afa0bb6aaf83f5eab', 2, 1, 1);
 
 --
