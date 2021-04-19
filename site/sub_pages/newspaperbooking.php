@@ -1,238 +1,204 @@
-<?php
-require("subheader.php");
+<?php 
+require("subheader.php");  
+
+require("lib/mod_ad_booking.php");
 
 require("cmn_booking_navbar.php");
-
-require("lib/mod_np_booking.php");
-
-require_once("lib/dbconnection.php");
-
-//$newID=getNewOrderId();
-
-/*include('lib/dbconnection.php');
-
-$sql = "SELECT newsp_id,newsp_name FROM tbl_newspaper WHERE newsp_id NOT IN (SELECT newsa_id FROM tbl_newspaper_ad) AND newsp_status=1;";
-
-$statement = $connect->prepare($sql);
-
-$statement->execute();
-
-$result = $statement->fetchAll();  */
-
-?>
-
-<style type="text/css">
-  .currency{
-    text-align: right;
-  }
-</style>
+?> 
 
 
-    <!-- ======= Newspaper Booking Details Section ======= -->
-<div class="container" style="padding-top: 100px;">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <h3 >Newspaper Booking</h3>
-    </li>
-  </ol>
-
- <form id="BookingForm">
+    <!-- ======= Advertisment Details Section ======= -->
+  
+    <div class="container" style="padding-top: 100px;">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3 >Newspaper Booking</h3>
+        </li>
+      </ol>
+    <form id="BookingForm" enctype="multipart/form-data">
 
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="txt_npname">Newspaper Name<b class="text-danger">*</b></label>
             <select class="form-control col-sm-8" name="txt_npname" id="txt_npname">
-              <option>-- Select Newspaper --</option>
-                                  <?php getNewspaperCategories(); ?>
+              <option value="">-- Select Newspaper --</option>
+               <?php getNewspaperCategories(); ?>
             </select>
         </div>
-        
         <div class="form-group col-md-6">
-          <label for="dtadpublish">Date Of Publish<b class="text-danger">*</b></label>                            
-            <input type="text" id="dtadpublish" class="form-control col-sm-4" name="dtadpublish" readonly="readonly">
+          <label for="dtnporder">Price</label>  
+          <div class="col-md-6">
+                <input type="hidden"    id="newsp_id" name="newsp_id" >
+                <input type="text"  class=" form-control"  id="newsp_price" name="newsp_price" >
+          </div> 
         </div>
+         
       </div>
+
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="txt_npadmode">Modes of Advertisment<b class="text-danger">*</b></label>
-            <select class="form-control col-sm-8" name="txt_npadmode" id="txt_npadmode">
-              <option>-- Select Ad Mode--</option>
-                <?php getModesofAd(); ?>
-            </select>
-        </div>
+          <label for="txtqty" class="col-sm-5 col-form-label">Quantity<b class="text-danger">*</b></label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="txtqty" name="txtqty" value="">
+            </div> 
+          </div>
         <div class="form-group col-md-6">
-        <label for="txt_npadcolour">Colour<b class="text-danger">*</b></label>
-          <select class="form-control col-sm-8" name="txt_npadcolour" id="txt_npadcolour">
-            <option>-- Select Colour --</option>
-              <?php getAdColour(); ?>
-          </select>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="txt_npadsize">Size<b class="text-danger">*</b></label>
-          <select class="form-control col-sm-8" name="txt_npadsize" id="txt_npadsize">
-            <option>-- Select Size --</option>
-              <?php getAdSize(); ?>
-          </select>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="txt_npadcat">Category of Advertisment<b class="text-danger">*</b></label>
-          <select class="form-control col-sm-8" name="txt_npadcat" id="txt_npadcat">
-            <option>-- Select Ad Category--</option>
-              <?php getAdCategories(); ?>
-          </select>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="txt_npadcatdes">Description of Ad Category<b class="text-danger">*</b></label>
-          <select class="form-control col-sm-8" name="txt_npadcatdes" id="txt_npadcatdes">
-            <option>-- Select Ad Category Description--</option>
-              <?php getAdCatDescription(); ?>
-          </select>
-      </div>    
-    </div>
-
-
-
-
-    <div class="form-row">
-      <div class="form-group col-md-10">
-        <label for="txtaddress">Description of Ad <b class="text-danger">*</b></label>
-          <textarea type="text" class="form-control" name="txtaddress" id="txtaddress" placeholder="Type your Advertisment here"></textarea>
-      </div>  
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="txt_wc">Word Count<b class="text-danger">*</b></label>
-          <input type="text" class="form-control col-sm-8" id="txt_wc" name="txt_wc" value="">
-      </div>
-    </div>
-
-
-    <div class="form-group row">
-        <label for="imgad" class="col-sm-4 col-form-label">Upload Advertisment Image</label>
-          <div class="col-sm-3">
-            <input type="hidden" name="MAX_FILE_SIZE" value="10000000">
-            <input type="file" class="form-control-file" name="imgad" id="imgad"  accept="image/*">
-          </div>
-            <div style="padding-left: 180px; padding-right: 20px">
-              <small id="passwordHelpBlock" class="form-text text-muted">*Only applicable for Photo classified advertisments
-              </small>
-            </div>
-      </div>
-
-    <div class="form-group row">
-      <label for="imgupnic" class="col-sm-4 col-form-label">Upload Image of NIC<b style="color: red">*</b></label>
-        <div class="col-sm-3">
-          <input type="hidden" name="MAX_FILE_SIZE" value="10000000">
-          <input type="file" class="form-control-file" name="imgupnic" id="imgupnic"  accept="image/*">
+          <label for="dtnporder">Date Of Order<b class="text-danger">*</b></label>  
+            <input type="text" id="dtnporder" class="form-control col-sm-4" name="dtnporder" readonly="readonly">
         </div>
-    </div>
+      </div>
 
-    <div class="form-group row">
-        <label for="imgupbr" class="col-sm-4 col-form-label">Upload Image of Business Registartion Certificate<b style="color: red">*</b></label>
-          <div class="col-sm-3">
-            <input type="hidden" name="MAX_FILE_SIZE" value="10000000">
-            <input type="file" class="form-control-file" name="imgupbr" id="imgupbr"  accept="image/*">
+      <div>
+        <div class="align-items-end" >
+          <input  type="button" class="btn btn-success col-1" value="Add" id="btn_np_add" name="btn_np_add">
+        </div>
+      </div>
+      <br>
+
+      <div class="container ">
+         <table class="table table-sm" width="90%">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Newspaper</th>
+                <th>Quantity</th>
+                <th>Total Price(Rs)</th>
+
+            </tr>
+            </thead>
+
+            <tbody id="np_content">
+
+            </tbody>
+            <tfoot>
+
+            <tr align="right" >
+                <td colspan="2"></td>
+                <td > <input type="text" readonly="readonly" class=" form-control form-control-sm text-right"  size="1" id="totqty" name="totqty" value="0"> </td>
+
+                <td  > <input type="text" readonly="readonly" class=" form-control form-control-sm text-right px-3"  size="1" id="txtgtot" name="txtgtot" value="0.00"> </td>
+            </tr>
+
+            
+            <tr align="right" ><th colspan="3" >Total(Rs)</th>
+                <td  > <input type="text" readonly="readonly" class="form-control form-control-sm text-right"  size="2" id="txtntot" name="txtntot" value="0.00"> </td>
+            </tr>
+            </tfoot>
+
+        </table>
+        
+          <div>
+            <div class="modal-footer">
+              <button type="reset" class="btn btn-secondary" data-dismiss="modal">Reset</button>
+              <button type="button" class="btn btn-primary" id="btnBooking">Place My Booking</button>
+            </div>
           </div>
-    </div>
-
-    <div class="form-group" style="padding-top: 50px;">
-      <label for="tot_price">Total Price</label>
-      <input type="text" class="form-control col-sm-2" id="tot_price" name="tot_price" readonly="readonly" value="00.00">
-    </div> 
-
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="ck_agree">
-          <label class="form-check-label" for="ck_agree">I agree to the Pay Half of the total Package fee as retainer to hold the date.</label>
-    </div>
-
-    <div class="modal-footer">
-        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Reset</button>
-        <button type="button" class="btn btn-primary" id="btnBooking" disabled>Place My Booking</button>
-    </div>
-  </form>
-
+        </div>
+    </form>
 </div>
+<!-- End Advertismen Details Section -->
 
+<script type="text/javascript"> 
+    $(function(){
+      $("#dtnporder").datepicker({
+        changeYear:true,
+        changeMonth:true,
+        dateFormat:"yy-mm-dd",
+        //maxDate:"-6570" 
+        minDate:"10",                                 
+    });
 
+        /*----------------------get np price when click newspaper--------------------------   */
+        $("#txt_npname").click(function() {  
 
-   
+          var newsp_id = $(this).val(); /* store currnet id of newpaper*/
+            if(newsp_id==""){
+               $("#newsp_price").html("<option value=''>0</option>");
+              }else{
+              var url  = "lib/mod_np_booking.php?type=getprice";
+                  $.ajax({
+            method:"POST",  
+            url:url,
+            data:{newsp_id:newsp_id},
+            dataType:"text",
+            success:function (result) {
+                $("#newsp_price").html(result);
+            },
+            error:function (etxt) {
+                console.log(etxt);
+            }
 
-      <!-- End Newspaper Booking Details Section -->
-<script type="text/javascript">
-  $(document).ready(function(){
-
-    $("#btnadd").click(function(){
-        var sid = $("#txtproid").val();
-        var name = $("#txt_npname").val();
-        var qty = parseInt($("#txt_npqty").val());
-
-        if(name==""){
-          swal("Invalid Input", "Please select the Newspaper", "error");
-          return;
-        }
-        if(qty==0){
-          swal("Error","Quantity Cannot be Zero","error");
-          return;
-        }
-
-       // var url = "lib/mod_np_booking.php?type=getNPDetails";
-
-        $.ajax({
-                      method:"POST",
-                      url:url,
-                      data:{sampleid:sid,qty:qty},
-                      dataType:"json",
-                      success:function(result){
-                        for(i=0;i<result.length;i++){
-                          var name = result[i][0];
-                          var qty = parseFloat(result[i][1]);
-                          
-                          var nprice = parseFloat(result[i][2]);
-                          
-                          var total = nprice*qty;
-                          
-                          var ntot = parseFloat($("#txtntot").val());
-
-                          var row ="<tr>";
-                          
-                          row += "<td><a href = 'javascript:void(0)'><i class= 'fa fa-times remove' aria-hidden='true'style= 'color:red' ></i></a></td>";
-
-                          row +="<td><input type='text' class ='form-control' readonly='readonly' size='2' value='"+name+"' name='txtnpname[]'/></td>";
-
-                          row +="<td><input type='text' class ='form-control' readonly='readonly' size='2' value='"+qty+"' name='txtnpqty[]'/></td>";
-
-                          row +="<td><input type='text' class ='form-control' readonly='readonly' size='2' value='"+nprice+"' name='txtsnprice[]'/></td>";
-
-                          
-
-                          row +="<td><input type='text' class ='form-control total currency' readonly='readonly' size='2' value='"+total+"' name='txtstotal[]'/></td>";
-                          
-                          row += "</tr>";
-                          ntot = ntot + total;
-                          $("#txtntot").val(ntot);
-                          $("#sampledetails").append(row);
-                          resetCtrl();
-                        }
-                                                
-                      },
-                      error:function(eobj,etxt,err){
-                        console.log(etxt);
-                      }
           });
+        }
 
-      });
-    
+      });  
+
+
+     
+ $("#btn_np_add").click(function () {
+
+            $npodate = $("#dtnporder").val();
+            $np_name = $("#txt_npname").val();
+            $np_qty = $("#txtqty").val();
+            $totqty = $("#totqty").val();
+
+            if($npodate=="" || $np_name=="" || $np_qty=="" || $totqty==""){
+              swal("Error","Please Fill All inputs","error");
+                return;
+            }
+            //sum of curunt quantity and new quantity
+            var totqty = parseInt($totqty)+ parseInt($np_qty);
+            $("#totqty").val(totqty); //add quantity to total quantity input
+
+
+            var total = parseFloat($newsp_price) * parseInt($np_qty); // calculate toatal using price and quantity
+            total = parseFloat(total).toFixed(2);
+
+            $row= "<tr>";
+            $row += "<td><a href='javascript:void(0)' class='btn btn-danger remove' >X</a> </td>";
+
+            $row += "<td><input type='text' class='form-control-plaintext '  readonly value='"+$prod_name+"'>" +
+                "<input type='hidden' id='tbl_prod' name='tbl_prod[]'  value='"+$grn_prod+"' ></td>";
+
+            $row += "<td><input type='text' class='form-control-plaintext'  readonly value='"+$cat_name+"' >" +
+                "<input type='hidden' id='tbl_cat' name='tbl_cat[]' value='"+$grn_cat+"' ></td>";
+
+            $row += "<td><input type='text' class='form-control-plaintext text-right qty' id='tbl_qty' name='tbl_qty[]' readonly value='"+$grn_qty+"' ></td>";
+
+            $row += "<td><input type='text' class='form-control-plaintext text-right' id='tbl_cprice' name='tbl_cprice[]' readonly value='"+$cost_price+"' ></td>";
+
+            $row += "<td><input type='text' class='form-control-plaintext text-right' id='tbl_sprice' name='tbl_sprice[]' readonly value='"+$sell_price+"' ></td>";
+
+            $row += "<td><input type='text' class='form-control-plaintext text-right total' id='bat_price' name='bat_price[]' readonly value='"+total+"' > </td>";
+
+            $row += "</tr>";
+
+            var gtot = parseFloat($("#txtgtot").val()); // input convert to currency
+            var ntot = parseFloat($("#txtntot").val()); // input convert to currency
+
+            gtot = parseFloat(gtot)+parseFloat(total);
+            ntot = parseFloat(ntot)+parseFloat(total);
+            gtot= parseFloat(gtot).toFixed(2);
+            ntot= parseFloat(ntot).toFixed(2);
+
+
+            $("#txtgtot").val(gtot); 
+            $("#txtntot").val(ntot);
+            $("#selectSup").val($("#grn_sup").val());
+            $("#grn_sup").prop("disabled",true);
+
+            $("#grn_content").append($row);
+            resetinput();
+
+        });
+
+
+
+
+
 </script>
-
-
 
 
 <?php
 require("subfooter.php");
 ?>
-
-
