@@ -1,4 +1,4 @@
-<?php 
+<?php  
 require_once("dbconnection.php"); 
 
 if(isset($_GET["type"])){
