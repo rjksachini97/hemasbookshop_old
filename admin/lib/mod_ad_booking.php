@@ -23,8 +23,8 @@ function viewadbooking(){
 	    array( 'db' => 'newsp_name','dt' => 3 ),
 	    array( 'db' => 'adpub_date','dt' => 4 ),
 	    array( 'db' => 'ad_tot_price','dt' => 5 ),
-	    array( 'db' => 'ad_book_status','dt' => 6 ),
-		array( 'db' => 'ad_pay_status' , 'dt' => 7)
+	    array( 'db' => 'ad_book_status','dt' => 6 )
+		//array( 'db' => 'ad_pay_status' , 'dt' => 7)
 	);
 
 	// SQL server connection information
@@ -106,6 +106,27 @@ function viewadBookingDetails(){
 
 	echo $output;
 }
+
+
+function AdviewSlip(){
+			$ad_book_id = $_POST['ad_book_id'];
+			$dbobj=DB::connect();
+
+			$sql = "SELECT slip_img FROM tbl_event_book WHERE ad_book_id=$ad_book_id;";
+
+			$result = $dbobj->query($sql);
+
+			$output = "";
+
+			$row = $result->fetch_assoc();
+			if($row['slip_img'] != ""){  //correct  the path
+				$output .= "<img  class='img-thumbnail' src='../../dlab_admin_edit/images/Bankslips/Event_slips/" . $row['slip_img'] . "' />";
+			}else{
+				$output .="<i>No Image Uploaded!</i>";
+			}
+			echo $output;
+}
+
 
 function confirmBooking(){
 	$booking_id = $_POST['booking_id'];
