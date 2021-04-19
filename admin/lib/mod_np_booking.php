@@ -106,6 +106,26 @@ function viewBookingDetails(){
 	echo $output;
 }
 
+function viewSlip(){
+	$booking_id = $_POST['booking_id'];
+	$dbobj=DB::connect();
+
+	$sql = "SELECT np_img_slip FROM tbl_newspaper_booking WHERE np_book_id=$booking_id;";
+
+	$result = $dbobj->query($sql);
+
+	$output = "";
+
+	$row = $result->fetch_assoc();
+	if($row['np_img_slip'] != ""){///correcr path
+		$output .= "<img class='img-thumbnail' src='../..//images/Bankslips/Wedding_slips/" . $row['np_img_slip'] . "' />";
+	}else{
+		$output .="<i>No Image Uploaded!</i>";
+	}
+	echo $output;
+}
+
+
 function confirmBooking(){
 	$booking_id = $_POST['booking_id'];
 	$dbobj=DB::connect();
