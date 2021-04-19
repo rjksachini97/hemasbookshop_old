@@ -175,32 +175,39 @@ function getAdSize(){
 function addNewAdBooking(){
           session_start();
 
-          // $cus_id = $_SESSION['session_cus']['cus_id'];
-          // $newsad_mode = $_POST["txt_npadmode"];
-          // $adcolour_name = $_POST["txt_npadcolour"];
-          // $newsp_name = $_POST["txt_npname"];
+          $cus_id = $_SESSION['session_cus']['cus_id'];
+          $newsad_mode = $_POST["txt_npadmode"];
+          $adcolour_name = $_POST["txt_npadcolour"];
+          $newsp_name = $_POST["txt_npname"];
           $newsac_category = $_POST["txt_npadcat"];
-          // $adcattype_desc = $_POST["txt_npadcatdes"];
-          // $admode_details_size= $_POST["txt_npadsize"];
+          $adcattype_desc = $_POST["txt_npadcatdes"];
+          $admode_details_size= $_POST["txt_npadsize"];
           $adpub_date = $_POST["dtadpublish"];
-          // $ad_description = $_POST["txtaddress"];
-          // $ad_wc = $_POST["txt_wc"];
-          // $ad_tot_price = $_POST[""];
-          // $ad_book_status = 1;
-          // $crnt_date = date("Y-m-d");
+          $ad_description = $_POST["txtaddress"];
+          $ad_wc = $_POST["txt_wc"];
+          $ad_tot_price = $_POST["tot_price"];
+          $ad_book_status = 1;
+          $crnt_date = date("Y-m-d");
 
           //Advertisment images
-          $ad_img_name = $_FILES["imgad"]['name']; //image nam
-          $ad_img_tmp_name = $_FILES["imgad"]['tmp_name']; //image temporary name
-          $ad_img_ext = substr($ad_img_name, strrpos($ad_img_name, ".")); //take image extention
-          $ad_img_path = "../../../images/upload_image/add_book_image";   
-          if(!file_exists($ad_img_path)){
-              mkdir($ad_img_path);
+          if(file_exists($_FILES['imgad']['tmp_name']) || is_uploaded_file($_FILES['imgad']['tmp_name'])){
+            $ad_img_name = $_FILES["imgad"]['name']; //image nam
+            $ad_img_tmp_name = $_FILES["imgad"]['tmp_name']; //image temporary name
+            $ad_img_ext = substr($ad_img_name, strrpos($ad_img_name, ".")); //take image extention
+            $ad_img_path = "../../../images/upload_image/add_book_image";   
+            if(!file_exists($ad_img_path)){
+                mkdir($ad_img_path);
+            }
+            $ad_img_dbname = $newsac_category."_".$adpub_date.time().$ad_img_ext;
+            $ad_img_dbpath = $ad_img_path."/".$ad_img_dbname;
+            
+            
+            if(move_uploaded_file($ad_img_tmp_name, $ad_img_dbpath)){
+              $ad_img_pathsave="images/upload_image/add_book_image/".$ad_img_dbname;
+            } //image is uploaded or not
+          }else{
+            $ad_img_pathsave="";
           }
-          $ad_img_dbname = $newsac_category."_".$adpub_date.time().$ad_img_ext;
-          $ad_img_dbpath = $ad_img_path."/".$ad_img_dbname;
-          
-          $is_add_image_uploded = move_uploaded_file($ad_img_tmp_name, $ad_img_dbpath); //image is uploaded or not
 
            //NIC images
           $nic_img_name = $_FILES["imgupnic"]['name']; //image nam
@@ -213,55 +220,58 @@ function addNewAdBooking(){
           $nic_img_dbname = $newsac_category."_".$adpub_date.time().$nic_img_ext;
           $nic_img_dbpath = $nic_img_path."/".$nic_img_dbname;
           
-          $is_nic_image_uploded = move_uploaded_file($nic_img_tmp_name, $nic_img_dbpath); //image is uploaded or not
+          
+          if (move_uploaded_file($nic_img_tmp_name, $nic_img_dbpath)){
+            $nic_img_pathsave= "images/upload_image/nic_image/".$nic_img_dbname;
+          } //image is uploaded or not
 
           
            //BRC images
-           $brc_img_name = $_FILES["imgupbr"]['name']; //image nam
-           $brc_img_tmp_name = $_FILES["imgupbr"]['tmp_name']; //image temporary name
-           $brc_img_ext = substr($brc_img_name, strrpos($brc_img_name, ".")); //take image extention
-           $brc_img_path = "../../../images/upload_image/brc_image";   
-           if(!file_exists($brc_img_path)){
-               mkdir($brc_img_path);
-           }
-           $brc_img_dbname = $newsac_category."_".$adpub_date.time().$brc_img_ext;
-           $brc_img_dbpath = $brc_img_path."/".$brc_img_dbname;
-           $is_brc_image_uploded = move_uploaded_file($brc_img_tmp_name, $brc_img_dbpath); //image is uploaded or not
-          
+          if(file_exists($_FILES['imgupbr']['tmp_name']) || is_uploaded_file($_FILES['imgupbr']['tmp_name'])){
+            $brc_img_name = $_FILES["imgupbr"]['name']; //image nam
+            $brc_img_tmp_name = $_FILES["imgupbr"]['tmp_name']; //image temporary name
+            $brc_img_ext = substr($brc_img_name, strrpos($brc_img_name, ".")); //take image extention
+            $brc_img_path = "../../../images/upload_image/brc_image";   
+            if(!file_exists($brc_img_path)){
+                mkdir($brc_img_path);
+            }
+            $brc_img_dbname = $newsac_category."_".$adpub_date.time().$brc_img_ext;
+            $brc_img_dbpath = $brc_img_path."/".$brc_img_dbname;
+           
+
+            if(move_uploaded_file($brc_img_tmp_name, $brc_img_dbpath)){
+              $brc_img_pathsave="images/upload_image/brc_image/".$brc_img_dbname;
+            } //image is uploaded or not
+          }else{
+            $brc_img_pathsave="";
+          }
          
 
-          // $nic_im = $_FILES["imgupnic"];
-          // $br_img = $_FILES("imgupbr");
-          // $tot_price = $_POST["tot_price"];
+          $dbobj = DB::connect();
 
-          // $ad_path = "";
-          // $nic_path = "";
-          // $br_path = "";  
-
-          // $dbobj = DB::connect();
-
-          // $sql = "INSERT INTO tbl_ad_booking (cus_id,newsad_mode,adcolour_name,newsp_name,newsac_category,adcattype_desc, admode_details_size,crnt_date,adpub_date,ad_description,ad_wc,ad_tot_price,ad_pay_status,ad_book_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-          // $stmt = $dbobj->prepare($sql);
-
-          // if(!$stmt->execute()){
-          //     echo(" AdBooking SQL Error: ".$stmt->error);
-          //     exit;
-          // }else {
-              
-          //         $sql_adorder = "INSERT INTO tbl_ad_order (adorder_id,cus_id,newsad_mode,adorder_date,publish_date,adorder_price,adorder_status) VALUES (?,?,?,?,?,?,?)";
-
-          //         $stmt_adorder= $dbobj->prepare($sql_adorder);
-          //         $stmt_adorder->bind_param("iisssdi",$bat_id,$grn_id,$tbl_prod[$i],$tbl_cprice[$i],$tbl_sprice[$i],$tbl_qty[$i],$tbl_qty[$i],$rdate,$bat_price[$i],$status);
-          //         if(!$stmt_adorder->execute()){
-          //             echo(" Batch SQL Error: ".$stmt_adorder->error);
-          //             exit;
-          //         }
-          //         $stmt_adorder->close();
-          //     }
-          //     echo("1,Order Successfully added");
-          //     $stmt->close();
-          //     $dbobj->close();
+          $sql = "INSERT INTO tbl_ad_booking (cus_id,newsad_mode,adcolour_name,newsp_name,newsac_category,adcattype_desc, admode_details_size,crnt_date,adpub_date,ad_description,ad_wc,ad_tot_price,ad_pay_status,ad_book_status,ad_img,ad_img_nic,ad_img_br) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          $stmt = $dbobj->prepare($sql);
+          $stmt->bind_param("isssssssssidiisss",$cus_id,$newsad_mode,$adcolour_name,$newsp_name,$newsac_category,$adcattype_desc,$admode_details_size,$crnt_date,$adpub_date,$ad_description,$ad_wc,$ad_tot_price,$ad_book_status,$ad_book_status,$ad_img_pathsave,$nic_img_pathsave,$brc_img_pathsave);
+          
+          if(!$stmt->execute()){
+              echo(" AdBooking SQL Error: ".$stmt->error);
+              exit;
+          }else {
+            $last_id= mysqli_insert_id($dbobj);
+            $sql_adorder = "INSERT INTO tbl_ad_order (cus_id,ad_book_id,newsad_mode,adorder_date,publish_date,adorder_price,adorder_status) VALUES (?,?,?,?,?,?,?)";
+            $stmt_adorder= $dbobj->prepare($sql_adorder);
+            $stmt_adorder->bind_param("iisssdi",$cus_id,$last_id,$newsad_mode,$crnt_date,$adpub_date,$ad_tot_price,$ad_book_status);
+            if(!$stmt_adorder->execute()){
+              echo(" Batch SQL Error: ".$stmt_adorder->error);
+              exit;
+            }else{
+              echo ("1,Successfully Saved!");
+            }
+            $stmt_adorder->close();
+            
+          }          
+          $stmt->close();
+          $dbobj->close();
 
     }
 
