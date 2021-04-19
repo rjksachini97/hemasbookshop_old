@@ -124,7 +124,7 @@ require("cmn_booking_navbar.php");
 
     <div class="form-check">
         <input type="checkbox" class="form-check-input" id="ck_agree">
-          <label class="form-check-label" for="ck_agree">I agree to the Pay Half of the total Package fee as retainer to hold the date.</label>
+          <label class="form-check-label" for="ck_agree">I agree to the Pay Half of the total  fee as retainer to hold the date.</label>
     </div>
 
     <div class="modal-footer">
@@ -244,11 +244,11 @@ $("#btnBooking").click(function(){
       return;
     }
 
-    if(br_img == ""){
+  /*  if(br_img == ""){
       swal("Required Field", "Please Upload the Image of Business Registartion Certificate", "error");
       return;
     }
-
+*/
     // var fdata = $('#BookingForm').serialize();
     var fdata =new FormData($('#BookingForm')[0]);
     var url = "lib/mod_ad_booking.php?type=addNewAdBooking";
@@ -378,7 +378,7 @@ $("#imgupbr").change(function(){
 
 /*validation for word count*/   
 // $("#txt_wc").change(function(){
-//   $string =                                         ///complet6e this
+//   $string =                                   
 // });    
 
 
