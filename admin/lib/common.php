@@ -1,5 +1,5 @@
 <?php  
-require_once("dbconnection.php");
+require_once("dbconnection.php"); 
 
 
 if(isset($_GET["type"])){
@@ -110,5 +110,7 @@ function getNPLevel(){
 
 
 }
+
+
 
 ?>
