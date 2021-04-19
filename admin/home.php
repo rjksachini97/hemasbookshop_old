@@ -72,6 +72,8 @@ if(!isset($_SESSION["user"])){
           <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item menu" href="#" title="" id="lnknewemp">New Employees</a>
               <a class="collapse-item menu" href="#" title="" id="lnkviewemp">View Employees</a>
+              <a class="collapse-item menu" href="#" title="" id="lnknewdelm">New Deliveryman</a>
+              <a class="collapse-item menu" href="#" title="" id="lnkviewdelm">View Deliveryman</a>
           </div>
         </div>
     </li>
@@ -149,19 +151,19 @@ if(!isset($_SESSION["user"])){
     </li>
 
             <!-- Nav Item - Delivery Collapse Menu -->
-    <li class="nav-item">
+<!--    <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDeliveryMan" aria-expanded="true" aria-controls="collapseDeliveryMan">
         <i class="fas fa-truck"></i>
         <span>Delivery Management</span>
       </a>  
       <div id="collapseDeliveryMan" class="collapse" aria-labelledby="headingNews" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
+        <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item menu" href="#" title="" id="lnknewdelm">New Deliveryman</a>
               <a class="collapse-item menu" href="#" title="" id="lnkviewdelm">View Deliveryman</a>
-          </div>
+          </div>  
         </div>
     </li>
-
+-->
             <!-- Nav Item - Stock Collapse Menu -->
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStock" aria-expanded="true" aria-controls="collapseStock">
@@ -283,14 +285,16 @@ if(!isset($_SESSION["user"])){
         </li>
 
         <!-- Nav Item - Messages -->
-        <li class="nav-item dropdown no-arrow mx-1">
+<!--        <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-envelope fa-fw"></i>
+-->
             <!-- Counter - Messages -->
-            <span class="badge badge-danger badge-counter">7</span>
+<!--            <span class="badge badge-danger badge-counter">7</span>
           </a>
+-->
           <!-- Dropdown - Messages -->
-          <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+<!--          <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
             <h6 class="dropdown-header">Message Center</h6>
             <a class="dropdown-item d-flex align-items-center" href="#">
               <div class="dropdown-list-image mr-3">
@@ -305,6 +309,7 @@ if(!isset($_SESSION["user"])){
             <a class="dropdown-item text-center small text-gray-500" href="#">Read More Mess</a>
           </div>
         </li>
+-->
 
         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -312,7 +317,7 @@ if(!isset($_SESSION["user"])){
 
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php getUserName(); ?></span>
+            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php getUserName() ?></span>
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <!-- Dropdown - User Information -->
@@ -334,7 +339,107 @@ if(!isset($_SESSION["user"])){
 
       <!-- Page Heading -->   
       <div class="container-fluid" id="rpanel">
-        <?php require("view/kpi.php");?>
+<!--        <?php //require("view/kpi.php");?>        -->
+      
+      <!-- Breadcrumbs-->
+<div class="row d-sm-flex align-items-center justify-content-between mb-4">
+  <div class="col-xl-8 col-lg-7">  <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="#">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">Overview</li>
+    </ol></div>   
+  <!-- Page Heading -->
+<!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm" id="btnallreports">
+  <i class="fas fa-download fa-sm text-white-50"></i> Generate Report  </a>
+  <script type="text/javascript">
+$(document).ready(function(){
+  $("#btnallreports").click(function(){
+    window.open("reports/custom_report.php");
+  });
+});
+</script>  -->
+</div>  
+
+<!-- Content Row -->
+<div class="row">
+
+              <!-- Active Users Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-3">Active Users</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php getActiveUserCount(); ?></div>
+                      </div>
+                    <div class="col-auto">
+                      <i class="fas fa-user fa-2x text-gray-600"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+              <!-- Redister Customers Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-3">Register Customers</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php getRegCustomerCount(); ?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-users fa-2x text-gray-600"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+              <!-- Orders Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-3"> Newspaper Orders</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php getNPOrderCount(); ?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-cart-arrow-down fa-2x text-gray-600"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+              <!-- Out of Stocks Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-danger text-uppercase mb-3">Out of Stocks</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php getOutofStockCount();?></div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-box-open fa-2x text-gray-600"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+      
+</div>
+
+
+
+
+
       </div>
 
       </div>
