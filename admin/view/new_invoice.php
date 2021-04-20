@@ -1,11 +1,12 @@
 <?php
 require ("../lib/mod_invoice.php");
 require ("../lib/mod_customer.php");   
-$cus_id = getNewCusId();
-session_start();
+$cus_id = getCusId();
+/*session_start();
 if(isset($_SESSION["user"]["uid"])){
     $oper =$_SESSION["user"]["uid"];
 }
+*/
 
 ?>
 <!-- Breadcrumbs-->
@@ -18,12 +19,13 @@ if(isset($_SESSION["user"]["uid"])){
 </ol>
 
 <!-- New Newspaer Form -->
-<h3 class="h3" >Add New GRN</h3>
+<h3 class="h3" >Add New Invoice</h3>
 <hr> 
 
 <div class="container">
 <form id="inv_form">
-    <input type="hidden" name="log_user" value="<?php echo ($oper)?>">
+<!--    <input type="hidden" name="log_user" value="<?php //echo ($oper)?>">
+-->
     <!-----------------------      Invoice Details                       --------------------->
     <div class="row">
         <div class="col-lg-5">
@@ -75,7 +77,7 @@ if(isset($_SESSION["user"]["uid"])){
             </div>
         </div>
     </div>
-    <!-----------------------      Product Details       --------------------->
+    <!----------------------- NewspaperDetails       --------------------->
     <div class="row">
         <div class="col-lg-4">
             <div class="form-group row">
@@ -175,11 +177,75 @@ if(isset($_SESSION["user"]["uid"])){
 
 </div>
 </div>
+<div class="modal  fade" id="addCus" tabindex="-1" role="alertdialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <form id="addCudForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title" >
+                        <h3>Add New Customer</h3>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="msg_body">
+                    <div class="form-group row">
+                        <label for="" class="col-lg-4 col-form-label">Customer Email</label>
+                        <input type="text" class="col-lg-7 form-control " name="ncus_email" id="ncus_email"  >
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-lg-4 col-form-label">Name</label>
+                        <input type="text" class="col-lg-7 form-control " name="ncus_name" id="ncus_name"  >
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-lg-4 col-form-label">Date of Birth</label>
+                        <input type="text" class="col-lg-7 form-control " name="ndtpdob" id="ndtpdob"  >
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-lg-4 col-form-label">Address</label>
+                        <input type="text" class="col-lg-7 form-control " name="ncus_address" id="ncus_address"  >
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-lg-4 col-form-label">Mobile No</label>
+                        <input type="text" class="col-lg-7 form-control " name="ncus_mobile" id="ncus_mobile"  >
+                    </div>
+                    <div class="form-group row">
+                        <label for="" class="col-lg-4 col-form-label">NIC</label>
+                        <input type="text" class="col-lg-7 form-control " name="ncus_nic" id="ncus_nic"  >
+                    </div>
+                        <div class="form-group row">
+                        <label for="staticEmail" class=" col-sm-4  col-form-label-sm">Gender</label>
+                        <div class="form-check form-check-inline"> <!-- for align button and label -->
+                            <input type="radio" class="form-check-input ml-3 selected" required name="gender" id="optmale" value="1" >
+                            <label for="optmale" class="form-check-label-sm">Male</label>
+                            <!-- for align button and label -->
+                            <input type="radio" class="form-check-input ml-4" required name="gender" id="optfemale" value="0" >
+                            <label for="optfemale" class="form-check-label-sm" >Female</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success"   id="modal_btn_add_cus"> ADD</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"  id="modal_btn_add"> Cancel</button>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 
 <script>
     $(document).ready(function () {
          $("#inv_date").datepicker({
+            changeMonth:true,
+            changeYear:true,
+            maxDate:"0",
+            dateFormat:"yy-mm-dd"
+        });
+         $("#ndtpdob").datepicker({
             changeMonth:true,
             changeYear:true,
             maxDate:"0",
@@ -225,7 +291,58 @@ if(isset($_SESSION["user"]["uid"])){
             }
         });
 
-        /*-----------------------Customer email and mobile no validation---------------------*/
+        /*----------------------Add new customer  --------------------------   */
+
+        // add new Customer
+        $("#modal_btn_add_cus").click(function () {
+            
+            $ncus_email =$("#ncus_email").val();
+            $ncus_name =$("#ncus_name").val();
+            $ncus_mobile =$("#ncus_mobile").val();
+            $ndtpdob =$("#ndtpdob").val();
+            $ncus_address =$("#ncus_address").val();
+            $ncus_nic = $("ncus_nic").val();
+
+            var date_pattern = /^[0-9]{4}\-[0-9]{2}\-[0-9]{2}$/;
+            if (!ndtpdob.match(date_pattern)){
+            swal("Invalid Input","Please Enter a valid Date","error");
+                return;
+            }
+
+            var email_pattern=/^[a-zA-Z\.\s]+$/;
+            if( $ncus_email.match(email_pattern)){
+                swal ("Invalid Input","Please enter your email address","error");
+                return;
+            }
+
+            if($ncus_email == "" || $ncus_name=="" || $ncus_address=="" || $ncus_mobile=="" || $ncus_nic==""){
+                swal("warning","Fill All Fieds","warning" );
+            }
+            var fdata = $("#addCudForm").serialize();
+            var url  = "lib/mod_invoice.php?type=addNewCustomer";
+
+            $.ajax({
+                method:"POST",
+                url:url,
+                data:fdata,
+                dataType:"text",
+                success:function (result) {
+                    res = result.split(",");
+                    if(res[0]=="0"){
+                        swal("Error",res[1],"error")
+                    }
+                    else if(res[0]=="1") {
+                        $("#addCus").modal('hide');
+                        $("#cus_id").val($ncus_id);
+                        $("#cus_name").val($ncus_name);
+                        $("#cus_mobile").val($ncus_mobile);
+                    }
+                }
+
+            });
+        });
+
+        /*-----------------------Customer email and mobile no keyup---------------------*/
         $("#cus_email").keyup(function(){
             var email = $(this).val();
             var email_pattern=/^[a-zA-Z1-9\n{@}.\s]+$/;
@@ -251,8 +368,8 @@ if(isset($_SESSION["user"]["uid"])){
 
          $("#newsp_id").keypress(function (e) {  // check this email register or not
             if(e.which==13){
-                var newspidnewspid = $(this).val();
-                 if(newspidnewspid==""){
+                var newspid = $(this).val();
+                 if(newspid==""){
                    swal("warning","Newspaper id not valid","warning");
                 }else{
 
