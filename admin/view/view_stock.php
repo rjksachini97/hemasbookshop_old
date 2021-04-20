@@ -4,7 +4,7 @@ require("../lib/mod_stock.php");
 require ("../lib/common.php");
 ?>
 
-<!-- Breadcrumbs-->
+<!-- Breadcrumbs--> 
 <ol class="breadcrumb">
   <li class="breadcrumb-item">
     <a href="home.php">Dashboard</a>
@@ -101,7 +101,7 @@ require ("../lib/common.php");
 
 
 <!-- New Newspaer Form -->
-<h3 class="h3" >View All Stock Batches</h3>
+<h3 class="h3" >View All Stock Batches</h3> 
 <hr>
 <br>
 
