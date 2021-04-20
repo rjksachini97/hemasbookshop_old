@@ -1,6 +1,6 @@
 <?php  
 require("../lib/mod_customer.php");
-$newid = getNewCusId();
+//$newid = getNewCusId();
 ?>
 
 <script>
@@ -94,12 +94,13 @@ $newid = getNewCusId();
 
           <!-- New employee form-->
             <form>
-              <div class="form-group row">
+            <!--  <div class="form-group row">
                 <label for="txtcid" class="col-sm-2 col-form-label">Customer ID</label>
                 <div class="col-sm-3">
-                  <input type="text" class="form-control" id="txtcid" name="txtcid" value="<?php echo($newid); ?>" readonly="readonly">
+                  <input  class="form-control" id="txtcid" name="txtcid" readonly="readonly">
                 </div>
               </div>
+            -->
 
               
 
