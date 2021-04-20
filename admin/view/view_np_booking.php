@@ -17,48 +17,45 @@ require("../lib/mod_np_booking.php");
           {"data":"2"},
           {"data":"3"},
           {"data":"4"},
-          {"data":"5"},
         ],
         "columnDefs":[
 
         {
-            "data":"6",
+            "data":"5",
             "render":function(data,type,row){
               return (data=="1")?"Approved":"Approval Pending";
             },
-            "targets": 6
+            "targets": 5
           }, 
 
           {
-            "data":"6",
-            "render":function(data,type,row){
-              return (data=="1")?"":"<a href='#' title='Half_payment'><i class='far fa-calendar-check'></i></a>";
-            },
-            "targets": 7
+            "data":null
+            "defaultContent": "<a href='#' title='Open_Slip' data-toggle='modal' data-target='#viewSlip'><i class='fas fa-money-check-alt'></i></a>",
+            "targets": 6
           },
           {
-            "data":"7",
+            "data":"6",
             "render":function(data,type,row){
               return (data=="1")?"Yes":"No";
             },
-            "targets": 8
+            "targets": 7
           },
 
         {
             "data":null,
             "defaultContent": "<a href='#' title='Full_payment'><i class='fas fa-calendar-check'></i></a>",
-            "targets": 9
+            "targets": 8
           },
     
           {
             "data":null,
             "defaultContent": "<a href='#' title='View_details' data-toggle='modal' data-target='#viewdetails'><i class='fas fa-list-alt'></i></a>",
-            "targets": 10
+            "targets": 9
           },
           {
             "data":null,
             "defaultContent": "<a href='#' title='Cancel_Booking'><i style='color:red' class='fas fa-window-close'></i></a>",
-            "targets": 11
+            "targets": 10
           }
         ]
     });
@@ -111,7 +108,22 @@ require("../lib/mod_np_booking.php");
               console.log(etxt);
             }
           });
- 		}else if(type=="Half_payment"){
+
+ 		}else if(type=="Open_Slip"){
+        var url = "lib/mod_booking.php?type=viewSlip";
+         $.ajax({
+            method:"POST",
+            url:url,
+            data:{booking_id:eid},
+            dataType:"text",
+            success:function(result){
+              $("#viewSlip").html(result);
+            },
+            error:function(eobj,etxt,err){
+              console.log(etxt);
+            }
+          });
+    }else if(type=="Full_payment"){
         swal({
             title:"Do you want to Approve this Booking?",
             text:"You are trying to Approve this Booking :"+eid,
@@ -196,10 +208,9 @@ require("../lib/mod_np_booking.php");
       <th>Customer ID</th>
       <th>News paper</th>
       <th>Qty</th>
-      <th>Order Period</th>
       <th>Total Price</th>
       <th>Status</th>
-      <th>Half payment</th>
+      <th>Uploaded Slip</th>
       <th>Fully paid</th>
       <th>Full payment</th>
       <th>View Details</th>
@@ -212,10 +223,9 @@ require("../lib/mod_np_booking.php");
       <th>Customer ID</th>
       <th>News paper</th>
       <th>Qty</th>
-      <th>Order Period</th>
       <th>Total Price</th>
       <th>Status</th>
-      <th>Half payment</th>
+      <th>Uploaded Slip</th>
       <th>Fully paid</th>
       <th>Full payment</th>
       <th>View Details</th>
@@ -247,6 +257,28 @@ require("../lib/mod_np_booking.php");
 
 
                     </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+                        <!-- View Bank Slip Modal -->
+            <div class="modal fade" id="viewSlip" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bank Slip</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div id="view-slip"></div>
+                    
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
