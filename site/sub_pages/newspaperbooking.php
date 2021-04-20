@@ -219,7 +219,8 @@ require("cmn_booking_navbar.php");
                 url:url,
                 data:data,
                 dataType:"text",
-                success:function (result) {             
+                success:function (result) {  
+                      
                     res = result.split(",");
                     msg = res[0].trim();
                     if(msg=="0"){

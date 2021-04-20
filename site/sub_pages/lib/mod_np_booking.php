@@ -20,6 +20,28 @@ function getNewOrderId(){
   
 }
 
+function getInvId(){
+  $dbobj = DB::connect();
+
+  $cdate = date("Y-m-d",time());
+  $sql = "SELECT count(inv_id) FROM tbl_invoice WHERE inv_date='$cdate';";
+
+  $result = $dbobj->query($sql);
+
+  if($dbobj->errno){
+      echo("SQL Error : ".$dbobj->error);
+      exit;
+  }
+  $row = $result->fetch_array();
+  $count = $row[0];
+  $count++;
+
+  $newid = "INV".str_replace("-","",$cdate)."_".str_pad($count,4,"0",STR_PAD_LEFT);
+
+  return $newid;
+  $dbobj->close();
+}
+
 /*function getNPDetails(){
   $sampleid = $_POST["sampleid"];
   $qty = $_POST["qty"];
@@ -247,11 +269,11 @@ function addNewsPaperBooking(){
   
   
   
-  $sql_inv = "INSERT INTO tbl_newspaper_booking_details (cus_id,crnt_date,total_qty,total_price,npbook_status) VALUES ('$cus_id','$crnt_date','$total_qty','$total_price','$status')";
+  $sql_order = "INSERT INTO tbl_newspaper_booking_details (cus_id,crnt_date,total_qty,total_price,npbook_status) VALUES ('$cus_id','$crnt_date','$total_qty','$total_price','$status')";
 
-  $stmt_inv =$dbobj->prepare($sql_inv);
-  if(!$stmt_inv->execute()){
-      echo ("0,SQL Error ".$stmt_inv->error);
+  $stmt_order =$dbobj->prepare($sql_order);
+  if(!$stmt_order->execute()){
+      echo ("0,SQL Error ".$stmt_order->error);
   }else{
       $row = count($newsp_id = $_POST['newsp_id']);
 
@@ -266,16 +288,8 @@ function addNewsPaperBooking(){
           $stmt_prod->bind_param("iisisssdi",$cus_id,$npbook_details_id,$newsp_id[$i],$np_book_qty[$i],$inv_time,$crnt_date,$order_date[$i],$np_tot_price[$i],$status);
           if(!$stmt_prod->execute()){
                echo ("0,SQL Error ".$stmt_prod->error);
-           }
-          //  else{
-              
-              // $res = updateStock($dbobj,$batch_id[$i],$tbl_id[$i],$tbl_qty[$i]);
-              // if ($res=="0"){
-              //     echo("0,Error on Batch update");
-              //     exit;
-              // }
-
-          //  }
+          }
+           
 
       }
       // $sql_pay ="INSERT INTO tbl_payment (pay_id,inv_id,pay_amount,pay_date,pay_time,pay_type) VALUES ('$payid','$inv_id','$txtntot','$paydate','$inv_time','$inv_type')";
@@ -284,10 +298,20 @@ function addNewsPaperBooking(){
       //             echo ("0,SQL Error ".$result_pay->error);
       //             exit;    
       //         }
+        $inv_type="online";
+        $inv_id = getInvId();
+        $sql_inv ="INSERT INTO tbl_invoice (inv_id,cus_id,inv_date,inv_qty,inv_total,inv_type,inv_status) VALUES (?,?,?,?,?,?,?)";
+        $result_inv = $dbobj->prepare($sql_inv);
+        $result_inv->bind_param("sisidsi",$inv_id,$cus_id,$crnt_date,$total_qty,$total_price,$inv_type,$status);
+        if(!$result_inv->execute()){
+          echo ("0,SQL Error ".$result_inv->error);
+            exit;    
+        }
+       
       echo("1,Invoice created");
 
   }
-  $stmt_inv->close();
+  $stmt_order->close();
   $dbobj->close(); 
 
 }
