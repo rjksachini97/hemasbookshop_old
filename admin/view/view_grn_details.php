@@ -1,4 +1,4 @@
-<?php
+<?php 
 if(isset($_GET['grn_id'])){
 	$grn_id = $_GET['grn_id'];
 }
