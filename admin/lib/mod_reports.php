@@ -1,4 +1,4 @@
-<?php    
+<?php     
 require_once("config.php"); 
 if(isset($_GET["type"])){
     $type = $_GET["type"];
@@ -123,7 +123,7 @@ function incomeInventory($sdate,$edate){
 }
 
 /*---------------------------------np booked Reports-----------------------------------------*/
-function numberOrderByYear(){
+function numberOrderByYear(){ 
 
     $year = $_GET['year'];
 
