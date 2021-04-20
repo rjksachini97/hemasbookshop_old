@@ -100,7 +100,7 @@ $(function(){
           }
         }); 
     });
-    });
+    }); 
           //login function
     $(function(){
     $("#loginform").submit(function(e){
