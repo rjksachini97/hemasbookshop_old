@@ -1,4 +1,4 @@
-<?php 
+<?php  
   require("lib/mod_cus.php");
    ?> 
 
@@ -100,8 +100,8 @@ $(function(){
           }
         }); 
     });
-    }); 
-          //login function
+    });   
+           //login function
     $(function(){
     $("#loginform").submit(function(e){
       e.preventDefault();
