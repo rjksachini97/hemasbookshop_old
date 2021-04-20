@@ -31,6 +31,8 @@
               ?>
 
               <li class="dropdown"><a href="#why-us" data-toggle="dropdown"><?php echo $_SESSION['session_cus']['cus_name']; ?></a>
+
+                
                   <ul id="products-menu" class="dropdown-menu clearfix" role="menu">
                       <li><a href="cus_profile.php">Profile</a></li>
                       <li><a href="lib/logout.php" id="logout_btn">Logout</a></li>
