@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2021 at 06:09 PM
+-- Generation Time: Apr 20, 2021 at 07:00 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -42,13 +42,22 @@ CREATE TABLE `tbl_ad_booking` (
   `ad_description` varchar(5000) NOT NULL,
   `ad_wc` int(11) NOT NULL,
   `ad_tot_price` float(15,2) NOT NULL,
-  `ad_img` varchar(200) NOT NULL,
-  `ad_img_nic` varchar(500) NOT NULL,
-  `ad_img_br` varchar(100) NOT NULL,
-  `ad_img_slip` varchar(250) NOT NULL,
-  `ad_pay_status` int(11) NOT NULL,
-  `ad_book_status` tinyint(1) NOT NULL DEFAULT '1'
+  `ad_img` varchar(1000) NOT NULL,
+  `ad_img_nic` varchar(1000) NOT NULL,
+  `ad_img_br` varchar(1000) NOT NULL,
+  `ad_img_slip` varchar(1000) NOT NULL,
+  `ad_pay_status` tinyint(11) NOT NULL,
+  `ad_book_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_ad_booking`
+--
+
+INSERT INTO `tbl_ad_booking` (`ad_book_id`, `cus_id`, `newsad_mode`, `adcolour_name`, `newsp_name`, `newsac_category`, `adcattype_desc`, `admode_details_size`, `crnt_date`, `adpub_date`, `ad_description`, `ad_wc`, `ad_tot_price`, `ad_img`, `ad_img_nic`, `ad_img_br`, `ad_img_slip`, `ad_pay_status`, `ad_book_status`) VALUES
+(1, 1, 'Box Advertisement', 'Black & White', 'Sunday Times', 'Automobile', 'For Sale', '4cmx1cm', '2021-04-20', '2021-04-30', 'Car for sale', 3, 1500.00, '', '', '', '', 0, 0),
+(2, 1, 'Box Advertisement', 'Black & White', 'Sunday Times', 'Automobile', 'For Sale', '4cmx1cm', '2021-04-20', '2021-04-30', 'go go go', 3, 1500.00, '', '', '', '', 1, 0),
+(3, 3, 'Box Advertisement ', 'Black & White', 'Sunday Times', 'Automobile', 'For Sale', '4cmx1cm', '2021-04-20', '2021-04-23', 'go go go', 3, 1500.00, '', '', '', '', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -111,8 +120,20 @@ CREATE TABLE `tbl_ad_order` (
   `adorder_date` date NOT NULL,
   `publish_date` date NOT NULL,
   `adorder_price` varchar(10) NOT NULL,
-  `adorder_status` tinyint(11) NOT NULL
+  `adorder_status` tinyint(11) NOT NULL,
+  `msg_email` varchar(1000) NOT NULL,
+  `msg_title` varchar(100) NOT NULL,
+  `msg_date` date NOT NULL,
+  `msg_time` time NOT NULL,
+  `msg_status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_ad_order`
+--
+
+INSERT INTO `tbl_ad_order` (`adorder_id`, `cus_id`, `ad_book_id`, `newsad_mode`, `adorder_date`, `publish_date`, `adorder_price`, `adorder_status`, `msg_email`, `msg_title`, `msg_date`, `msg_time`, `msg_status`) VALUES
+(1, 1, 1, 'Box Advertisement', '2021-04-20', '2021-04-30', '1500.00', 0, '', '', '0000-00-00', '00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -377,6 +398,7 @@ INSERT INTO `tbl_newspaper_ad` (`newsa_id`, `pub_id`, `npcat_id`, `newsp_id`, `n
 CREATE TABLE `tbl_newspaper_booking` (
   `np_book_id` int(11) NOT NULL,
   `cus_id` int(11) NOT NULL,
+  `npbook_details_id` int(11) NOT NULL,
   `newsp_name` varchar(30) NOT NULL,
   `np_book_qty` int(11) NOT NULL,
   `np_order_time` varchar(10) NOT NULL,
@@ -392,10 +414,25 @@ CREATE TABLE `tbl_newspaper_booking` (
 -- Dumping data for table `tbl_newspaper_booking`
 --
 
-INSERT INTO `tbl_newspaper_booking` (`np_book_id`, `cus_id`, `newsp_name`, `np_book_qty`, `np_order_time`, `crnt_date`, `order_date`, `np_tot_price`, `np_slip_img`, `np_pay_status`, `np_book_status`) VALUES
-(1, 1, 'NEWP0001', 1, '09:00:00', '2019-01-03', '2019-01-05', 80.00, '', 1, 1),
-(2, 1, 'NEWP0002', 1, '09:02:00', '2019-01-03', '2019-01-05', 80.00, '', 1, 1),
-(3, 1, 'NEWP0005', 1, '09:05:00', '2019-01-03', '2019-01-05', 100.00, '', 0, 1);
+INSERT INTO `tbl_newspaper_booking` (`np_book_id`, `cus_id`, `npbook_details_id`, `newsp_name`, `np_book_qty`, `np_order_time`, `crnt_date`, `order_date`, `np_tot_price`, `np_slip_img`, `np_pay_status`, `np_book_status`) VALUES
+(1, 1, 0, 'NEWP0001', 1, '09:00:00', '2019-01-03', '2019-01-05', 80.00, '', 1, 1),
+(2, 1, 0, 'NEWP0002', 1, '09:02:00', '2019-01-03', '2019-01-05', 80.00, '', 1, 1),
+(3, 1, 0, 'NEWP0005', 1, '09:05:00', '2019-01-03', '2019-01-05', 100.00, '', 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_newspaper_booking_details`
+--
+
+CREATE TABLE `tbl_newspaper_booking_details` (
+  `npbook_details_id` int(11) NOT NULL,
+  `cus_id` int(11) NOT NULL,
+  `crnt_date` date NOT NULL,
+  `total_qty` int(11) NOT NULL,
+  `total_price` float(15,2) NOT NULL,
+  `npbook_status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -857,6 +894,12 @@ ALTER TABLE `tbl_newspaper_booking`
   ADD PRIMARY KEY (`np_book_id`);
 
 --
+-- Indexes for table `tbl_newspaper_booking_details`
+--
+ALTER TABLE `tbl_newspaper_booking_details`
+  ADD PRIMARY KEY (`npbook_details_id`);
+
+--
 -- Indexes for table `tbl_newspaper_category`
 --
 ALTER TABLE `tbl_newspaper_category`
@@ -956,7 +999,7 @@ ALTER TABLE `tbl_users`
 -- AUTO_INCREMENT for table `tbl_ad_booking`
 --
 ALTER TABLE `tbl_ad_booking`
-  MODIFY `ad_book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ad_book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tbl_ad_modes_details`
