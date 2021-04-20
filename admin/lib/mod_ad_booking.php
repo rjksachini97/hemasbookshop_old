@@ -23,8 +23,9 @@ function viewadbooking(){
 	    array( 'db' => 'newsp_name','dt' => 3 ),
 	    array( 'db' => 'adpub_date','dt' => 4 ),
 	    array( 'db' => 'ad_tot_price','dt' => 5 ),
-	    array( 'db' => 'ad_book_status','dt' => 6 )
-		//array( 'db' => 'ad_pay_status' , 'dt' => 7)
+	    array( 'db' => 'ad_pay_status' , 'dt' => 6),
+	    array( 'db' => 'ad_book_status','dt' => 7 )
+		
 	);
 
 	// SQL server connection information
@@ -128,7 +129,7 @@ function AdviewSlip(){
 }
 
 
-function confirmBooking(){
+function confirmNPBooking(){
 	$booking_id = $_POST['booking_id'];
 	$dbobj=DB::connect();
 
@@ -157,6 +158,19 @@ function confirmfullpayment(){
 		echo 0;
 	}
 }
+
+/*function approval(){
+	$booking_id = $_POST['booking_id'];
+	$dbobj = DB::connect();
+
+	$sql = "UPDATE tbl_ad_booking SET ad_book_status=1 WHERE ad_book_id=$booking_id";
+
+	if($dbobj->query($sql)){
+		echo 1;
+	}else {echo 0;
+}
+}*/
+
 
 
 function deleteadbooking(){
