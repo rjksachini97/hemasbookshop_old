@@ -1,4 +1,4 @@
-<?php   
+<?php     
 require("../lib/mod_ad_order.php");  
 ?>
 
@@ -17,11 +17,28 @@ require("../lib/mod_ad_order.php");
 				{"data":"2"},
 				{"data":"3"},
 				{"data":"4"},
-				{"data":"5"},
+				{"data":"5"
+				   "visible":false,
+				   "searchable":false},
+				{"data":"6"
+				   "visible":false,
+				   "searchable":false},
+				{"data":"7"
+				    "visible":false,
+					"searchable":false},
 			],
 			"columnDefs":[
-				{
-					"data":[5],
+				
+				 {
+                        "data":"5",
+                        "render": function(data,type,row){
+                            return(data=="0")?"<button class='btn btn-success btn-sm' title='Send Email'>Send Email</button>":"<button class='btn btn-primary btn-sm' title='view Email'>View Email</button>";
+                        },
+                        "targets":8
+                    },
+
+                    {
+					"data":[8],
 					"render":function(data,type,row){
 						if(data=="0"){
 							return "<a href='#' title='completed' ><i class='fas fa-1x text-primary fa-check-double'></i></a> "
@@ -29,9 +46,18 @@ require("../lib/mod_ad_order.php");
 							return "<p class='text-success'>Completed</p> "
 						}
 					},
-					"targets": 5
+					"targets": 9
 				},
 				{
+                        "target":"8",
+                        "render": function(data,type,row){
+                            return(target=="0")?"<button class='btn btn-success btn-sm' title='Send SMS'>Send SMS</button>":"<button class='btn btn-primary btn-sm' title='view SMS'>View SMS</button>";
+                        },
+                        "targets":10
+                    },
+
+
+			/*	{
 					"data":"5",
 					"render":function(data,type,row){
 						if(data=="0"){
@@ -41,12 +67,12 @@ require("../lib/mod_ad_order.php");
 						}
 					},
 					"targets": 6
-				},
+				}, */
 
 				{
 					"data":null,
 					"defaultContent":"<a href='#' title='view_ad_orders'><i class='fas fa-2x fa-clipboard-list'></i></a> ",
-					"targets": 7
+					"targets": 11
 				}
 				]
 		});
@@ -182,6 +208,7 @@ $("#btnmsgsend").click(function(){
       <th>Publish Date</th>
       <th>Total Price</th>
       <th>Status</th>
+      <th>Send Email</th>
       <th>Send Message</th>
       <th></th>
     </tr>
@@ -194,6 +221,7 @@ $("#btnmsgsend").click(function(){
       <th>Publish Date</th>
       <th>Total Price</th>
       <th>Status</th>
+      <th>Send Email</th>
       <th>Send Message</th>
 	  <th></th>
     </tr>
@@ -230,6 +258,55 @@ $("#btnmsgsend").click(function(){
 </div>
 
 
+<!--  --------------Send Email------------- -->
+
+<!--<div class="modal fade" id="sendEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="formSendemail"> 
+            <div class="modal-header">
+                                   
+                
+                <div class="modal-title" >
+                    <h5 >Send Email</h5>                 
+                </div>                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="msg_body">
+                <input type="hidden" name="id" id="id" value="" >
+               <div class="form-group row">
+                    <label for="" class="col-lg-4 col-form-label">name</label>:
+                    <input type="email" class="ml-1 col-lg-6 form-control" readonly name="send_name" id="send_name"> 
+                </div>
+                <div class="form-group row">
+                    <label for="" class="col-lg-4 col-form-label">To</label>:
+                    <input type="email" class="ml-1 col-lg-6 form-control" readonly name="send_mail" id="send_mail"> 
+                </div>
+               <div class="form-group row">
+                    <label for="" class="col-lg-4 col-form-label">Title</label>:
+                    <input type="text" class="ml-1 col-lg-6 form-control" readonly name="send_title" id="send_title">
+                </div>
+               <div class="form-group row">
+                    <label for="" class="col-lg-4 col-form-label">Message</label>:
+                    <textarea class="ml-1 col-lg-7 form-control " rows="6" id="send_msg" name="send_msg">
+                            
+                    </textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <img src="../resources/img/page-loading.gif" class="d-none" id="load_imag" width='100px'>
+                <button type="button" class="btn btn-success"  id="modal_reply_send"> Send</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="row">
 	<div class="col-sm-3"></div>
 	<div class="col-sm-6 shadow">
@@ -243,4 +320,4 @@ $("#btnmsgsend").click(function(){
 		</form>
 	</div>
 	<div class="col-sm-3"></div>
-</div>
+</div>  -->
