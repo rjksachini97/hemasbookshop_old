@@ -272,7 +272,7 @@ if(isset($_SESSION["user"]["uid"])){
                         data:{email:email},
                         dataType:"json",
                         success:function (result) {
-
+                           
                             if(result=="1"){
                                 $("#cus_id").val("");
                                 $("#cus_name").val("");
@@ -325,7 +325,7 @@ if(isset($_SESSION["user"]["uid"])){
                 method:"POST",
                 url:url,
                 data:fdata,
-                dataType:"text",
+                dataType:"json",
                 success:function (result) {
                     res = result.split(",");
                     if(res[0]=="0"){
@@ -458,7 +458,7 @@ if(isset($_SESSION["user"]["uid"])){
             }
 
             if(date =="" || cus_email=="" || cus_name=="" || cus_mobile=="" || newsp_id=="" ||
-                newsp_modal=="" || newsp_qty=="" ){
+                newsp_name=="" || newsp_qty=="" ){
                 swal("warning","Please fill All Inputs correctly","warning");
             return;
             }
