@@ -19,15 +19,31 @@ require("../lib/mod_ad_booking.php");
           {"data":"3"},
           {"data":"4"},
           {"data":"5"},
+
         ],
         "columnDefs":[
 
         {
             "data":"6",
             "render":function(data,type,row){
-              return (data=="1")?"Approved":"Approval Pending";
+              return (data=="1")?"Paid":"Not paid";
             },
             "targets": 6
+          },
+          {  ////chechk here
+            "data":"6",
+            "render":function(data,type,row){
+              return (data=="1")?"":"<a href='#' title='Full_payment'><i class='far fa-calendar-check'></i></a>";
+            },
+            "targets": 7
+          },
+
+          {
+            "data":"6",
+            "render":function(data,type,row){
+              return (data=="1")?"Approved":"Approval Pending";
+            },
+            "targets": 8
           },
           /* {
             "data":null,
@@ -51,12 +67,12 @@ require("../lib/mod_ad_booking.php");
           {
             "data":null,
             "defaultContent": "<a href='#' title='View_details' data-toggle='modal' data-target='#viewdetails'><i class='fas fa-list-alt'></i></a>",
-            "targets": 7
+            "targets": 9
           },
           {
             "data":null,
             "defaultContent": "<a href='#' title='Cancel_Booking'><i style='color:red' class='fas fa-window-close'></i></a>",
-            "targets": 8
+            "targets": 10
           }
         ]
     });
@@ -112,6 +128,37 @@ require("../lib/mod_ad_booking.php");
           });
 
    }
+   else if(type=="Full_payment"){
+        swal({
+            title:"Do you want to Approve this Booking?",
+            text:"You are trying to Approve this Booking :"+eid,
+            icon:"warning",
+            buttons:true,
+            dangerMode:true
+          }).then((willDelete)=>{
+            if(willDelete){
+              var url = "lib/mod_ad_booking.php?type=confirmNPBooking";
+             $.ajax({
+                method:"POST",
+                url:url,
+                data:{event_id:eid},
+                dataType:"text",
+                success:function(result){
+                  if(result == 1){
+                    swal("Approved", "Booking has been approved", "success");
+                    dataTable.row($(this).parents('tr')).draw();
+                  }else{
+                    swal("Error!", "Full payment is not confirmed!", "error")
+                  }
+                },
+                error:function(eobj,etxt,err){
+                  console.log(etxt);
+                }
+              });
+            }
+          });
+        
+      }
 
  /*  else if(type=="Open_Slip"){
         var url = "lib/mod_ad_booking.php?type=AdviewSlip";
@@ -162,9 +209,11 @@ require("../lib/mod_ad_booking.php");
       <th>NewsPaper</th>
       <th>Publish Date</th>
       <th>Total Price</th>
+      <th>Fully paid</th>
+      <th>Aproval</th>
       <th>Status</th>
    <!--   <th>Uploaded Slip</th>
-      <th>Fully paid</th>
+      
       <th>Full payment</th> -->
       <th>View Details</th>
       <th>Cancel Booking</th>
@@ -178,9 +227,11 @@ require("../lib/mod_ad_booking.php");
       <th>NewsPaper</th>
       <th>Publish Date</th>
       <th>Total Price</th>
+      <th>Fully paid</th>
+      <th>Aproval</th>
       <th>Status</th>
  <!--     <th>Uploaded Slip</th>
-      <th>Fully paid</th>
+      
       <th>Full payment</th>  -->
       <th>View Details</th>
       <th>Cancel Booking</th>
