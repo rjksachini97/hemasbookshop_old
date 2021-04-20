@@ -33,7 +33,7 @@
               <h4 class="title"><a href="">NEWSPAPERS</a></h4>
               <!--<p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>  -->
               <div class="btn-group-vertical">
-                <a href="./sub_pages" class="btn btn-light">Read more</a>
+                <a href="./sub_pages/newspaper_details.php" class="btn btn-light">Read more</a>
                 <a href="./sub_pages/newspaperbooking.php" class="btn btn-light">Booking</a>
               </div>
             </div>
