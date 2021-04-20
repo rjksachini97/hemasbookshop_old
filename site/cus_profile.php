@@ -96,4 +96,88 @@ $resad = $dbobj->query($sqlad);
       
     </div>
 </header>
+  <!-- #header --> 
+<section id="services" class="section-bg" style="padding-top: 150px;">
+  <div class="container">
+  <table style="width:100%;" align="center">
+  <tr>
+    <th><button class="btn btn-success" id="profile-btn">Profile</button></th> 
+    <th><button class="btn btn-success" id="bookings-btn">My Bookings</button></th>
+  </tr>  
+</table>
+</div>
+</section>
+
+<!-- /////////////////////////////////Profile infomations///////////////////////////////////// -->
+
+<div class="container">
+	
+  <div class="row">
+    <fieldset class="for-panel" id="panel-profile">
+      <legend>Profile Infomation</legend>
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-horizontal">
+              <label class="col-xs-5 control-label">Name:</label>
+                <p class="form-control-static"><?php echo $cus_info["cus_name"]; ?></p>               
+               <label class="col-xs-5 control-label">Phone Number: </label>
+                <p class="form-control-static"><?php echo $cus_info["cus_mobile"]; ?></p>               
+                <label class="col-xs-5 control-label">Address</label>
+                  <p class="form-control-static"><?php echo $cus_info["cus_address"]; ?></p>
+                 <label class="col-xs-4 control-label">Gender: </label>
+                  	<p class="form-control-static"><?php if ($cus_info["cus_gender"]==1){
+                        echo "Male";
+                      }else{
+                        echo "Female";
+                      } ?></p>                        
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-horizontal">               
+                  <label class="col-xs-4 control-label">Date Of Birth:</label>
+                  	<p class="form-control-static"><?php echo $cus_info["cus_dob"]; ?></p>
+                  <label class="col-xs-4 control-label">NIC Number:</label>
+                  	<p class="form-control-static"><?php echo $cus_info["cus_nic"]; ?></p>
+                  <label class="col-xs-4 control-label">Email:</label>
+                  		<p class="form-control-static"><?php echo $cus_info["cus_email"]; ?></p>                
+              </div>
+             </div>
+          </div>
+
+          <a href="#Updatemodal" data-toggle="modal" class="btn btn-primary">
+              Edit Details
+            </a>
+        <!--  <a href="#updatepaswrd" data-toggle="modal" class="btn btn-primary">
+              Update Password
+            </a>  -->
+        </fieldset>
+
+        <!-- /////////////////////////////////Booking infomations///////////////////////////////////// -->
+
+        <fieldset class="for-panel" id="panel-bookings">
+          <legend>Booking Infomation</legend>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Booking Date</th>
+                    <th scope="col">Booking time</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Payment Slip</th>
+                    <th scope="col">Slip approve Status</th>
+                    <th scope="col">Full payment Status</th>
+
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td colspan="8" class="bg-info font-weight-bold" style="text-align:center;color:white;border-radius:30px;">
+                      Advertisment Bookings
+                    </td>
+                  </tr>
+    </div>
+
+
 </body>
