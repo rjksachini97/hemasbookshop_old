@@ -260,7 +260,7 @@ $("#btnmsgsend").click(function(){
 
 <!--  --------------Send Email------------- -->
 
-<!--<div class="modal fade" id="sendEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="sendEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <form id="formSendemail"> 
@@ -320,4 +320,56 @@ $("#btnmsgsend").click(function(){
 		</form>
 	</div>
 	<div class="col-sm-3"></div>
-</div>  -->
+</div> 
+<!--   code for send sms  -->
+<?php
+if(isset($_GET["type"])){
+	$type = $_GET["type"];
+	$obj = new ContSMS();
+	$obj->$type();
+}
+class ContSMS{
+	public $conn;
+	function __construct(){
+		require_once("../model/connection.php");
+		$this->conn= Connection::conn();
+	}
+
+	public function sendSMS(){
+		$sender_contact = $_POST["contactno"];
+		$sms_text = $_POST["msgtext"];
+
+		// echo($sender_contact.$sms_text);
+
+		//Username to login
+        $user = "94717228827";
+
+        //Password set
+        $password = "4380";
+
+        //Message encoding to avoid space character ommiting
+        $text = urlencode("$sms_text");
+
+        //Receiver number
+        $to = "$sender_contact";
+
+        //Gateway URL
+        $baseurl = "http://www.textit.biz/sendmsg";
+
+        //Setting sending parameter and pass
+        $url = "$baseurl/?id=$user&pw=$password&to=$to&text=$text&eco=y";
+
+        $ret = file($url);
+        $res = explode(":", $ret[0]);
+        // Get message delivery status if needed
+        if (trim($res[0]) == "OK") {
+            echo "Message Sent - ID : " . $res[1];
+        } else {
+            echo "Sent Failed - Error : " . $res[1];
+        }
+
+	}
+}
+?> 
+
+
