@@ -71,9 +71,9 @@ function getNewspaperCategories(){
 }
 
 function getprice(){
-  $price = $_POST['price'];
+  $newsp_id = $_POST['newsp_id'];
   $dbobj = DB::connect();
-  $sql = "SELECT newsp_id,newsp_price FROM tbl_newspaper WHERE newsp_price='$price';";
+  $sql = "SELECT newsp_id,newsp_qty,newsp_name,newsp_price FROM tbl_newspaper WHERE newsp_id='$newsp_id';";
   $result =  $dbobj->query($sql);
   if($dbobj->errno){
     echo("SQL Error : ".$dbobj->error);
@@ -222,5 +222,74 @@ function deleteSave(){
 
   $result = $statement->fetchAll();
 }*/
+
+
+/*----------------------Add New Invoice --------------------------   */
+function addNewsPaperBooking(){
+  session_start();
+  $cus_id = $_SESSION['session_cus']['cus_id'];
+  $total_qty = $_POST['totqty'];
+  $total_price = $_POST['txtntot'];
+  $inv_type = "offline";
+  $status ="1";  
+  // $payid = getPayId();
+  $crnt_date = date("Y-m-d");
+  $inv_time = date("H:m:s");
+
+  $newsp_id = $_POST['newsp_id'];
+  $newsp_name = $_POST['newsp_name'];
+  $np_book_qty = $_POST['newsp_qty'];
+  $order_date = $_POST['order_date'];
+  $np_tot_price = $_POST['newsp_total_price'];
+
+  $dbobj= DB::connect();
+
+  
+  
+  
+  $sql_inv = "INSERT INTO tbl_newspaper_booking_details (cus_id,crnt_date,total_qty,total_price,npbook_status) VALUES ('$cus_id','$crnt_date','$total_qty','$total_price','$status')";
+
+  $stmt_inv =$dbobj->prepare($sql_inv);
+  if(!$stmt_inv->execute()){
+      echo ("0,SQL Error ".$stmt_inv->error);
+  }else{
+      $row = count($newsp_id = $_POST['newsp_id']);
+
+      $npbook_details_id= mysqli_insert_id($dbobj);
+      
+      for($i=0; $i<$row; $i++){
+
+          // $nodays = $nodays[$i]." days";
+          // $warrenty =date("Y-m-d", strtotime($inv_date. $nodays)); //warrenty expire date
+          $sql_prod = "INSERT INTO tbl_newspaper_booking (cus_id,npbook_details_id,newsp_name,np_book_qty,np_order_time,crnt_date,order_date,np_tot_price,np_book_status) VALUES (?,?,?,?,?,?,?,?,?)";
+          $stmt_prod =$dbobj->prepare($sql_prod);
+          $stmt_prod->bind_param("iisisssdi",$cus_id,$npbook_details_id,$newsp_id[$i],$np_book_qty[$i],$inv_time,$crnt_date,$order_date[$i],$np_tot_price[$i],$status);
+          if(!$stmt_prod->execute()){
+               echo ("0,SQL Error ".$stmt_prod->error);
+           }
+          //  else{
+              
+              // $res = updateStock($dbobj,$batch_id[$i],$tbl_id[$i],$tbl_qty[$i]);
+              // if ($res=="0"){
+              //     echo("0,Error on Batch update");
+              //     exit;
+              // }
+
+          //  }
+
+      }
+      // $sql_pay ="INSERT INTO tbl_payment (pay_id,inv_id,pay_amount,pay_date,pay_time,pay_type) VALUES ('$payid','$inv_id','$txtntot','$paydate','$inv_time','$inv_type')";
+      //         $result_pay = $dbobj->prepare($sql_pay);
+      //         if(!$result_pay->execute()){
+      //             echo ("0,SQL Error ".$result_pay->error);
+      //             exit;    
+      //         }
+      echo("1,Invoice created");
+
+  }
+  $stmt_inv->close();
+  $dbobj->close(); 
+
+}
 
 ?>

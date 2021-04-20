@@ -121,15 +121,15 @@ require("cmn_booking_navbar.php");
       <label for="tot_price">Total Price</label>
       <input type="text" class="form-control col-sm-2" id="tot_price" name="tot_price" readonly="readonly" value="00.00">
     </div> 
-
+<!-- 
     <div class="form-check">
         <input type="checkbox" class="form-check-input" id="ck_agree">
           <label class="form-check-label" for="ck_agree">I agree to the Pay Half of the total  fee as retainer to hold the date.</label>
-    </div>
+    </div> -->
 
     <div class="modal-footer">
         <button type="reset" class="btn btn-secondary" data-dismiss="modal">Reset</button>
-        <button type="button" class="btn btn-primary" id="btnBooking" disabled>Place My Booking</button>
+        <button type="button" class="btn btn-primary" id="btnBooking" >Place My Booking</button>
     </div>
 	</form>
 </div>
@@ -282,7 +282,7 @@ $("#btnBooking").click(function(){
               cache:false,
               processData:false,
               success:function(result){
-              alert(result);
+     
               res = result.split(",");
               stat = res[0].trim();
                 if(stat[0]=="0"){
@@ -325,13 +325,13 @@ $("#btnBooking").click(function(){
 
 //function to disable booking button to agree for terms
 
- $("#ck_agree").change(function (){
-  if($(this).is(":checked")) {
-    $("#btnBooking").attr('disabled', false);
-  }else{
-  $("#btnBooking").attr('disabled', true);
-  }
-});
+//  $("#ck_agree").change(function (){
+//   if($(this).is(":checked")) {
+//     $("#btnBooking").attr('disabled', false);
+//   }else{
+//   $("#btnBooking").attr('disabled', true);
+//   }
+// });
 
 /*File type validation for Ad Image upload*/
 $("#imgad").change(function(){
