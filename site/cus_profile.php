@@ -161,8 +161,8 @@ $resad = $dbobj->query($sqlad);
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Booking Date</th>
-                    <th scope="col">Booking time</th>
-                    <th scope="col">Address</th>
+                    <th scope="col">Newspaper</th>
+                    <th scope="col">Mode of Advertisment</th>
                     <th scope="col">Total Price</th>
                     <th scope="col">Payment Slip</th>
                     <th scope="col">Slip approve Status</th>
@@ -177,6 +177,18 @@ $resad = $dbobj->query($sqlad);
                       Advertisment Bookings
                     </td>
                   </tr>
+                  <tr>
+                    <th scope="col">#</th>   <!----change from here ----->
+                    <th scope="col">Booking Date</th>
+                    <th scope="col">Newspaper</th>
+                    <th scope="col">Mode of Advertisment</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Payment Slip</th>
+                    <th scope="col">Slip approve Status</th>
+                    <th scope="col">Full payment Status</th>
+
+
+                  </tr>
             <?php 
               $sql_bking = "SELECT * FROM  tbl_ad_booking WHERE cus_id = '$cus_id'"; 
                 $result_bking = $dbobj->query($sql_bking);
@@ -189,7 +201,7 @@ $resad = $dbobj->query($sqlad);
                     <tr>
                       <td ><?php echo $i; ?></td>
                       <td ><?php echo $bking['adpub_date'] ?> </td>
-                      <td ><?php echo $bking['  newsad_mode'] ?> </td>
+                      <td ><?php echo $bking['newsad_mode'] ?> </td>
                       <td ><?php echo $bking['newsp_name'] ?> </td>
                      <th ><?php echo $bking['ad_tot_price'] ?> </td> 
                       <th ><?php
@@ -211,7 +223,7 @@ $resad = $dbobj->query($sqlad);
                                 echo "Approval Pending";
                               } ?></th>
 
-                         <th scope="col"><?php if($bking['  ad_pay_status'] == 1){
+                         <th scope="col"><?php if($bking['ad_pay_status'] == 1){
                                 echo "Approved";
                               }else{
                                 echo "Approval Pending";
@@ -310,6 +322,10 @@ $resad = $dbobj->query($sqlad);
 </script>
 <script type="text/javascript">
   $("document").ready(function (){
+    $("#panel-profile").show();
+    $("#panel-bookings").hide();
+  });
+  $("#profile-btn").click(function (){
     $("#panel-profile").show();
     $("#panel-bookings").hide();
   });
