@@ -8,7 +8,7 @@ $cusname = $_POST['name'];		// customer name
 $cusemail = $_POST['email'];	//customer Email
 $cusphone = $_POST['phone'];	//customer contact No
 
-require '../resources/plugin/phpmailer/PHPMailerAutoload.php';
+require '../phpmailer/PHPMailerAutoload.php';
 $mail = new PHPMailer;
 
 $mail->isSMTP();                            // Set mailer to use SMTP
@@ -17,9 +17,9 @@ $mail->SMTPAuth = true;                     // Enable SMTP authentication
 $mail->SMTPSecure = 'tls';                  // Enable TLS encryption, `ssl` also accepted
 $mail->Port = 587;                          // TCP port to connect to
 
-$mail->setFrom('contactnesmo@gmail.com', 'Nesmo Contact'); //email sender
-$mail->addReplyTo('contactnesmo@gmail.com', 'Nesmo'); // reply email
-$mail->addAddress('contactnesmo@gmail.com');   // Add a recipient
+$mail->setFrom('mailgampaha@gmail.com', 'Nesmo Contact'); //email sender
+$mail->addReplyTo('mailgampaha@gmail.com', 'Nesmo'); // reply email
+$mail->addAddress('mailgampaha@gmail.com');   // Add a recipient
 //$mail->addCC($cusemail);
 //$mail->addBCC('contactnesmo@gmail.com');
 
@@ -51,7 +51,7 @@ if(!$mail->send()) {
 	$dbobj = DB::connect();
 	$parent ="0";
 	$status = "0";
-	$sql_insert = "INSERT INTO tbl_messages (name,msg_email,msg_contact,msg_title, msg_message, msg_date,msg_time,parent_id,msg_status) VALUES (?,?,?,?,?,?,?,?,?)";
+	$sql_insert = "INSERT INTO tbl_email (name,msg_email,msg_contact,msg_title, msg_message, msg_date,msg_time,parent_id,msg_status) VALUES (?,?,?,?,?,?,?,?,?)";
 	$stmt = $dbobj->prepare($sql_insert);
 	$stmt->bind_param("sssssssii",$cusname,$cusemail,$cusphone,$msg_title,$cusmsg,$cdate,$ctime,$parent,$status);
 
