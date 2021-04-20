@@ -154,7 +154,7 @@
       This report will provide a summary of booked newspaper advertisments
     </div>
   </div>
-</div>
+</div> 
 
  <div class="col-lg-6">
    <div class="card shadow mb-4">
@@ -165,7 +165,7 @@
         </a>
     </div>
     <div class="card-body">
-      This report will provide a summary of completed newspaper advertisments
+      This report will provide a summary of order newspaper advertisments
     </div>
   </div>
 </div> 
@@ -473,7 +473,7 @@ $(document).ready(function () {
                   setTimeout(function(){ 
                     $("#rpanel").load("view/reports/adbookedsummarybydate.php?sdate="+sdate+"&edate="+edate+"&income="+income);
                   }, 250);
-                }else if(title=="Sales by Ad "){
+                }else if(title=="Sales by Ad"){
                     //var income = $("#income").val();
                   setTimeout(function(){ 
                     $("#rpanel").load("view/reports/adsalesbydate.php?sdate="+sdate+"&edate="+edate+"&income="+income);
@@ -555,7 +555,7 @@ $(document).ready(function () {
                 }else if(title=="Booked Ad"){
                     
                   setTimeout(function(){ 
-                    $("#rpanel").load("view/reports/adBookedSummarybyYear.php?month="+month+"&year="+year);
+                    $("#rpanel").load("view/reports/adBookedSummarybyYear.php?year="+year);
                   }, 250);  
                     
                 }
