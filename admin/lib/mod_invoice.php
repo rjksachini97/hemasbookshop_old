@@ -1,4 +1,4 @@
-<?php 
+<?php  
 require_once("config.php");
 date_default_timezone_set("Asia/Colombo");
 
@@ -66,6 +66,33 @@ function checkCustomer(){
     }else{
         echo (json_encode($row));
     }
+    $dbobj->close();
+}
+
+/*------------add new customer----------------*/
+
+function addNewCustomer(){
+
+    $ncus_email = $_POST['ncus_email'];
+    $ncus_name = $_POST['ncus_name'];
+    $ncus_mobile = $_POST['ncus_mobile'];
+    $ncus_gender = $_POST['gender'];
+    $ndtpdob =$_POST['ndtpdob'];
+    $ncus_address =$_POST['ncus_address'];
+    $ncus_nic = $_POST['$ncus_nic'];
+    $status = 1;
+
+    $dbobj= DB::connect();
+    $sql = "INSERT INTO `tbl_customers` (`cus_name`,`cus_dob`,`cus_gender`,`cus_address`,`cus_mobile`,`cus_email`,`cus_nic`,`cus_status`)
+ VALUES ('$ncus_name','$ndtpdob','ncus_gender','$ncus_address','$ncus_mobile','$ncus_email',$ncus_nic,'$status' );";
+
+    $stmt =$dbobj->prepare($sql);
+    if(!$stmt->execute()){
+        echo ("0,SQL Error ".$stmt->error);
+    }else{
+        echo("1,Created successfully ");
+    }
+    $stmt->close();
     $dbobj->close();
 }
 

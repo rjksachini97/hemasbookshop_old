@@ -130,7 +130,7 @@ function getAdCategories(){
   $dbobj->close(); 
 }
 
-function getAdCatDescription(){
+function getAdCatDescription(){ 
   $newsac_id = $_POST["newsac_id"];
   $dbobj = DB::connect();
   
