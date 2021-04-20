@@ -127,7 +127,7 @@ $(function(){
   });
 
    
-    });
+    }); 
      
 
   
@@ -135,7 +135,7 @@ $(function(){
     
 
 
-</script>
+</script> 
 
     <!-- ======= Why Us Section ======= -->
 
