@@ -1,5 +1,5 @@
 <?php  
-require_once("config.php");
+require_once("dbconnection.php");
 date_default_timezone_set("Asia/Colombo");
 
 if(isset($_GET["type"])){
@@ -155,7 +155,7 @@ function getNewspaper(){
 /*----------------------Add New Invoice --------------------------   */
 function addNewInv(){
 
-    $log_user = $_POST['log_user'];
+    //$log_user = $_POST['log_user'];
 
 
     $inv_id = $_POST['inv_id']; 
@@ -188,8 +188,8 @@ function addNewInv(){
     
     
     
-    $sql_inv = "INSERT INTO tbl_invoice (inv_id,cus_id,inv_date,inv_qty,inv_discount,inv_total,inv_paid, pay_id, inv_user,inv_type, inv_status ) VALUES (
-    '$inv_id','$cus_id','$inv_date','$totqty','$txtdis','$txtntot','$txtntot','$payid','$log_user','$inv_type','$status')";
+    $sql_inv = "INSERT INTO tbl_invoice (inv_id,cus_id,inv_date,inv_qty,inv_discount,inv_total,inv_paid, pay_id,inv_type, inv_status ) VALUES (
+    '$inv_id','$cus_id','$inv_date','$totqty','$txtdis','$txtntot','$txtntot','$payid','$inv_type','$status')";
 
     $stmt_inv =$dbobj->prepare($sql_inv);
     if(!$stmt_inv->execute()){
