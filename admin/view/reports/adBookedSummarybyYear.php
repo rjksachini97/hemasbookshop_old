@@ -1,14 +1,13 @@
 <?php       
 
-	require_once("../../lib/common.php"); 
-	require_once("../../lib/mod_reports.php");
+  require_once("../../lib/common.php"); 
+  require_once("../../lib/mod_reports.php");
  
 
    if(isset($_GET['year'])){
 
     $year = $_GET['year'];
    } 
-   
 
 ?>
 
@@ -28,8 +27,8 @@
 
 
 <div class="card mt-3" >
-	<h4 class="text-center h4 font-weight-bold text-primary">Newspaper Order Summary Report By Year </h4>
-	<p class="text-center h5  text-dark"><?php echo $year;  ?> </p>
+  <h4 class="text-center h4 font-weight-bold text-primary">Adverisment orders </h4>
+  <p class="text-center h5  text-dark"><?php echo $year;  ?> </p>
 
   <div class="d-flex justify-content-between">
     <div class="col-sm-3">
@@ -60,7 +59,7 @@
 
  <div class="m-3">
 
-	</div>
+  </div>
 </div>
 
 <script>
@@ -126,8 +125,8 @@ $(document).ready(function(){
 
  
    $("#btn-export").click(function(){
-      var monthname = "<?php echo $monthname ?>";
-      var year = "<?php echo $year ?>";
+      var monthname = "<?php //echo $monthname ?>";
+      var year = "<?php //echo $year ?>";
     	
     	window.open('view/reports/npBookedSummaryByMonthReportPDF.php?monthname='+monthname+'&year='+year,'_blank');
 
