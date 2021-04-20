@@ -175,7 +175,7 @@ require("../lib/mod_booking_pay.php");
       <th>ID</th>
       <th>Cus ID</th>
       <th>Total Price</th>
-    <!--  <th>Status</th>  --><
+    <!--  <th>Status</th>  -->
       <th>Uploaded Slip</th>
       <th>Fully paid</th>
       <th>Full payment</th>
