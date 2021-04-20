@@ -29,11 +29,11 @@
               <li class="dropdown"><a href="#why-us" data-toggle="dropdown"><?php echo $_SESSION['session_cus']['cus_name']; ?></a>
 
                 
-                  <ul id="products-menu" class="dropdown-menu clearfix" role="menu">
+                  
                       <li><a href="cus_profile.php">Profile</a></li>
                       <li><a href="lib/logout.php" id="logout_btn">Logout</a></li>
                       
-                  </ul>
+                  
               </li>
 
               <?php
@@ -46,6 +46,28 @@
 
     </div>
   </header><!-- End Header -->
+  <script type="text/javascript">
+              $(function(){
+            
+
+              $("#logout_btn").click(function(e){
+                e.preventDefault();
+                 
+                 swal({
+                        title:"Do you want to Logout from Your Account?",
+                        text:"You are trying to logout from <?php echo $_SESSION['session_cus']['cus_name']; ?>",
+                        icon:"warning",
+                        buttons:true,
+                        dangerMode:true
+                     }).then((willLogout)=>{
+                          if(willLogout){
+                            window.location = "lib/logout.php";
+                          }
+                        });
+              });
+            });    
+
+</script>
 
   <!-- ======= Hero Section ======= -->
  <section id="intro" class="clearfix">
