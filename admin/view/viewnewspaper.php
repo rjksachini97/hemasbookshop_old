@@ -1,6 +1,6 @@
 <?php
 require("../lib/mod_newspaper.php");
-?>
+?> 
 
 <script>
 $(document).ready(function(){
@@ -12,7 +12,9 @@ $(document).ready(function(){
       "type": "POST"
     },
     "columns":[
-      {"data":"0"},
+      {"data":"0"
+        "visible": false,
+        "searchable": false},
       {"data":"1"},
       {"data":"2"},
       {"data":"3"},
@@ -96,7 +98,7 @@ $(document).ready(function(){
 <table id="tblviewnewspaper" class="table table-striped">
   <thead>
     <tr>
-      <th>ID</th>
+    
        <th>Name</th>
       <th>Category</th>
       <th>Pub Company</th>
@@ -110,7 +112,7 @@ $(document).ready(function(){
   </thead>
   <tfoot>
     <tr>
-      <th>ID</th>
+      
        <th>Name</th>
       <th>Category</th>
       <th>Pub Company</th>
