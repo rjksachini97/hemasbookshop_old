@@ -150,6 +150,24 @@ if(!isset($_SESSION["user"])){
         </div>
     </li>
 
+                <!-- Nav Item - Payment & Billing Collapse Menu -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePB" aria-expanded="true" aria-controls="collapsePB">
+        <i class="fas fa-hand-holding-usd"></i>
+        <span>Payment & Billing </span>
+      </a>  
+      <div id="collapsePB" class="collapse" aria-labelledby="headingNews" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item menu" href="#" title="" id="lnkviewadbookpay">Ad Booking Payments</a>
+              <a class="collapse-item menu" href="#" title="" id="lnkviewnpbookpay">NP Booking Payments</a>
+              <a class="collapse-item menu" href="#" title="" id="lnknewinvoice">New Invoice</a>
+              <a class="collapse-item menu" href="#" title="" id="lnkviewinvoice">View Invoice</a>
+              
+          </div>
+        </div>
+    </li>
+
+
             <!-- Nav Item - Delivery Collapse Menu -->
 <!--    <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseDeliveryMan" aria-expanded="true" aria-controls="collapseDeliveryMan">
@@ -192,22 +210,6 @@ if(!isset($_SESSION["user"])){
         </div>
     </li>
 
-            <!-- Nav Item - Payment & Billing Collapse Menu -->
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePB" aria-expanded="true" aria-controls="collapsePB">
-        <i class="fas fa-hand-holding-usd"></i>
-        <span>Payment & Billing </span>
-      </a>  
-      <div id="collapsePB" class="collapse" aria-labelledby="headingNews" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-              <a class="collapse-item menu" href="#" title="" id="lnkviewadbookpay">Ad Booking Payments</a>
-              <a class="collapse-item menu" href="#" title="" id="lnkviewnpbookpay">NP Booking Payments</a>
-              <a class="collapse-item menu" href="#" title="" id="lnknewinvoice">New Invoice</a>
-              <a class="collapse-item menu" href="#" title="" id="lnkviewinvoice">View Invoice</a>
-              
-          </div>
-        </div>
-    </li>
 
 
         <!-- Nav Item - Report Collapse Menu -->
