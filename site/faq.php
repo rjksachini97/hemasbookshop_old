@@ -21,7 +21,7 @@
             <a data-toggle="collapse" href="#faq2" class="collapsed">Can I order newspapers delivery for office/libaray/shops? <i class="ion-android-remove"></i></a>
             <div id="faq2" class="collapse" data-parent="#faq-list">
               <p>
-                Yes of course! You can easily place an order through your account.We will delivery newspapers at morning day of the published.
+                Yes,But we are delivering only in the Gampaha area.
               </p>
             </div>
           </li>
