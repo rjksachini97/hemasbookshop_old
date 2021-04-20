@@ -16,37 +16,37 @@ require("../lib/mod_booking_pay.php");
           {"data":"2"},
           ],
         "columnDefs":[
-         {
+    /*     {
             "data":"3",
             "render":function(data,type,row){
               return (data=="1")?"Approved":"Approval Pending";
             },
             "targets": 3
-          },
+          },  */
 
            {
             "data":null,
             "defaultContent": "<a href='#' title='Open_Slip' data-toggle='modal' data-target='#viewSlip'><i class='fas fa-money-check-alt'></i></a>",
-            "targets": 4
+            "targets": 3
           },
-          {
+            {
             "data":"3",
             "render":function(data,type,row){
               return (data=="1")?"Yes":"No";
             },
+            "targets": 4
+          },
+          {
+            "data":null,
+            "defaultContent": "<a href='#' title='Full_payment'><i class='fas fa-calendar-check'></i></a>",
             "targets": 5
           },
 
-        {
-            "data":null,
-            "defaultContent": "<a href='#' title='Full_payment'><i class='fas fa-calendar-check'></i></a>",
-            "targets": 6
-          },
-    
-         {
+        
+		 {
             "data":null,
             "defaultContent": "<a href='#' title='View_details' data-toggle='modal' data-target='#viewdetails'><i class='fas fa-list-alt'></i></a>",
-            "targets": 7
+            "targets": 6
           },
          
         ]
@@ -57,7 +57,7 @@ require("../lib/mod_booking_pay.php");
       var data = dataTable.row($(this).parents('tr')).data();
       var eid = data[0];
       
-      if(type=="View_details"){
+ 		if(type=="View_details"){
         var url = "lib/mod_booking_pay.php?type=viewadBookingPayDetails";
          $.ajax({
             method:"POST",
@@ -71,7 +71,10 @@ require("../lib/mod_booking_pay.php");
               console.log(etxt);
             }
           });
-      }else if(type=="Open_Slip"){
+
+   }
+
+      else if(type=="Open_Slip"){
         var url = "lib/mod_booking_pay.php?type=AdviewSlip";
          $.ajax({
             method:"POST",
@@ -85,7 +88,8 @@ require("../lib/mod_booking_pay.php");
               console.log(etxt);
             }
           });
-      }else if(type=="Full_payment"){
+      }
+     /* else if(type=="Full_payment"){
         swal({
             title:"Do you want to Approve this Booking?",
             text:"You are trying to Approve this Booking :"+eid,
@@ -116,7 +120,8 @@ require("../lib/mod_booking_pay.php");
             }
           });
         
-      }else if(type=="Full_payment"){
+      }*/
+      else if(type=="Full_payment"){
         swal({
             title:"Fully paid?",
             text:"You are trying to Approve for Full payment :"+eid,
@@ -170,7 +175,7 @@ require("../lib/mod_booking_pay.php");
       <th>ID</th>
       <th>Cus ID</th>
       <th>Total Price</th>
-      <th>Status</th>
+    <!--  <th>Status</th>  --><
       <th>Uploaded Slip</th>
       <th>Fully paid</th>
       <th>Full payment</th>
@@ -182,7 +187,7 @@ require("../lib/mod_booking_pay.php");
 	  <th>ID</th>
       <th>Cus ID</th>
       <th>Total Price</th>
-      <th>Status</th>
+    <!--  <th>Status</th>  -->
       <th>Uploaded Slip</th>
       <th>Fully paid</th>
       <th>Full payment</th>
