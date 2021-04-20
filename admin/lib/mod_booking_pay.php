@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once("dbconnection.php");
 
 if(isset($_GET["type"])){
@@ -45,7 +45,7 @@ function viewadBookingPayDetails(){
 	$dbobj=DB::connect();
 
 	$sql = "SELECT * FROM tbl_ad_booking abook, tbl_reg_customer cus 
-			WHERE abook.cus_id=cus.cus_id AND abook.ad_book_id=1=$booking_id;";
+			WHERE abook.cus_id=cus.cus_id AND abook.ad_book_id=1='$booking_id';";
 
 	$result = $dbobj->query($sql);
 
@@ -110,8 +110,8 @@ function AdviewSlip(){
 			$output = "";
 
 			$row = $result->fetch_assoc();
-			if($row['slip_img'] != ""){  //correct  the path
-				$output .= "<img  class='img-thumbnail' src='../../dlab_admin_edit/images/Bankslips/Event_slips/" . $row['slip_img'] . "' />";
+			if($row['ad_img_slip'] != ""){  //correct  the path
+				$output .= "<img  class='img-thumbnail' src='../../images/Bankslips/AdBooking_slips/" . $row['ad_img_slip'] . "' />";
 			}else{
 				$output .="<i>No Image Uploaded!</i>";
 			}
@@ -147,4 +147,37 @@ function confirmfullpayment(){
 	}
 }
 
+/*-------------------------------------newspaper payments-----------------------------------*/
+function viewnpbookingpay(){
+	$table = 'tbl_newspaper_booking';
 
+	$primaryKey = 'np_book_id';
+
+		$columns = array(
+	    array( 'db' => 'np_book_id','dt' => 0 ),
+	    array( 'db' => 'cus_id','dt' => 1 ),
+	    array( 'db' => 'np_tot_price','dt' => 2 ),
+	/*    array( 'db' => 'np_book_status','dt' => 3 ),*/
+		array( 'db' => 'np_pay_status' , 'dt' => 3)
+	);
+
+	// SQL server connection information
+	require_once("config.php");
+	$host = Config::$host;
+	$uname = Config::$db_uname;
+	$pass = Config::$db_pass;
+	$db = Config::$dbname;
+
+	$sql_details = array(
+    	'user' => $uname,
+    	'pass' => $pass,
+    	'db'   => $db,
+    	'host' => $host
+	);
+
+	require('ssp.class.php');
+ 
+	echo json_encode(
+    SSP::complex($_POST, $sql_details, $table, $primaryKey, $columns,null)
+	);
+}
