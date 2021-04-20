@@ -120,6 +120,7 @@ require("../lib/mod_news_order.php");
       <th>Order Date</th>
       <th>Delivery Date</th>
       <th>Total Price</th>
+      <th>Delivery Details</th>
       <th>Status</th>
       <th></th>
     </tr>
@@ -131,6 +132,7 @@ require("../lib/mod_news_order.php");
       <th>Order Date</th>
       <th>Delivery Date</th>
       <th>Total Price</th>
+      <th>Delivery Details</th>
       <th>Status</th>
       <th></th>
     </tr>
@@ -164,4 +166,62 @@ require("../lib/mod_news_order.php");
 			</div>
 		</div>
 	</div>	
+</div>
+
+<!--  --------------Send Delivery Note------------- -->
+
+<div class="modal fade" id="sendDelivery" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form id="formSendemail"> 
+            <div class="modal-header">
+                                   
+                
+                <div class="modal-title" >
+                    <h5 >Inform about Delivery</h5>                 
+                </div>                
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="del_body">
+                <input type="hidden" name="id" id="id" value="" >
+                <div class="form-group row">
+                <label for="cmbdelname" class="col-lg-4 col-form-label">Deliveryman</label>
+                <div class="col-sm-3">
+                  <select class="form-control" name="cmbdelname" id="cmbdelname">
+                    <option>-- Select Deliveryman--</option>
+                    <?php getdeliveryman(); ?>
+                  </select>
+                </div>
+              </div>
+                <div class="form-group row">
+                  <label for="veh_no" class="col-lg-4 col-form-label">Vehicle Number</label>:
+                    <div class="col-sm-3">
+                    <select class="form-control" name="veh_no" id="veh_no">
+                    <option>--Select Vehicle--</option>
+                    <option>QL-9904</option>
+                    <option>ER-01860</option>
+                  </select>
+                </div>
+                </div>
+               <div class="form-group row">
+                    <label for="" class="col-lg-4 col-form-label">Title</label>:
+                    <input type="text" class="ml-1 col-lg-6 form-control" readonly name="send_title" id="send_title">
+                </div>
+               <div class="form-group row">
+                    <label for="" class="col-lg-4 col-form-label">Message</label>:
+                    <textarea class="ml-1 col-lg-7 form-control " rows="6" id="send_msg" name="send_msg">
+                            
+                    </textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <img src="../resources/img/page-loading.gif" class="d-none" id="load_imag" width='100px'>
+                <button type="button" class="btn btn-success"  id="modal_reply_send"> Send</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
 </div>
