@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2021 at 07:00 AM
+-- Generation Time: Apr 20, 2021 at 10:00 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 7.2.11
 
@@ -120,20 +120,15 @@ CREATE TABLE `tbl_ad_order` (
   `adorder_date` date NOT NULL,
   `publish_date` date NOT NULL,
   `adorder_price` varchar(10) NOT NULL,
-  `adorder_status` tinyint(11) NOT NULL,
-  `msg_email` varchar(1000) NOT NULL,
-  `msg_title` varchar(100) NOT NULL,
-  `msg_date` date NOT NULL,
-  `msg_time` time NOT NULL,
-  `msg_status` tinyint(1) NOT NULL
+  `adorder_status` tinyint(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_ad_order`
 --
 
-INSERT INTO `tbl_ad_order` (`adorder_id`, `cus_id`, `ad_book_id`, `newsad_mode`, `adorder_date`, `publish_date`, `adorder_price`, `adorder_status`, `msg_email`, `msg_title`, `msg_date`, `msg_time`, `msg_status`) VALUES
-(1, 1, 1, 'Box Advertisement', '2021-04-20', '2021-04-30', '1500.00', 0, '', '', '0000-00-00', '00:00:00', 0);
+INSERT INTO `tbl_ad_order` (`adorder_id`, `cus_id`, `ad_book_id`, `newsad_mode`, `adorder_date`, `publish_date`, `adorder_price`, `adorder_status`) VALUES
+(1, 1, 1, 'Box Advertisement', '2021-04-20', '2021-04-30', '1500.00', 1);
 
 -- --------------------------------------------------------
 
@@ -225,6 +220,23 @@ CREATE TABLE `tbl_delivery_details` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_email`
+--
+
+CREATE TABLE `tbl_email` (
+  `email_id` int(11) NOT NULL,
+  `cus_id` int(11) NOT NULL,
+  `adorder_id` int(11) NOT NULL,
+  `email_msg` varchar(1000) NOT NULL,
+  `email_title` varchar(100) NOT NULL,
+  `email_date` date NOT NULL,
+  `email_time` time NOT NULL,
+  `email_status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_employee`
 --
 
@@ -309,11 +321,29 @@ CREATE TABLE `tbl_invoice` (
 --
 
 INSERT INTO `tbl_invoice` (`inv_id`, `cus_id`, `inv_date`, `inv_qty`, `inv_discount`, `inv_total`, `inv_paid`, `pay_id`, `inv_user`, `inv_type`, `inv_status`) VALUES
+('', 0, '0000-00-00', 0, 0.00, 0.00, 0.00, 0, '', 'offline', 1),
 ('INV20200112_0001', 1, '2020-01-12', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2),
 ('INV20210412_0001', 1, '2021-04-12', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2),
 ('INV20210412_0002', 1, '2021-04-12', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2),
 ('INV20210413_0001', 1, '2021-04-13', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2),
-('INV20210413_0002', 3, '2021-04-13', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2);
+('INV20210413_0002', 3, '2021-04-13', 1, 0.00, 80.00, 80.00, 1, '', 'online', 2),
+('INV20210420_0001', 3, '2021-04-20', 16, 0.00, 1280.00, 1280.00, 0, '', 'offline', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_inv_details`
+--
+
+CREATE TABLE `tbl_inv_details` (
+  `id` int(1) NOT NULL,
+  `inv_id` varchar(25) NOT NULL,
+  `newsp_id` char(8) NOT NULL,
+  `newsp_cprice` float(15,2) NOT NULL,
+  `newsp_qty` int(11) NOT NULL,
+  `newsp_sprice` float(15,2) NOT NULL,
+  `inv_det_status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -694,7 +724,7 @@ CREATE TABLE `tbl_reg_customer` (
   `cus_email` varchar(50) NOT NULL,
   `cus_nic` varchar(12) NOT NULL,
   `cus_pass` varchar(255) NOT NULL,
-  `cus_status` tinyint(4) NOT NULL
+  `cus_status` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -707,7 +737,9 @@ INSERT INTO `tbl_reg_customer` (`cus_id`, `cus_name`, `cus_dob`, `cus_gender`, `
 (3, 'Rasindu Gunasena', '1992-05-31', 1, 'No 43/1,Bazar Road,Gampaha', '0712365203', 'rasindu@gmail.com', '923652104V', '25f9e794323b453885f5181f1b624d0b', 1),
 (4, 'Nikila Vibodha', '1991-04-02', 1, 'N306,Yakkala Road,Gampaha', '0785463120', 'nikila@gmail.com', '912044567V', '25f9e794323b453885f5181f1b624d0b', 1),
 (5, 'Pawara Matheesha', '1993-11-16', 1, 'No76/1,Kandy Road,Gampaha', '0701549986', 'pawara@gmail.com', '931200458V', '25f9e794323b453885f5181f1b624d0b', 1),
-(7, 'Amanthe Dissa', '1993-07-07', 0, 'No56,Imbulgoda Road,Gampaha', '0771234569', 'amanthe@gmail.com', '931254698V', '123456789', 1);
+(7, 'Amanthe Dissa', '1993-07-07', 0, 'No56,Imbulgoda Road,Gampaha', '0771234569', 'amanthe@gmail.com', '931254698V', '123456789', 1),
+(8, 'Nishani Kumari', '1993-06-07', 0, '1234,Colombo Roiad,Gampaha', '0715623561', 'nishani@gmail.com', '935642136V', 'd41d8cd98f00b204e9800998ecf8427e', 0),
+(12, 'lakshita', '1994-05-03', 1, '1234,Colombo Rd,Gampaha', '0711234567', 'lak@gmail.com', '941234567V', '25f9e794323b453885f5181f1b624d0b', 1);
 
 -- --------------------------------------------------------
 
@@ -766,6 +798,22 @@ INSERT INTO `tbl_seller` (`sell_id`, `sell_title`, `sell_name`, `sell_address`, 
 ('SELL0001', 1, 'Samitha Ranasinghe', 'Samitha Bookshop,No76,Colombo Road,Gamapha', '0774502316', 'samitha@gmail.com', '591206534V', '2018-05-07', 1),
 ('SELL0002', 1, 'Gamini Jayasinghe', 'Gamini Shop,No 45,Main Street,Gampaha', '0118546221', 'gamini@gmail.com', '673498011V', '2018-08-06', 1),
 ('SELL0003', 1, 'Saman Herath', 'Saman Stores,No21,Main Street,Gampaha', '0716532210', 'saman@gmail.com', '845673222V', '2017-09-12', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_sms`
+--
+
+CREATE TABLE `tbl_sms` (
+  `sms_id` int(11) NOT NULL,
+  `cus_id` int(11) NOT NULL,
+  `adorder_id` int(11) NOT NULL,
+  `sms_msg` varchar(1000) NOT NULL,
+  `sms_date` date NOT NULL,
+  `sms_time` time NOT NULL,
+  `sms_status` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -850,6 +898,12 @@ ALTER TABLE `tbl_delivery_details`
   ADD PRIMARY KEY (`deld_id`);
 
 --
+-- Indexes for table `tbl_email`
+--
+ALTER TABLE `tbl_email`
+  ADD PRIMARY KEY (`email_id`);
+
+--
 -- Indexes for table `tbl_employee`
 --
 ALTER TABLE `tbl_employee`
@@ -867,6 +921,12 @@ ALTER TABLE `tbl_grn`
 --
 ALTER TABLE `tbl_invoice`
   ADD PRIMARY KEY (`inv_id`);
+
+--
+-- Indexes for table `tbl_inv_details`
+--
+ALTER TABLE `tbl_inv_details`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tbl_newspaper`
@@ -986,6 +1046,12 @@ ALTER TABLE `tbl_seller`
   ADD PRIMARY KEY (`sell_id`);
 
 --
+-- Indexes for table `tbl_sms`
+--
+ALTER TABLE `tbl_sms`
+  ADD PRIMARY KEY (`sms_id`);
+
+--
 -- Indexes for table `tbl_users`
 --
 ALTER TABLE `tbl_users`
@@ -1029,7 +1095,7 @@ ALTER TABLE `tbl_pwd_reset`
 -- AUTO_INCREMENT for table `tbl_reg_customer`
 --
 ALTER TABLE `tbl_reg_customer`
-  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tbl_sample_data`
