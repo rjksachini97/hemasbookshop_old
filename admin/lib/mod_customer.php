@@ -10,7 +10,7 @@ if(isset($_GET["type"])){
 Following function generates a new employee id
 eg. EMP00001
 */
-function getNewCusId(){
+function getCusId(){
 	$dbobj = DB::connect();
 	$sql = "SELECT cus_id FROM tbl_reg_customer ORDER BY cus_id DESC LIMIT 1;";
 	$result = $dbobj->query($sql);
@@ -20,20 +20,8 @@ function getNewCusId(){
 		exit;
 	}
 
-	$nor = $result->num_rows;
-
-	if($nor == 0){
-		$newid = "1";
-	}
-	else{
-		$rec = $result->fetch_assoc();
-		$lastid = $rec["cus_id"];
-		$newid = $lastid+1;
-		$newid++;
-	}
-
 	$dbobj->close();
-	return $newid;
+
 }
 
 /*
@@ -41,7 +29,6 @@ Below function is used to insert new employee records to
 the tbl_employee
 */
 function addNewCus(){
-	$cus_id = $_POST["txtcid"];
 	$cus_name = $_POST["txtname"];
 	$cus_dob = $_POST["dtpdob"];
 	$cus_gender = $_POST["optgen"];
@@ -52,10 +39,10 @@ function addNewCus(){
 
 	$dbobj = DB::connect();
 
-	$sql = "INSERT INTO tbl_reg_customer(cus_id,,cus_name,cus_dob,cus_gender,cus_address,cus_mobile,cus_email,cus_nic) VALUES(?,?,?,?,?,?,?,?);";
+	$sql = "INSERT INTO tbl_reg_customer(cus_name,cus_dob,cus_gender,cus_address,cus_mobile,cus_email,cus_nic) VALUES(?,?,?,?,?,?,?);";
 
 	$stmt = $dbobj->prepare($sql);
-	$stmt->bind_param("sssissss",$cus_id,$cus_name,$cus_dob,$cus_gender,$cus_address,$cus_mobile,$cus_email,$cus_nic);
+	$stmt->bind_param("ssissss",$cus_name,$cus_dob,$cus_gender,$cus_address,$cus_mobile,$cus_email,$cus_nic);
 
 	if(!$stmt->execute()){
 		echo("0,SQL Error : ".$stmt->error);
