@@ -29,7 +29,9 @@ require("cmn_booking_navbar.php");
           <label for="dtnporder">Price</label>  
           <div class="col-md-6">
                 <input type="hidden"    id="newsp_id" name="newsp_id" >
-                <input type="text"  class=" form-control"  id="newsp_price" name="newsp_price" >
+                <input type="hidden"    id="newsp_name" name="newsp_name" >
+                <input type="hidden"    id="remaining_qty" name="remaining_qty" >
+                <input type="text"  class=" form-control" readonly="readonly"  id="newsp_price" name="newsp_price" value="0.00">
           </div> 
         </div>
          
@@ -39,12 +41,12 @@ require("cmn_booking_navbar.php");
         <div class="form-group col-md-6">
           <label for="txtqty" class="col-sm-5 col-form-label">Quantity<b class="text-danger">*</b></label>
             <div class="col-sm-6">
-              <input type="text" class="form-control" id="txtqty" name="txtqty" value="">
+              <input type="number" class="form-control" id="txtqty" name="txtqty" value="1">
             </div> 
           </div>
         <div class="form-group col-md-6">
           <label for="dtnporder">Date Of Order<b class="text-danger">*</b></label>  
-            <input type="text" id="dtnporder" class="form-control col-sm-4" name="dtnporder" readonly="readonly">
+            <input type="text" id="dtnporder" class="form-control col-sm-4" name="dtnporder" >
         </div>
       </div>
 
@@ -60,8 +62,10 @@ require("cmn_booking_navbar.php");
             <thead>
             <tr>
                 <th></th>
-                <th>Newspaper</th>
+                <th>Newspaper</th>                
+                <th>Unit Price</th>
                 <th>Quantity</th>
+                <th>Date of Order</th>
                 <th>Total Price(Rs)</th>
 
             </tr>
@@ -73,14 +77,13 @@ require("cmn_booking_navbar.php");
             <tfoot>
 
             <tr align="right" >
-                <td colspan="2"></td>
-                <td > <input type="text" readonly="readonly" class=" form-control form-control-sm text-right"  size="1" id="totqty" name="totqty" value="0"> </td>
-
-                <td  > <input type="text" readonly="readonly" class=" form-control form-control-sm text-right px-3"  size="1" id="txtgtot" name="txtgtot" value="0.00"> </td>
+                <th colspan="5">Total Qty</th>
+                <td > <input type="text" readonly="readonly" class=" form-control form-control-sm text-right"  size="2" id="totqty" name="totqty" value="0"> </td>
+                
             </tr>
 
             
-            <tr align="right" ><th colspan="3" >Total(Rs)</th>
+            <tr align="right" ><th colspan="5" >Total(Rs)</th>
                 <td  > <input type="text" readonly="readonly" class="form-control form-control-sm text-right"  size="2" id="txtntot" name="txtntot" value="0.00"> </td>
             </tr>
             </tfoot>
@@ -89,7 +92,7 @@ require("cmn_booking_navbar.php");
         
           <div>
             <div class="modal-footer">
-              <button type="reset" class="btn btn-secondary" data-dismiss="modal">Reset</button>
+              <!-- <button type="reset" class="btn btn-secondary" data-dismiss="modal">Reset</button> -->
               <button type="button" class="btn btn-primary" id="btnBooking">Place My Booking</button>
             </div>
           </div>
@@ -105,95 +108,182 @@ require("cmn_booking_navbar.php");
         changeMonth:true,
         dateFormat:"yy-mm-dd",
         //maxDate:"-6570" 
-        minDate:"10",                                 
-    });
+        minDate:"10",  
+      });
+   
+    //     /*----------------------get np price when click newspaper--------------------------   */
+    $("#txt_npname").change(function() {  
+      
+      var newsp_id = $(this).val(); /* store currnet id of newpaper*/
+ 
+      if(newsp_id==""){
+        $("#newsp_price").html("");
+      }else{
+        var url  = "lib/mod_np_booking.php?type=getprice";
+       
+        $.ajax({
+          method:"POST",  
+          url:url,
+          data:{newsp_id:newsp_id},
+          dataType:"json",
+          success:function (result) {
+           
+            $("#newsp_id").val(result.newsp_id);
+            $("#newsp_name").val(result.newsp_name);
+            $("#remaining_qty").val(result.newsp_qty);
+            $("#newsp_price").val(result.newsp_price);
+          },
+          error:function (etxt) {
+            console.log(etxt);
+          }
 
-        /*----------------------get np price when click newspaper--------------------------   */
-        $("#txt_npname").click(function() {  
+        });
+      }
 
-          var newsp_id = $(this).val(); /* store currnet id of newpaper*/
-            if(newsp_id==""){
-               $("#newsp_price").html("<option value=''>0</option>");
-              }else{
-              var url  = "lib/mod_np_booking.php?type=getprice";
-                  $.ajax({
-            method:"POST",  
-            url:url,
-            data:{newsp_id:newsp_id},
-            dataType:"text",
-            success:function (result) {
-                $("#newsp_price").html(result);
-            },
-            error:function (etxt) {
-                console.log(etxt);
-            }
-
-          });
-        }
-
-      });  
+    });  
 
 
      
- $("#btn_np_add").click(function () {
+        $("#btn_np_add").click(function () {
 
             $npodate = $("#dtnporder").val();
             $np_name = $("#txt_npname").val();
+            $newspaper_name = $("#newsp_name").val();
             $np_qty = $("#txtqty").val();
-            $totqty = $("#totqty").val();
+            $order_date = $("#dtnporder").val();
+            $newsp_id = $("#newsp_id").val();
+            $newsp_price = $("#newsp_price").val();
+
+            $totqty = $("#totqty").val();            
+            
 
             if($npodate=="" || $np_name=="" || $np_qty=="" || $totqty==""){
               swal("Error","Please Fill All inputs","error");
                 return;
             }
             //sum of curunt quantity and new quantity
-            var totqty = parseInt($totqty)+ parseInt($np_qty);
+            var totqty = parseFloat($totqty)+ parseFloat($np_qty);
             $("#totqty").val(totqty); //add quantity to total quantity input
 
 
             var total = parseFloat($newsp_price) * parseInt($np_qty); // calculate toatal using price and quantity
             total = parseFloat(total).toFixed(2);
 
-            $row= "<tr>";
+            $row = "<tr>";
             $row += "<td><a href='javascript:void(0)' class='btn btn-danger remove' >X</a> </td>";
 
-            $row += "<td><input type='text' class='form-control-plaintext '  readonly value='"+$prod_name+"'>" +
-                "<input type='hidden' id='tbl_prod' name='tbl_prod[]'  value='"+$grn_prod+"' ></td>";
+            $row += "<td><input type='text' class='form-control-plaintext '  readonly='readonly' class='form-control form-control-sm text-right' id='newsp_name' name='newsp_name[]' value='"+$newspaper_name+"'/>" +
+                "<input type='hidden' id='newsp_id' name='newsp_id[]'  value='"+$newsp_id+"' /></td>";
 
-            $row += "<td><input type='text' class='form-control-plaintext'  readonly value='"+$cat_name+"' >" +
-                "<input type='hidden' id='tbl_cat' name='tbl_cat[]' value='"+$grn_cat+"' ></td>";
+            $row += "<td><input type='text' id='newsp_unit_price' name='newsp_unit_price[]' readonly='readonly' class='form-control form-control-sm text-right' value='"+$newsp_price+"' /></td>";
+            
+            $row += "<td><input type='text' id='newsp_qty' name='newsp_qty[]' readonly='readonly' class='form-control form-control-sm text-right'  value='"+$np_qty+"' /></td>";
+            
+            $row += "<td><input type='text' id='order_date' name='order_date[]' readonly='readonly' class='form-control form-control-sm text-right'  value='"+$order_date+"' /></td>";
 
-            $row += "<td><input type='text' class='form-control-plaintext text-right qty' id='tbl_qty' name='tbl_qty[]' readonly value='"+$grn_qty+"' ></td>";
-
-            $row += "<td><input type='text' class='form-control-plaintext text-right' id='tbl_cprice' name='tbl_cprice[]' readonly value='"+$cost_price+"' ></td>";
-
-            $row += "<td><input type='text' class='form-control-plaintext text-right' id='tbl_sprice' name='tbl_sprice[]' readonly value='"+$sell_price+"' ></td>";
-
-            $row += "<td><input type='text' class='form-control-plaintext text-right total' id='bat_price' name='bat_price[]' readonly value='"+total+"' > </td>";
-
+            $row += "<td><input type='text' id='newsp_total_price' name='newsp_total_price[]' readonly='readonly' class='form-control form-control-sm text-right'  value='"+total+"' /></td>";
+            
+           
             $row += "</tr>";
 
-            var gtot = parseFloat($("#txtgtot").val()); // input convert to currency
-            var ntot = parseFloat($("#txtntot").val()); // input convert to currency
+            $price_total = $("#txtntot").val();
+            var inv_total = parseFloat($price_total) +parseFloat(total);
+            inv_total= parseFloat(inv_total).toFixed(2);
+            $("#txtntot").val(inv_total);
 
-            gtot = parseFloat(gtot)+parseFloat(total);
-            ntot = parseFloat(ntot)+parseFloat(total);
-            gtot= parseFloat(gtot).toFixed(2);
-            ntot= parseFloat(ntot).toFixed(2);
+            // $("#txtgtot").val(gtot); 
+            // $("#txtntot").val(ntot);
+            // $("#selectSup").val($("#grn_sup").val());
+            // $("#grn_sup").prop("disabled",true);
 
-
-            $("#txtgtot").val(gtot); 
-            $("#txtntot").val(ntot);
-            $("#selectSup").val($("#grn_sup").val());
-            $("#grn_sup").prop("disabled",true);
-
-            $("#grn_content").append($row);
+            $("#np_content").append($row);
             resetinput();
 
         });
 
+    
+    
+        /*---------------------- Submit Data --------------------------   */
+
+        $("#btnBooking").click(function () {
+            var date = $("#newsp_id").val();
+            if(data==""){
+              swal("Error","Please add products","error");
+            }   
+
+            var data = $('#BookingForm').serialize();
+            var url  = "lib/mod_np_booking.php?type=addNewsPaperBooking";
+
+            $.ajax({
+                method:"POST",
+                url:url,
+                data:data,
+                dataType:"text",
+                success:function (result) {             
+                    res = result.split(",");
+                    msg = res[0].trim();
+                    if(msg=="0"){
+                        swal("Error",res[1],"error")
+                    }
+                    else if(msg=="1"){
+                      swal({
+                        title:"Success",
+                        text:res[1],
+                        icon:"success",
+                      }).then((willDelete)=>{
+                        if(willDelete){
+                            window.location.href="../index.php";
+                          }
+                        });
+                        // setTimeout(function() {
+                        //     funAddInv();
+                        // }, 300);
+                    }
+                }
+
+            });
+
+        });
+
+    function resetinput(){
+
+      $npodate = $("#dtnporder").val("");
+      $np_name = $("#txt_npname").val("");
+      $newspaper_name = $("#newsp_name").val("");
+      $np_qty = $("#txtqty").val("1");
+      $newsp_id = $("#newsp_id").val("");
+      $newsp_price = $("#newsp_price").val("0.00");
+      // disable customer details
+      $("#cus_email").prop('readonly',true);
+      $("#cus_fname").prop('readonly',true);
+      $("#cus_mobile").prop('readonly',true);
+    }
+
+    /*---------------------- function for remove --------------------------   */
+
+    $("#np_content").on("click",".remove",function(){ // after load page if click remove run function
+
+      var total =parseFloat($(this).parents("tr").find("#newsp_total_price").val());
+      var qty =parseFloat($(this).parents("tr").find("#newsp_qty").val());
+
+      var totqty = parseFloat($("#totqty").val()); 
+      var price_total = parseFloat($("#txtntot").val());
+
+      price_total = parseFloat(price_total-total).toFixed(2);
+      // $("#txtdiscount").prop("readonly","");
+      // $("#txtdiscount").val("");
+      // var ntot = gtot;
+
+      totqty = totqty-qty;
+
+      $("#txtntot").val(price_total);
+      $("#totqty").val(totqty);
+
+      $(this).parents("tr").remove();
+    });
 
 
+})
 
 
 </script>
