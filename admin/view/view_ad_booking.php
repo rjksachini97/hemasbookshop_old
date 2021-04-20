@@ -14,7 +14,7 @@ require("../lib/mod_ad_booking.php");
         },
         "columns":[
           {"data":"0"},
-          {"data":"1"},
+          {"data":"1"}, 
           {"data":"2"},
           {"data":"3"},
           {"data":"4"},
@@ -39,7 +39,7 @@ require("../lib/mod_ad_booking.php");
           },
 
           {
-            "data":"6",
+            "data":"7",
             "render":function(data,type,row){
               return (data=="1")?"Approved":"Approval Pending";
             },
