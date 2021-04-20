@@ -15,8 +15,8 @@ function viewadbookingpay(){
 	    array( 'db' => 'ad_book_id','dt' => 0 ),
 	    array( 'db' => 'cus_id','dt' => 1 ),
 	    array( 'db' => 'ad_tot_price','dt' => 2 ),
-	    array( 'db' => 'ad_book_status','dt' => 3 ),
-		array( 'db' => 'ad_pay_status' , 'dt' => 4)
+	/*    array( 'db' => 'ad_book_status','dt' => 3 ),*/
+		array( 'db' => 'ad_pay_status' , 'dt' => 3)
 	);
 
 	// SQL server connection information
