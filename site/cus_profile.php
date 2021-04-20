@@ -144,9 +144,9 @@ $resad = $dbobj->query($sqlad);
              </div>
           </div>
 
-          <a href="#Updatemodal" data-toggle="modal" class="btn btn-primary">
+        <!--  <a href="#Updatemodal" data-toggle="modal" class="btn btn-primary">
               Edit Details
-            </a>
+            </a>  -->
         <!--  <a href="#updatepaswrd" data-toggle="modal" class="btn btn-primary">
               Update Password
             </a>  -->
@@ -177,7 +177,183 @@ $resad = $dbobj->query($sqlad);
                       Advertisment Bookings
                     </td>
                   </tr>
-    </div>
+            <?php 
+              $sql_bking = "SELECT * FROM  tbl_ad_booking WHERE cus_id = '$cus_id'"; 
+                $result_bking = $dbobj->query($sql_bking);
+                  $i=1;
+                  $totalPrice = 0;
+                  while ($bking= $result_bking->fetch_assoc()) {
+                   $totalPrice += $bking['ad_tot_price'];
+                   $ad_book_id=$bking['ad_book_id'];
+                    ?>
+                    <tr>
+                      <td ><?php echo $i; ?></td>
+                      <td ><?php echo $bking['adpub_date'] ?> </td>
+                      <td ><?php echo $bking['  newsad_mode'] ?> </td>
+                      <td ><?php echo $bking['newsp_name'] ?> </td>
+                     <th ><?php echo $bking['ad_tot_price'] ?> </td> 
+                      <th ><?php
+                         if($bking['ad_img_slip'] == ""){
+                        ?>
+                      <form action="lib/mod_cus.php?type=uploadSlipAd&ad_book_id=<?php echo $ad_book_id; ?>" enctype="multipart/form-data" method="post">
+                        <input type="file" name="imgup" accept="image/*">
+                          <button type="submit" class="btn btn-primary btn-sm" name="upslip">Upload</button>
+                      </form>
+                       <?php
+                      }else{
+                        echo "<i>Slip has already uploaded!</i>";
+                      }
+                        ?>
+                       </th>
+                        <th scope="col"><?php if($bking['ad_book_status'] == 1){
+                                echo "Approved";
+                              }else{
+                                echo "Approval Pending";
+                              } ?></th>
+
+                         <th scope="col"><?php if($bking['  ad_pay_status'] == 1){
+                                echo "Approved";
+                              }else{
+                                echo "Approval Pending";
+                              } ?></th>     
+                              
+                            </tr>
+                          <?php
+                          $i++;
+                      }
+
+                  ?>
+                  <tr>
+                    <td colspan="8" class="bg-info font-weight-bold" style="text-align:center;color:white;border-radius:30px;">
+                      Newspaper Bookings
+                    </td>
+                  </tr>
+
+                  <?php 
+                    $sql_npbking = "SELECT * FROM tbl_newspaper_booking WHERE cus_id = '$cus_id'"; 
+                    $result_npbking = $dbobj->query($sql_npbking);
+                    $nptotalPrice = 0;
+                    $i=1;
+                    while ($npbking= $result_npbking->fetch_assoc()) {
+                      $nptotalPrice += $npbking['np_tot_price'];
+                      $newspbking_id=$npbking['np_book_id'];
+                     ?>
+                     <tr>
+                      <td ><?php echo $i; ?></td>
+                      <td ><?php echo $npbking['order_date'] ?> </td>
+                      <td ><?php echo $npbking['newsp_name'] ?> </td>
+                      <td ><?php echo $npbking['  np_book_qty'] ?> </td>
+                      <th ><?php echo $npbking['np_tot_price'] ?> </td> 
+                       <th >
+                        <?php
+                          if($npbking['np_slip_img'] == ""){
+                        ?>
+                        <form action="lib/mod_cus.php?type=uploadSlipNp&np_book_id=<?php echo $newspbking_id; ?>" enctype="multipart/form-data" method="post">
+                                  <input type="file" name="imgup"  accept="image/*">
+                                  <button type="submit" class="btn btn-primary btn-sm" name="upslip">Upload</button>
+                                </form>
+                                 <?php
+                                  }else{
+                                    echo "<i>Slip has already uploaded!</i>";
+                                  }
+                                ?>
+                              </th>
+                              <th scope="col"><?php if($npbking['np_book_status'] == 1){
+                                echo "Approved";
+                              }else{
+                                echo "Approval Pending";
+                              } ?>
+                                
+                              </th>
+
+                              <th scope="col"><?php if($npbking['np_pay_status'] == 1){
+                                echo "Approved";
+                              }else{
+                                echo "Approval Pending";
+                              } ?>
+                                
+                              </th>    
+                              
+                            </tr>
+                          <?php
+                          $i++;
+                      }
+
+                  ?>
+                </tbody>
+              </table>
+          
+        </fieldset>
+</div>
+         <!-- /////////////////////////////////Booking infomations End///////////////////////////////////// -->
+<script type="text/javascript">
+              $(function(){
+            
+
+              $("#logout_btn").click(function(e){
+                e.preventDefault();
+                 
+                 swal({
+                        title:"Do you want to Logout from Your Account?",
+                        text:"You are trying to logout from <?php echo $_SESSION['session_cus']['cus_name']; ?>",
+                        icon:"warning",
+                        buttons:true,
+                        dangerMode:true
+                     }).then((willLogout)=>{
+                          if(willLogout){
+                            window.location = "lib/logout.php";
+                          }
+                        });
+              });
+            });    
+
+</script>
+<script type="text/javascript">
+  $("document").ready(function (){
+    $("#panel-profile").show();
+    $("#panel-bookings").hide();
+  });
+  $("#bookings-btn").click(function (){
+    $("#panel-profile").hide();
+    $("#panel-bookings").show();
+  });
+</script>
+
+<!-- JavaScript Libraries -->
+    <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/jquery/jquery-migrate.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/mobile-nav/mobile-nav.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/isotope/isotope.pkgd.min.js"></script>
+    <script src="lib/lightbox/js/lightbox.min.js"></script>
+
+    <!-- Template Main Javascript File -->
+    <script src="js/main.js"></script>
+
+    <!-- login form -->
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+  <!--===============================================================================================-->
+    <script src="vendor/animsition/js/animsition.min.js"></script>
+  <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+  <!--===============================================================================================-->
+    <script src="vendor/daterangepicker/moment.min.js"></script>
+    <script src="vendor/daterangepicker/daterangepicker.js"></script>
+  <!--===============================================================================================-->
+    <script src="vendor/countdowntime/countdowntime.js"></script>
+  <!--===============================================================================================-->
+<script src="scripts/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+
 
 
 </body>
+</html>
