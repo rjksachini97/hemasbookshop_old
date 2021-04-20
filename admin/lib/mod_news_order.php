@@ -147,4 +147,27 @@ function viewNPOrderDetails(){
 }
 
 
+
+/*-------------------------Delivery Newspaper-------------------------*/
+function getdeliveryman(){
+	$dbobj ==DB::connect(); 
+  $sql = "SELECT delm_id,delm_name FROM tbl_deliveryman WHERE delm_status=1;";
+
+  $result = $dbobj->query($sql);
+
+  if($dbobj->errno){
+    echo("SQL Error : ".$dbobj->error);
+    exit;
+  }
+
+   $nor = $result->num_rows;
+  if($nor>0){
+    while($rec = $result->fetch_assoc()){
+      echo("<option value='".$rec["delm_id"]."'>".$rec["delm_name"]."</option>");
+    }
+  }
+  $dbobj->close(); 
+}
+
+
 ?>
