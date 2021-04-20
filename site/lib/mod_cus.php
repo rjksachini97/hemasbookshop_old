@@ -18,11 +18,11 @@ function addNewCus(){
 	$cus_mobile = $_POST["txtmob"];
 	$cus_email = $_POST["txtemail"];
 	$cus_nic = $_POST["txtnic"];
-	$cus_pass = md5($_POST["txtpass"]);
+	$cus_pass = md5($_POST["txtformpass"]);
 
 	$dbobj = DB::connect();
 
-	$sql = "INSERT INTO  tbl_reg_customer(cus_name,cus_dob,cus_gender,cus_address,cus_mobile,cus_email,cus_nic,cus_pass) VALUES(?,?,?,?,?,?,?,?);";
+	$sql = "INSERT INTO  tbl_reg_customer(cus_name,cus_dob,cus_gender,cus_address,cus_mobile,cus_email,cus_nic,cus_pass) VALUES(?,?,?,?,?,?,?,?);"; 
 
 	$stmt = $dbobj->prepare($sql);
 	$stmt->bind_param("ssisssss",$cus_name,$cus_dob,$cus_gender,$cus_address,$cus_mobile,$cus_email,$cus_nic,$cus_pass);
