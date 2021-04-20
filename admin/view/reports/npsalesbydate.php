@@ -1,11 +1,11 @@
-<?php       
+<?php         
 
 	require_once("../../lib/common.php"); 
 	require_once("../../lib/mod_reports.php");
   if(isset($_GET['sdate'])){
         $sdate = $_GET['sdate'];
         $edate = $_GET['edate'];
-        $income = $_GET['income'];        
+        //$income = $_GET['income'];        
    }
    
 
