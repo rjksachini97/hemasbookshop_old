@@ -186,7 +186,7 @@ function addNewAdBooking(){
           $ad_description = $_POST["txtaddress"];
           $ad_wc = $_POST["txt_wc"];
           $ad_tot_price = $_POST["tot_price"];
-          $ad_book_status = 1;
+          $ad_book_status = 0;
           $crnt_date = date("Y-m-d");
 
           //Advertisment images
